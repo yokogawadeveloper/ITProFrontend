@@ -1,3 +1,101 @@
-<p>
-  newhireform works!
-</p>
+<form action="">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="department">Department</label>
+            <select class="form-control" [(ngModel)]="department" name="department">
+              <option selected>Choose...</option>
+              <option value="1">IT</option>
+              <option value="2">HR</option>
+              <option value="3">Finance</option>
+              <option value="4">Admin</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="IsExpenditure">Is Expenditure</label>
+            <select class="form-control" [(ngModel)]="isExpenditure" name="isExpenditure">
+              <option selected>Choose...</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="TotalBudget">Total Budget</label>
+            <input type="number" class="form-control" [(ngModel)]="totalBudget" name="totalBudget" placeholder="Total Buget" />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="UtilizedBudget">Utilized Budget</label>
+            <input type="number" class="form-control" [(ngModel)]="utilizedBudget" name="utilizedBudget" placeholder="Utilized Buget" />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="upload">Upload</label>
+            <input type="file" class="form-control" [(ngModel)]="upload" name="upload" />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="comment">Comment</label>
+            <textarea class="form-control" [(ngModel)]="comment" name="comment" rows="1"></textarea>
+          </div>
+          <table class="table table-bordered">
+            <thead class="text text-primary">
+              <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of rows; let i = index">
+                <td>
+                  <input [(ngModel)]="rows[i].name" class="form-control" type="text" name="name"/>
+                </td>
+                <td>
+                  <select [(ngModel)]="rows[i].category" class="form-control" name="category">
+                    <option value="0">Select</option>
+                    <option value="1">Electronics</option>
+                    <option value="2">Furniture</option>
+                    <option value="3">Grocery</option>
+                    <option value="4">Clothing</option>
+                    <option value="5">Footwear</option>
+                    <option value="6">Others</option>
+                  </select>
+                </td>
+                <td>
+                  <select [(ngModel)]="rows[i].item" class="form-control" name="item">
+                    <option value="0">Select</option>
+                    <option value="1">Electronics</option>
+                    <option value="2">Furniture</option>
+                    <option value="3">Grocery</option>
+                    <option value="4">Clothing</option>
+                    <option value="5">Footwear</option>
+                    <option value="6">Others</option>
+                  </select>
+                </td>
+                <td>
+                  <input type="number" [(ngModel)]="rows[i].quantity" class="form-control" name="quantity"  value="1" />
+                </td>
+                <td>
+                  <button (click)="deleteRow(i)" mat-mini-fab color="accent"
+                    aria-label="Example icon button with a delete icon">
+                    <ion-icon name="trash-outline"></ion-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="7">
+                  <button (click)="addRow()" mat-raised-button style="cursor: pointer">Add New (+)</button><br />
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <button class="btn btn-info" (click)="submit()">Submit</button>
+      </div>
+    </div>
+  </div>
+</form>

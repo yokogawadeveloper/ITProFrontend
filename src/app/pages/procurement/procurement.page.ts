@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-// import newhireform component
-import { NewhireformComponent } from 'src/app/component/newhireform/newhireform.component'
+
 
 @Component({
   selector: 'app-procurement',

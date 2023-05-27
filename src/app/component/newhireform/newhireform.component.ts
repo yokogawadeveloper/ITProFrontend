@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-newhireform',
@@ -7,11 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewhireformComponent implements OnInit {
 
+  department!: string;
+  isExpenditure: boolean = false;
+  totalBudget!: number;
+  utilizedBudget!: number;
+  upload: any;
+  comment!: Text;
   rows: any = []
+  //for dropdown
   DepartmentdropdownOptions: any = [];
   CostCenterdropdownOptions: any = [];
-  selectedUserType: string | undefined;   //user type dropdown
-
+  selectedUserType: string | undefined;   
   constructor() { }
 
   ngOnInit(): void {
@@ -52,7 +59,6 @@ export class NewhireformComponent implements OnInit {
 
 
   deleteRow(index: any) {
-
     if (this.rows.length == 1) {
       alert("Atleast one row should be there")
     }
@@ -61,9 +67,18 @@ export class NewhireformComponent implements OnInit {
     }
   }
 
-  submit() {
 
-    console.log(this.rows)
+  submit() {
+    const formData = {
+      department: this.department,
+      isExpenditure: this.isExpenditure,
+      totalBudget: this.totalBudget,
+      utilizedBudget: this.utilizedBudget,
+      upload: this.upload,
+      comment: this.comment,
+      rows: this.rows,
+    };
+    console.log(formData);
   }
 
 }
