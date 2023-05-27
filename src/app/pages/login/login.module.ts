@@ -8,12 +8,17 @@ import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
 
+// Import the module
+import { HttpClientModule } from '@angular/common/http';
+
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginPageRoutingModule
+    LoginPageRoutingModule,
+    HttpClientModule
   ],
   declarations: [LoginPage]
 })
