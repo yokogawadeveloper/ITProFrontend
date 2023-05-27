@@ -128,12 +128,19 @@ export class NewhireformComponent implements OnInit {
     this.formData.TotalBudget = this.totalBudget;
     this.formData.UtilizedBudget = this.utilizedBudget;
     this.formData.Remarks = this.remarks;
+    this.formData.inlineitem = this.rows.map((row: any) => {
+      return {
+        name: row.name,
+        category: row.category,
+        item: row.item,
+        quantity: row.quantity
+      }
+    });
 
     this.apiService.postProcurementData(this.formData).subscribe((res: any) => {
       console.log(res);
     }
     );
-
   }
 
 
