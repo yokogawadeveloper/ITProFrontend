@@ -7,13 +7,13 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage  {
+export class LoginPage {
 
   username!: string;
   password!: string;
 
 
-  constructor(private authService:AuthService,private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   login() {
     this.authService.login(this.username, this.password,)
@@ -29,11 +29,15 @@ export class LoginPage  {
         });
   }
 
-    
-
-
-
+  logout() {
+    this.authService.logout();
   }
-  
+
+
+
+
+
+}
+
 
 

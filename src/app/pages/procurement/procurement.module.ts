@@ -9,6 +9,9 @@ import { ProcurementPage } from './procurement.page';
 
 // Import the module
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { NewhireformModule } from '../../component/newhireform/newhireform.module';
+
+
 
 @NgModule({
   imports: [
@@ -16,8 +19,13 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    ProcurementPageRoutingModule
+    ProcurementPageRoutingModule,
+    NewhireformModule,
   ],
-  declarations: [ProcurementPage]
+  declarations: [ProcurementPage],
+
+  
+
+  
 })
 export class ProcurementPageModule {}

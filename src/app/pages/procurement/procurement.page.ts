@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+// import newhireform component
+import { NewhireformComponent } from 'src/app/component/newhireform/newhireform.component'
 
 @Component({
   selector: 'app-procurement',
@@ -26,7 +28,16 @@ export class ProcurementPage implements OnInit {
   constructor(private formBuilder: FormBuilder) {
 
     this.NewHire = this.formBuilder.group({
-      // Form 1 controls and validators
+      department: ['', Validators.required],
+      isexpenditure: ['', Validators.required],
+      totalbudget : ['', Validators.required],
+      utilizedbudget : ['', Validators.required],
+      upload : ['', Validators.required],
+      comment: ['', Validators.required],
+      name: ['', Validators.required],
+      category: ['', Validators.required],
+      item: ['', Validators.required],
+      quantity: ['', Validators.required],
     });
 
     this.Replacement = this.formBuilder.group({
@@ -61,23 +72,15 @@ export class ProcurementPage implements OnInit {
 
 
   ngOnInit() {
-    this.rows = [{
-      name: '',
-      category: '',
-      item : '',
-      quantity: '',
-    }]
+    this.rows = [{ name: '', category: '', item: '', quantity: '', }]
   }
-
-
-  // form validation for form 1
   addRow() {
-    // only add 5 rows at a time otherwise it will take time to load
     if (this.rows.length < 5) {
       this.rows.push({
         name: '',
-        email: '',
-        mobno: ''
+        category: '',
+        item: '',
+        quantity: '',
       })
     }
     else {
@@ -93,6 +96,13 @@ export class ProcurementPage implements OnInit {
     else {
       this.rows.splice(index, 1)
     }
+  }
+
+
+  //newHireSubmit()
+
+  newHireSubmit() {
+    console.log(this.NewHire.value)
   }
 
 

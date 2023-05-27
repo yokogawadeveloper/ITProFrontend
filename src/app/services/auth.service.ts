@@ -33,6 +33,9 @@ export class AuthService {
       }));
   } // login
 
+
+  logout() {
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['/login']);
+  } // logout
 }
-
-

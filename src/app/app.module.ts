@@ -10,10 +10,11 @@ import { AppRoutingModule } from './app-routing.module';
 // Import the module 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, } from '@angular/common/http';
+import { NewhireformModule } from './component/newhireform/newhireform.module';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -21,6 +22,7 @@ import { HttpClientModule, } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NewhireformModule,
 
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
