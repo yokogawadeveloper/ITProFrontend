@@ -6,11 +6,7 @@
           <div class="form-group col-md-6">
             <label for="department">Department</label>
             <select class="form-control" [(ngModel)]="department" name="department">
-              <option selected>Choose...</option>
-              <option value="1">IT</option>
-              <option value="2">HR</option>
-              <option value="3">Finance</option>
-              <option value="4">Admin</option>
+              <option *ngFor="let option of departmentDropdown" [value]="option.id">{{ option.DepartmentName }}</option>
             </select>
           </div>
           <div class="form-group col-md-6">
@@ -34,8 +30,8 @@
             <input type="file" class="form-control" [(ngModel)]="upload" name="upload" />
           </div>
           <div class="form-group col-md-6">
-            <label for="comment">Comment</label>
-            <textarea class="form-control" [(ngModel)]="comment" name="comment" rows="1"></textarea>
+            <label for="remarks">Remarks</label>
+            <textarea class="form-control" [(ngModel)]="remarks" name="remarks" rows="1"></textarea>
           </div>
           <table class="table table-bordered">
             <thead class="text text-primary">
@@ -48,37 +44,25 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let row of rows; let i = index">
+              <tr *ngFor="let item of formData.inlineitem; let i = index">
                 <td>
-                  <input [(ngModel)]="rows[i].name" class="form-control" type="text" name="name"/>
+                  <input [(ngModel)]="rows[i].name" class="form-control" type="text" id="quantity{{ i }}" id="quantity{{ i }}"/>
                 </td>
                 <td>
                   <select [(ngModel)]="rows[i].category" class="form-control" name="category">
-                    <option value="0">Select</option>
-                    <option value="1">Electronics</option>
-                    <option value="2">Furniture</option>
-                    <option value="3">Grocery</option>
-                    <option value="4">Clothing</option>
-                    <option value="5">Footwear</option>
-                    <option value="6">Others</option>
+                    <option *ngFor="let option of categoryDropdown" [value]="option.CategoryId">{{ option.ItemCategory }}</option>
                   </select>
                 </td>
                 <td>
                   <select [(ngModel)]="rows[i].item" class="form-control" name="item">
-                    <option value="0">Select</option>
-                    <option value="1">Electronics</option>
-                    <option value="2">Furniture</option>
-                    <option value="3">Grocery</option>
-                    <option value="4">Clothing</option>
-                    <option value="5">Footwear</option>
-                    <option value="6">Others</option>
+                    <option *ngFor="let option of itemDropdown" [value]="option.ItemId">{{ option.ItemName }}</option>
                   </select>
                 </td>
                 <td>
-                  <input type="number" [(ngModel)]="rows[i].quantity" class="form-control" name="quantity"  value="1" />
+                  <input type="number" [(ngModel)]="rows[i].quantity" class="form-control" name="quantity" value="1" />
                 </td>
                 <td>
-                  <button (click)="deleteRow(i)" mat-mini-fab color="accent"
+                  <button (click)="deleteInlineItem(i)" mat-mini-fab color="accent"
                     aria-label="Example icon button with a delete icon">
                     <ion-icon name="trash-outline"></ion-icon>
                   </button>
@@ -88,7 +72,7 @@
             <tfoot>
               <tr>
                 <td colspan="7">
-                  <button (click)="addRow()" mat-raised-button style="cursor: pointer">Add New (+)</button><br />
+                  <button (click)="addInlineItem()" mat-raised-button style="cursor: pointer">Add New (+)</button><br />
                 </td>
               </tr>
             </tfoot>
