@@ -8,17 +8,38 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card class="main-card">
+    <ion-card-content>
+      <ion-card-title id="typing-title">Welcome To ITProcurement</ion-card-title>
+      <p>
+        ITProcurement is a web application that allows you to manage your IT
+        procurement process.
+      </p>
+    </ion-card-content>
+  </ion-card>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>
-      Start with Ionic
-      <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a>
-    </p>
+
+  <div class="row">
+    <div class="triangle-container">
+      <ion-card class="triangle-card card1" routerLink="/procurement">
+        <ion-card-header>
+          <ion-card-title>End user Pc Procurement</ion-card-title>
+          <ion-card-subtitle>To Create Request of Items</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+      <ion-card class="triangle-card card2">
+        <ion-card-header>
+          <ion-card-title>DS-IN</ion-card-title>
+          <ion-card-subtitle>Procurement Aprovers</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+      <ion-card class="triangle-card card3">
+        <ion-card-header>
+          <ion-card-title>Customer Project IT Requirements</ion-card-title>
+          <ion-card-subtitle>Customer Requirement Gathering</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    </div>
   </div>
 </ion-content>
+
