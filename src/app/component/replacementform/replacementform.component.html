@@ -97,22 +97,5 @@
     </div>
   </div>
 </form>
-<script>
-  // on click of purchase date, age will be auto calculated and displayed in age field along with disabled field
-  function calculateAge() {
-    var today = new Date();
-    var selectedDate = new Date(document.getElementsByName('purchaseDate')[0].value);
-    var age = today.getFullYear() - selectedDate.getFullYear();
-    var monthDiff = today.getMonth() - selectedDate.getMonth();
 
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < selectedDate.getDate())) {
-      age--;
-    }
-
-    document.getElementsByName('age')[0].value = age;
-    document.getElementsByName('age')[0].disabled = true;
-    // change color 
-    document.getElementsByName('age')[0].style.color = "black";
-  }
-</script>
 

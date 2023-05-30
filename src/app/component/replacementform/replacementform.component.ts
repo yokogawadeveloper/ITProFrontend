@@ -18,8 +18,6 @@ interface InlineItem {
   styleUrls: ['./replacementform.component.scss'],
 })
 export class ReplacementformComponent implements OnInit {
-
-
   name!: string;
   department!: number;
   isExpenditure!: string;
@@ -150,7 +148,6 @@ export class ReplacementformComponent implements OnInit {
       console.log(res);
     }
     );
-    console.log(this.formData);
   }
 
   // age 

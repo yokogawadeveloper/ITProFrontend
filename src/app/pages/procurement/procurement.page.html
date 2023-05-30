@@ -29,10 +29,10 @@
           <ion-radio value="Replacement">Replacement</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-radio value="TemporaryArrangements">Temporary Arrangements</ion-radio>
+          <ion-radio value="StockManagement">Stock Management</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-radio value="StockManagement">Stock Management</ion-radio>
+          <ion-radio value="TemporaryArrangements">Temporary Arrangements</ion-radio>
         </ion-item>
       </ion-radio-group>
     </ion-card-header>
@@ -40,19 +40,23 @@
 
     <ion-card-content>
       <ng-container *ngIf="formType === 'NewHire'">
+        <h3 class="text-center text-info">New Hire Form</h3>
         <app-newhireform></app-newhireform>
       </ng-container>
 
       <ng-container *ngIf="formType === 'Replacement'">
+        <h3 class="text-center text-info">Replacement Form</h3>
         <app-replacementform></app-replacementform>
       </ng-container>
 
       <ng-container *ngIf="formType === 'StockManagement'">
-        <app-temporaryform></app-temporaryform>
+        <h3 class="text-center text-info">Stock Management Form</h3>
+        <app-stockmanagementform></app-stockmanagementform>
       </ng-container>
 
       <ng-container *ngIf="formType === 'TemporaryArrangements'">
-        <app-stockmanagementform></app-stockmanagementform>
+        <h3 class="text-center text-info">Temporary Arrangements Form</h3>
+        <app-temporaryform></app-temporaryform>
       </ng-container>
 
     </ion-card-content>
