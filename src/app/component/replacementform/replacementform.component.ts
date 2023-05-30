@@ -52,16 +52,6 @@ export class ReplacementformComponent implements OnInit {
   };
 
 
-  addInlineItem(): void {
-    const newItem = { ...this.inlineItem };
-    this.formData.inlineitem.push(newItem);
-    this.inlineItem = { category: 0, item: 0, costCenter: 0, quantity: 0 };
-  }
-
-
-  deleteInlineItem(index: number): void {
-    this.formData.inlineitem.splice(index, 1);
-  }
 
 
   //other variables

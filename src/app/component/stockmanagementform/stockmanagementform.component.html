@@ -21,54 +21,53 @@
             <label class="required" for="remarks">Remarks</label>
             <textarea class="form-control" [(ngModel)]="remarks" name="remarks" rows="1"></textarea>
           </div>
-          <table class="table table-bordered">
-            <thead class="text text-primary">
-              <tr>
-                <th>Category</th>
-                <th>Item</th>
-                <th>Cost Center</th>
-                <th>Quantity</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let row of rows; let i = index">
-                <td>
-                  <select [(ngModel)]="rows[i].category" class="form-control" name="category" required>
-                    <option *ngFor="let option of categoryDropdown" [value]="option.CategoryId">{{ option.ItemCategory }}</option>
-                  </select>
-                </td>
-                <td>
-                  <select [(ngModel)]="rows[i].item" class="form-control" name="item" required>
-                    <option *ngFor="let option of itemDropdown" [value]="option.ItemId">{{ option.ItemName }}</option>
-                  </select>
-                </td> 
-                <td>
-                  <select [(ngModel)]="rows[i].costCenter" class="form-control" name="costCenter" required>
-                    <option *ngFor="let option of costCenterdropdown" [value]="option.id">{{ option.CostCenter }}</option>
-                  </select>
-                </td>
-                <td>
-                  <input type="number" [(ngModel)]="rows[i].quantity" class="form-control" value="1" name="quantity" required/>
-                </td>
-                <td>
-                  <button (click)="deleteRow(i)" mat-mini-fab color="accent"
-                    aria-label="Example icon button with a delete icon">
-                    <ion-icon name="trash-outline"></ion-icon>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="7">
-                  <button (click)="addRow()" mat-raised-button style="cursor: pointer">Add New (+)</button><br />
-                </td>
-              </tr>
-            </tfoot>
-          </table>
+          <div class="panel-body">
+            <table class="table table-bordered">
+              <thead class="text text-primary">
+                <tr>
+                  <th>Category</th>
+                  <th>Item</th>
+                  <th>Cost Center</th>
+                  <th>Quantity</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of rows; let i = index">
+                  <td>
+                    <select [(ngModel)]="rows[i].category" class="form-control" [ngModelOptions]="{standalone: true}">
+                      <option *ngFor="let option of categoryDropdown" [value]="option.CategoryId">{{ option.ItemCategory }}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select [(ngModel)]="rows[i].item" class="form-control" [ngModelOptions]="{standalone: true}">
+                      <option *ngFor="let option of itemDropdown" [value]="option.ItemId">{{ option.ItemName }}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select [(ngModel)]="rows[i].costCenter" class="form-control" [ngModelOptions]="{standalone: true}">
+                      <option *ngFor="let option of costCenterdropdown" [value]="option.id">{{ option.CostCenter }}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="number" [(ngModel)]="rows[i].quantity" class="form-control" [ngModelOptions]="{standalone: true}">
+                  </td>
+                  <td>
+                    <button (click)="deleteRow(i)"><ion-icon name="trash-outline"></ion-icon></button>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="7">
+                    <button (click)="addRow()" mat-raised-button style="cursor: pointer">Add New(+)</button><br />
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+            <button class="btn btn-info" (click)="submit()">Submit</button>
+          </div>
         </div>
-        <button class="btn btn-info" (click)="submit()">Submit</button>
       </div>
     </div>
   </div>

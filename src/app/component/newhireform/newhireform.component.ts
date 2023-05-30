@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-// import { FormData, InlineItem } from './newhireform.model';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 
 
+// for inline item interface
 interface InlineItem {
-  name: string;
   category: number;
   item: number;
+  costCenter: number;
   quantity: number;
 }
 
@@ -16,57 +15,52 @@ interface InlineItem {
   templateUrl: './newhireform.component.html',
   styleUrls: ['./newhireform.component.scss'],
 })
-export class NewhireformComponent implements OnInit {
 
+
+
+
+export class NewhireformComponent implements OnInit {
+  name!: string;
   department!: number;
   isExpenditure!: string;
   totalBudget!: number;
   utilizedBudget!: number;
   remarks!: string;
-  upload: any;
+  attachment!: FileList;
+  //for form data with inline item
   formData: any = {
+    Name : '',
     DepartmentId: null,
     IsExpenditure: '',
     TotalBudget: null,
     UtilizedBudget: null,
     Remarks: '',
+    Attachment: null,
     inlineitem: []
   };
   inlineItem: InlineItem = {
-    name: '',
-    category: 1,
-    item: 1,
+    category: 0,
+    item: 0,
+    costCenter: 0,
     quantity: 0
   };
 
-
-
-  addInlineItem(): void {
-    const newItem = { ...this.inlineItem };
-    this.formData.inlineitem.push(newItem);
-    this.inlineItem = { name: '', category: 0, item: 0, quantity: 0 };
-  }
-
-
-  deleteInlineItem(index: number): void {
-    this.formData.inlineitem.splice(index, 1);
-  }
-
+  //other variables for row and dropdown
   rows: any = []
   departmentDropdown: any = [];
   costCenterdropdown: any = [];
   categoryDropdown: any = [];
   itemDropdown: any = [];
 
-  // main constructor
+
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.rows = [{
-      name: '',
       category: '',
       item: '',
-      quantity: '',
+      costCenter : '',
+      quantity: '',      
     }];
 
     //for dropdown
@@ -89,15 +83,13 @@ export class NewhireformComponent implements OnInit {
       this.itemDropdown = res;
     }
     );
-
-
   }
 
   addRow() {
     this.rows.push({
-      name: '',
       category: '',
       item: '',
+      costCenter : '',
       quantity: '',
     });
   }
@@ -111,19 +103,20 @@ export class NewhireformComponent implements OnInit {
     }
   }
 
-
   submit(): void {
+    this.formData.Name = this.name;
     this.formData.DepartmentId = this.department;
     this.formData.IsExpenditure = this.isExpenditure;
     this.formData.TotalBudget = this.totalBudget;
     this.formData.UtilizedBudget = this.utilizedBudget;
     this.formData.Remarks = this.remarks;
+    this.formData.Attachment = this.attachment;
     this.formData.inlineitem = this.rows.map((row: any) => {
       return {
-        name: row.name,
-        category: row.category,
-        item: row.item,
-        quantity: row.quantity
+        category : row.category,
+        item : row.item,
+        costcenter : row.costCenter,
+        quantity : row.quantity
       }
     });
 
@@ -133,10 +126,8 @@ export class NewhireformComponent implements OnInit {
     );
   }
 
-
-
-
-
-
+  onFileChange(event: any) {
+    this.attachment = event.target.files;
+  }
 
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 
 
-
+// inline item interface
 interface InlineItem {
   category: number;
   item: number;
@@ -24,6 +24,7 @@ export class TemporaryformComponent  implements OnInit {
   remarks!: string;
   deviceType!: string;
   attachment!: FileList;
+
   //for form data with inline item
   formData: any = {
     Name : '',
@@ -42,20 +43,6 @@ export class TemporaryformComponent  implements OnInit {
     costCenter: 0,
     quantity: 0
   };
-
-
-  addInlineItem(): void {
-    const newItem = { ...this.inlineItem };
-    this.formData.inlineitem.push(newItem);
-    this.inlineItem = { category: 0, item: 0, costCenter: 0, quantity: 0 };
-  }
-
-
-  deleteInlineItem(index: number): void {
-    this.formData.inlineitem.splice(index, 1);
-  }
-
-
   //other variables
   rows: any = []
   departmentDropdown: any = [];
@@ -94,17 +81,20 @@ export class TemporaryformComponent  implements OnInit {
       this.itemDropdown = res;
     }
     );
-
-
   }
 
   addRow() {
-    this.rows.push({
-      category: '',
-      item: '',
-      costCenter : '',
-      quantity: '',
-    });
+    if (this.rows.length < 5) {
+      this.rows.push({
+        category: '',
+        item: '',
+        costCenter : '',
+        quantity: '',
+      });
+    }
+    else {
+      alert("Maximum 5 rows are allowed")
+    }
   }
 
   deleteRow(index: any) {
@@ -136,7 +126,6 @@ export class TemporaryformComponent  implements OnInit {
 
     this.apiService.postProcurementData(this.formData).subscribe((res: any) => {
       console.log(res);
-    }
-    );
+    });
   }
 }
