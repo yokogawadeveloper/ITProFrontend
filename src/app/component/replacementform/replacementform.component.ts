@@ -1,30 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-// import { FormData, InlineItem } from './newhireform.model';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+
+
 
 
 interface InlineItem {
-  name: string;
   category: number;
   item: number;
+  costCenter: number;
   quantity: number;
 }
 
+// main component class
 @Component({
-  selector: 'app-newhireform',
-  templateUrl: './newhireform.component.html',
-  styleUrls: ['./newhireform.component.scss'],
+  selector: 'app-replacementform',
+  templateUrl: './replacementform.component.html',
+  styleUrls: ['./replacementform.component.scss'],
 })
-export class NewhireformComponent implements OnInit {
+export class ReplacementformComponent implements OnInit {
 
+
+  name!: string;
   department!: number;
   isExpenditure!: string;
   totalBudget!: number;
   utilizedBudget!: number;
   remarks!: string;
   upload: any;
+  purchaseDate: Date = new Date();
+  age!:number;
+  //for form data with inline item
   formData: any = {
+    Name : '',
     DepartmentId: null,
     IsExpenditure: '',
     TotalBudget: null,
@@ -33,18 +40,17 @@ export class NewhireformComponent implements OnInit {
     inlineitem: []
   };
   inlineItem: InlineItem = {
-    name: '',
-    category: 1,
-    item: 1,
+    category: 0,
+    item: 0,
+    costCenter: 0,
     quantity: 0
   };
-
 
 
   addInlineItem(): void {
     const newItem = { ...this.inlineItem };
     this.formData.inlineitem.push(newItem);
-    this.inlineItem = { name: '', category: 0, item: 0, quantity: 0 };
+    this.inlineItem = { category: 0, item: 0, costCenter: 0, quantity: 0 };
   }
 
 
@@ -52,21 +58,23 @@ export class NewhireformComponent implements OnInit {
     this.formData.inlineitem.splice(index, 1);
   }
 
+
+  //other variables
   rows: any = []
   departmentDropdown: any = [];
   costCenterdropdown: any = [];
   categoryDropdown: any = [];
   itemDropdown: any = [];
 
-  // main constructor
+
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.rows = [{
-      name: '',
       category: '',
       item: '',
-      quantity: '',
+      costCenter : '',
+      quantity: '',      
     }];
 
     //for dropdown
@@ -95,9 +103,9 @@ export class NewhireformComponent implements OnInit {
 
   addRow() {
     this.rows.push({
-      name: '',
       category: '',
       item: '',
+      costCenter : '',
       quantity: '',
     });
   }
@@ -113,6 +121,7 @@ export class NewhireformComponent implements OnInit {
 
 
   submit(): void {
+    this.formData.Name = this.name;
     this.formData.DepartmentId = this.department;
     this.formData.IsExpenditure = this.isExpenditure;
     this.formData.TotalBudget = this.totalBudget;
@@ -120,10 +129,10 @@ export class NewhireformComponent implements OnInit {
     this.formData.Remarks = this.remarks;
     this.formData.inlineitem = this.rows.map((row: any) => {
       return {
-        name: row.name,
-        category: row.category,
-        item: row.item,
-        quantity: row.quantity
+        category : row.category,
+        item : row.item,
+        costcenter : row.costCenter,
+        quantity : row.quantity
       }
     });
 
@@ -131,12 +140,11 @@ export class NewhireformComponent implements OnInit {
       console.log(res);
     }
     );
+    console.log(this.formData);
   }
 
-
-
-
-
-
-
 }
+
+
+
+///

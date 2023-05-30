@@ -8,6 +8,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, } from '@angular/common/http';
 import { NewhireformModule } from './component/newhireform/newhireform.module';
+import { ReplacementformModule } from './component/replacementform/replacementform.module';
+import { StockmanagementformModule } from './component/stockmanagementform/stockmanagementform.module';
+import { TemporaryformModule } from './component/temporaryform/temporaryform.module';
 
 
 @NgModule({
@@ -20,6 +23,9 @@ import { NewhireformModule } from './component/newhireform/newhireform.module';
     ReactiveFormsModule,
     HttpClientModule,
     NewhireformModule,
+    ReplacementformModule,
+    StockmanagementformModule,
+    TemporaryformModule,
 
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

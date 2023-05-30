@@ -10,7 +10,9 @@ import { ProcurementPage } from './procurement.page';
 // Import the module
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NewhireformModule } from '../../component/newhireform/newhireform.module';
-
+import { ReplacementformModule } from '../../component/replacementform/replacementform.module';
+import { StockmanagementformModule } from '../../component/stockmanagementform/stockmanagementform.module';
+import { TemporaryformModule } from '../../component/temporaryform/temporaryform.module';
 
 
 @NgModule({
@@ -21,6 +23,9 @@ import { NewhireformModule } from '../../component/newhireform/newhireform.modul
     IonicModule,
     ProcurementPageRoutingModule,
     NewhireformModule,
+    ReplacementformModule,
+    StockmanagementformModule,
+    TemporaryformModule,
   ],
   declarations: [ProcurementPage],
 
