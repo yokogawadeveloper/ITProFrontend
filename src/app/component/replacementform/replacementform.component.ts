@@ -26,9 +26,12 @@ export class ReplacementformComponent implements OnInit {
   totalBudget!: number;
   utilizedBudget!: number;
   remarks!: string;
-  upload: any;
-  purchaseDate: Date = new Date();
+  purchaseDate!: string;
   age!:number;
+  status!:string;
+  attachment!: FileList;
+  //age calulation
+  ageCalculated: boolean = false;
   //for form data with inline item
   formData: any = {
     Name : '',
@@ -37,6 +40,10 @@ export class ReplacementformComponent implements OnInit {
     TotalBudget: null,
     UtilizedBudget: null,
     Remarks: '',
+    PurchaseDate: null,
+    Age: null,
+    Status: '',
+    Attachment: null,
     inlineitem: []
   };
   inlineItem: InlineItem = {
@@ -119,7 +126,6 @@ export class ReplacementformComponent implements OnInit {
     }
   }
 
-
   submit(): void {
     this.formData.Name = this.name;
     this.formData.DepartmentId = this.department;
@@ -127,6 +133,10 @@ export class ReplacementformComponent implements OnInit {
     this.formData.TotalBudget = this.totalBudget;
     this.formData.UtilizedBudget = this.utilizedBudget;
     this.formData.Remarks = this.remarks;
+    this.formData.PurchaseDate = this.purchaseDate;
+    this.formData.Age = this.age;
+    this.formData.Status = this.status;
+    this.formData.Attachment = this.attachment;
     this.formData.inlineitem = this.rows.map((row: any) => {
       return {
         category : row.category,
@@ -143,8 +153,24 @@ export class ReplacementformComponent implements OnInit {
     console.log(this.formData);
   }
 
+  // age 
+  calculateAge(): void {
+    if (this.purchaseDate) {
+      const selectedDate = new Date(this.purchaseDate);
+      const today = new Date();
+      const age = today.getFullYear() - selectedDate.getFullYear();
+      const monthDiff = today.getMonth() - selectedDate.getMonth();
+
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < selectedDate.getDate())) {
+        this.age = age - 1;
+      } else {
+        this.age = age;
+      }
+
+      this.ageCalculated = true; 
+    } else {
+      this.age = 0;
+      this.ageCalculated = false; 
+    }
+  }
 }
-
-
-
-///
