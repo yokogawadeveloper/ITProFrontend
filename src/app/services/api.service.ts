@@ -16,18 +16,18 @@ export class ApiService {
   }
 
   getCostCenterDropdownData(): Observable<any> {
-    return this.http.get('http://127.0.0.1:8000/mastercostcenter/');
+    return this.http.get(this.apiUrl + '/mastercostcenter/');
   }
 
  getCategoryDropdownData(): Observable<any> {
-    return this.http.get('http://127.0.0.1:8000/mastercategory/');
+    return this.http.get(this.apiUrl + '/mastercategory/');
  }
 
   getItemDropdownData(): Observable<any> {
-    return this.http.get('http://127.0.0.1:8000/masteritem/');
+    return this.http.get(this.apiUrl + '/masteritem/');
   }
 
-
+  
   //procurement form data send api with authtication header
   
   postProcurementData(formData: any): Observable<any> {
@@ -35,7 +35,7 @@ export class ApiService {
     if (userData && userData.access) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
       console.log("user data");
-      return this.http.post('http://127.0.0.1:8000/masterprocurement/', formData, { headers });
+      return this.http.post(this.apiUrl + '/masterprocurement/', formData, { headers });
     } else {
       console.log("no user data");
       return new Observable<any>((observer) => observer.error("No user data"));
@@ -45,7 +45,13 @@ export class ApiService {
 
   getProcurementData(): Observable<any> {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
-    return this.http.get('http://127.0.0.1:8000/masterprocurement/');
+    if (userData && userData.access) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
+      return this.http.get(this.apiUrl + '/masterprocurement/', { headers });
+    }
+    else {
+      return new Observable<any>((observer) => observer.error("Data for Procurement not found"));
+    }
   }
 
 }

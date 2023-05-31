@@ -17,10 +17,6 @@ export class ProcurementPage implements OnInit {
   Replacement: FormGroup;
   TemporaryArrangements: FormGroup;
   StockManagement: FormGroup;
-
-
-
-
   //other
   rows: any = [];
 

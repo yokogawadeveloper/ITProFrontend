@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-procurementview',
@@ -7,40 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProcurementviewPage implements OnInit {
 
-  constructor() { }
+  procurementData:any = [];
+  constructor(private apiService:ApiService) { }
 
   ngOnInit() {
-  }
 
-
-  data = [
-    { Name: 'John', Gender: 'Male', Age: 25 },
-    { Name: 'Jane', Gender: 'Female', Age: 30 },
-    // more data rows...
-  ];
-
-  filteredData = [...this.data];
-  columns = [
-    { prop: 'Name' },
-    { prop: 'Gender' },
-    { prop: 'Age' },
-  ];
-
-  searchTerm = '';
-
-  filterData() {
-    const searchTerm = this.searchTerm.toLowerCase();
-    this.filteredData = this.data.filter((row) => {
-      return (
-        row.Name.toLowerCase().includes(searchTerm) ||
-        row.Gender.toLowerCase().includes(searchTerm) ||
-        row.Age.toString().includes(searchTerm)
-      );
+    this.apiService.getProcurementData().subscribe((res) => {
+      console.log(res);
+      this.procurementData = res;
+      console.log(this.procurementData);
+    }, (err) => {
+      console.log(err);
     });
   }
 
-  performAction() {
-    // Add your action logic here
-  }
+
+  
+
+
+
+  
 
 }

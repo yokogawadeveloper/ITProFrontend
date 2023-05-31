@@ -1,8 +1,12 @@
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <ion-header [translucent]="true">
   <ion-toolbar>
@@ -14,7 +18,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- inside card create row wise fields and below that create a table -->
   <ion-card>
     <ion-card-header>
       <ion-card-title>
@@ -26,40 +29,45 @@
     <ion-card-content>
       <div class="row">
         <div class="col-xl-12">
-          <table class="table table-hover">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Vehicle Number</th>
-                <th scope="col">Vendor Name</th>
-                <th scope="col">Bill No</th>
-                <th scope="col" colspan="1">Date</th>
-                <th scope="col" colspan="1">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Sample Vehicle Number</td>
-                <td>Sample Vendor Name</td>
-                <td>Sample Bill No</td>
-                <td>Sample Date</td>
-                <td style="color: rgb(114, 10, 10);">Sample Total</td>
-              </tr>
-              <tr class="thead-light">
-                <th scope="col">SL NO</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Cost</th>
-                <th scope="col">Amount</th>
-              </tr>
-              <tr>
-                <th scope="row">1</th>
-                <td>Sample Product Name</td>
-                <td>Sample Quantity</td>
-                <td>Sample Cost</td>
-                <td>Sample Amount</td>
-              </tr>
-            </tbody>
-          </table>
+          <ng-container *ngFor="let data of procurementData">
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Department Name</th>
+                  <th scope="col">Request No</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="col">{{data.Name}}</td>
+                  <td scope="col">{{data.department_name}}</td>
+                  <td scope="col">{{data.department_name}}</td>
+                  <td scope="col">
+                    <ion-button class="edit" color="tertiary" fill="clear" size="small">
+                      <ion-icon name="eye-off-outline"></ion-icon>
+                    </ion-button>
+                    <ion-button class="delete" color="danger" fill="clear" size="small">
+                      <ion-icon name="trash-outline"></ion-icon>
+                    </ion-button>
+                  </td>
+                </tr>
+                <tr class="thead-light">
+                  <th scope="col">Category</th>
+                  <th scope="col">Item</th>
+                  <th scope="col">Cost Center</th>
+                  <th scope="col">Quantity</th>
+                </tr>
+                <tr *ngFor="let product of data.inlineitem">
+                  <td>{{product.category}}</td>
+                  <td>{{product.item}}</td>
+                  <td>{{product.costcenter}}</td>
+                  <td>{{product.quantity}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-container>
         </div>
       </div>
     </ion-card-content>

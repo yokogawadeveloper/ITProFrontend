@@ -82,14 +82,18 @@
                       <input type="number" value="2" [(ngModel)]="rows[i].quantity" class="form-control"  [ngModelOptions]="{standalone: true}">
                     </td>
                     <td>
-                      <button (click)="deleteRow(i)"><ion-icon name="trash-outline"></ion-icon></button>
+                      <ion-button (click)="deleteRow(i)" color="danger" fill="solid" size="small">
+                        <ion-icon name="trash-outline"></ion-icon>
+                      </ion-button>
                     </td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr>
                     <td colspan="7">
-                      <button (click)="addRow()" mat-raised-button style="cursor: pointer">Add New(+)</button><br />
+                      <ion-button (click)="addRow()" color="success" fill="solid" size="small">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                      </ion-button>
                     </td>
                   </tr>
                 </tfoot>

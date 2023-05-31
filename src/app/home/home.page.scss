@@ -201,3 +201,18 @@
     color: #ffffff;
   }
 }
+
+
+
+// for all mobile devices
+@media only screen and (max-width: 768px) {
+  .triangle-container .triangle-card {
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+}
