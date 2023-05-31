@@ -1,0 +1,67 @@
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>procurementview</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"> </ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- inside card create row wise fields and below that create a table -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-button expand="block" color="light" disabled="true">
+          <ion-label>Procurement List</ion-label>
+        </ion-button>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="row">
+        <div class="col-xl-12">
+          <table class="table table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Vehicle Number</th>
+                <th scope="col">Vendor Name</th>
+                <th scope="col">Bill No</th>
+                <th scope="col" colspan="1">Date</th>
+                <th scope="col" colspan="1">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sample Vehicle Number</td>
+                <td>Sample Vendor Name</td>
+                <td>Sample Bill No</td>
+                <td>Sample Date</td>
+                <td style="color: rgb(114, 10, 10);">Sample Total</td>
+              </tr>
+              <tr class="thead-light">
+                <th scope="col">SL NO</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Amount</th>
+              </tr>
+              <tr>
+                <th scope="row">1</th>
+                <td>Sample Product Name</td>
+                <td>Sample Quantity</td>
+                <td>Sample Cost</td>
+                <td>Sample Amount</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

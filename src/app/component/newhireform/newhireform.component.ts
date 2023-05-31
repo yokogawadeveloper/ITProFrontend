@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 // for inline item interface
@@ -15,9 +16,6 @@ interface InlineItem {
   templateUrl: './newhireform.component.html',
   styleUrls: ['./newhireform.component.scss'],
 })
-
-
-
 
 export class NewhireformComponent implements OnInit {
   name!: string;
@@ -47,21 +45,17 @@ export class NewhireformComponent implements OnInit {
 
   //other variables for row and dropdown
   rows: any = []
+  userProfile: any;
   departmentDropdown: any = [];
   costCenterdropdown: any = [];
   categoryDropdown: any = [];
   itemDropdown: any = [];
 
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.rows = [{
-      category: '',
-      item: '',
-      costCenter : '',
-      quantity: '',      
-    }];
+    this.rows = [{category: '',item: '',costCenter : '',quantity: 1,}];
 
     //for dropdown
     this.apiService.getDepartmentDropdownData().subscribe((res: any) => {
@@ -83,6 +77,19 @@ export class NewhireformComponent implements OnInit {
       this.itemDropdown = res;
     }
     );
+
+    //
+    const uData =  this.authService.getUserProfile()
+    if (uData) {
+      uData.subscribe((data: any) => {
+        this.userProfile = data;
+        console.log(this.userProfile);
+      })
+    }
+    else {
+      console.log("no user data");
+    }
+
   }
 
   addRow() {
@@ -90,7 +97,7 @@ export class NewhireformComponent implements OnInit {
       category: '',
       item: '',
       costCenter : '',
-      quantity: '',
+      quantity: 1,
     });
   }
 

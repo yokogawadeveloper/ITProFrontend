@@ -65,12 +65,12 @@
                   <tr *ngFor="let row of rows; let i = index">
                     <td>
                       <select [(ngModel)]="rows[i].category" class="form-control" [ngModelOptions]="{standalone: true}">
-                        <option *ngFor="let option of categoryDropdown" [value]="option.CategoryId">{{ option.ItemCategory }}</option>
+                        <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">{{ option.ItemCategory }}</option>
                       </select>
                     </td>
                     <td>
                       <select [(ngModel)]="rows[i].item" class="form-control" [ngModelOptions]="{standalone: true}">
-                        <option *ngFor="let option of itemDropdown" [value]="option.ItemId">{{ option.ItemName }}</option>
+                        <option *ngFor="let option of itemDropdown" [value]="option.ItemName">{{ option.ItemName }}</option>
                       </select>
                     </td>
                     <td>
@@ -79,7 +79,7 @@
                       </select>
                     </td>
                     <td>
-                      <input type="number" [(ngModel)]="rows[i].quantity" class="form-control" [ngModelOptions]="{standalone: true}">
+                      <input type="number" value="2" [(ngModel)]="rows[i].quantity" class="form-control"  [ngModelOptions]="{standalone: true}">
                     </td>
                     <td>
                       <button (click)="deleteRow(i)"><ion-icon name="trash-outline"></ion-icon></button>
@@ -113,14 +113,10 @@
                 <tbody>
                   <tr *ngFor="let row of rows; let i = index">
                     <td>
-                      <select [(ngModel)]="rows[i].category" class="form-control" [ngModelOptions]="{standalone: true}">
-                        <option *ngFor="let option of categoryDropdown" [value]="option.CategoryId">{{ option.ItemCategory }}</option>
-                      </select>
+                      <input type="text" [(ngModel)]="rows[i].category" class="form-control"  [ngModelOptions]="{standalone: true}">
                     </td>
                     <td>
-                      <select [(ngModel)]="rows[i].item" class="form-control" [ngModelOptions]="{standalone: true}">
-                        <option *ngFor="let option of itemDropdown" [value]="option.ItemId">{{ option.ItemName }}</option>
-                      </select>
+                      <input type="text" [(ngModel)]="rows[i].item" class="form-control"  [ngModelOptions]="{standalone: true}">
                     </td>
                     <td>
                       <select [(ngModel)]="rows[i].costCenter" class="form-control" [ngModelOptions]="{standalone: true}">

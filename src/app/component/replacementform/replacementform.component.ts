@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 
-
-
-
+//Inline item interface
 interface InlineItem {
   category: number;
   item: number;
@@ -25,14 +23,14 @@ export class ReplacementformComponent implements OnInit {
   utilizedBudget!: number;
   remarks!: string;
   purchaseDate!: string;
-  age!:number;
-  status!:string;
+  age!: number;
+  status!: string;
   attachment!: FileList;
   //age calulation
   ageCalculated: boolean = false;
   //for form data with inline item
   formData: any = {
-    Name : '',
+    Name: '',
     DepartmentId: null,
     IsExpenditure: '',
     TotalBudget: null,
@@ -50,10 +48,6 @@ export class ReplacementformComponent implements OnInit {
     costCenter: 0,
     quantity: 0
   };
-
-
-
-
   //other variables
   rows: any = []
   departmentDropdown: any = [];
@@ -68,8 +62,8 @@ export class ReplacementformComponent implements OnInit {
     this.rows = [{
       category: '',
       item: '',
-      costCenter : '',
-      quantity: '',      
+      costCenter: '',
+      quantity: 1,
     }];
 
     //for dropdown
@@ -90,18 +84,15 @@ export class ReplacementformComponent implements OnInit {
 
     this.apiService.getItemDropdownData().subscribe((res: any) => {
       this.itemDropdown = res;
-    }
-    );
-
-
+    });
   }
 
   addRow() {
     this.rows.push({
       category: '',
       item: '',
-      costCenter : '',
-      quantity: '',
+      costCenter: '',
+      quantity: 1,
     });
   }
 
@@ -127,10 +118,10 @@ export class ReplacementformComponent implements OnInit {
     this.formData.Attachment = this.attachment;
     this.formData.inlineitem = this.rows.map((row: any) => {
       return {
-        category : row.category,
-        item : row.item,
-        costcenter : row.costCenter,
-        quantity : row.quantity
+        category: row.category,
+        item: row.item,
+        costcenter: row.costCenter,
+        quantity: row.quantity
       }
     });
 
@@ -154,10 +145,10 @@ export class ReplacementformComponent implements OnInit {
         this.age = age;
       }
 
-      this.ageCalculated = true; 
+      this.ageCalculated = true;
     } else {
       this.age = 0;
-      this.ageCalculated = false; 
+      this.ageCalculated = false;
     }
   }
 }

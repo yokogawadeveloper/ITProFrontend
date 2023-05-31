@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 
 
@@ -58,7 +58,7 @@ export class TemporaryformComponent  implements OnInit {
       category: '',
       item: '',
       costCenter : '',
-      quantity: '',      
+      quantity: 1,     
     }];
 
     //for dropdown
@@ -89,7 +89,7 @@ export class TemporaryformComponent  implements OnInit {
         category: '',
         item: '',
         costCenter : '',
-        quantity: '',
+        quantity: 1,
       });
     }
     else {

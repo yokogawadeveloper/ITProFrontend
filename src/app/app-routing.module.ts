@@ -21,7 +21,11 @@ const routes: Routes = [
   {
     path: 'procurement',
     loadChildren: () => import('./pages/procurement/procurement.module').then( m => m.ProcurementPageModule)
+  },  {
+    path: 'procurementview',
+    loadChildren: () => import('./pages/procurementview/procurementview.module').then( m => m.ProcurementviewPageModule)
   },
+
 ];
 
 @NgModule({

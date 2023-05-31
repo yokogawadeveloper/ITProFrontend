@@ -36,12 +36,12 @@
                 <tr *ngFor="let row of rows; let i = index">
                   <td>
                     <select [(ngModel)]="rows[i].category" class="form-control" [ngModelOptions]="{standalone: true}">
-                      <option *ngFor="let option of categoryDropdown" [value]="option.CategoryId">{{ option.ItemCategory }}</option>
+                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">{{ option.ItemCategory }}</option>
                     </select>
                   </td>
                   <td>
                     <select [(ngModel)]="rows[i].item" class="form-control" [ngModelOptions]="{standalone: true}">
-                      <option *ngFor="let option of itemDropdown" [value]="option.ItemId">{{ option.ItemName }}</option>
+                      <option *ngFor="let option of itemDropdown" [value]="option.ItemName">{{ option.ItemName }}</option>
                     </select>
                   </td>
                   <td>

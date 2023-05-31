@@ -17,6 +17,20 @@
         </ion-menu-toggle>
 
         <ion-menu-toggle>
+          <ion-item routerLink="/procurement">
+            <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+            <ion-label>Procurement Form</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item routerLink="/procurementview">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-label>Procurement List</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
           <ion-item routerLink="">
             <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
             <ion-label>Analylitcs</ion-label>
@@ -41,6 +55,13 @@
           <ion-item routerLink="">
             <ion-icon name="help-circle-outline" slot="start"></ion-icon>
             <ion-label>Help</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item (click)="logout()">
+            <ion-icon name="log-out-outline" slot="start"></ion-icon>
+            <ion-label>Logout</ion-label>
           </ion-item>
         </ion-menu-toggle>
       </ion-list>

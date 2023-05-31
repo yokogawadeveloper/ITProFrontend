@@ -11,6 +11,8 @@ import { NewhireformModule } from './component/newhireform/newhireform.module';
 import { ReplacementformModule } from './component/replacementform/replacementform.module';
 import { StockmanagementformModule } from './component/stockmanagementform/stockmanagementform.module';
 import { TemporaryformModule } from './component/temporaryform/temporaryform.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -22,10 +24,14 @@ import { TemporaryformModule } from './component/temporaryform/temporaryform.mod
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    NgxDatatableModule,
+    //register component
     NewhireformModule,
     ReplacementformModule,
     StockmanagementformModule,
     TemporaryformModule,
+
 
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
