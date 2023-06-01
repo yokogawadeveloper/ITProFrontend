@@ -30,13 +30,7 @@ export class AuthService {
       }));
   } // login
 
-  // logout() {
-  //   sessionStorage.removeItem('currentUser');
-  //   localStorage.clear();
-  //   this.router.navigate(['/login']);
-  // } // logout
-
-  isAuthenticated(): boolean{
+  isLoggedIn(): boolean{
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
     if (userData && userData.access) {
       return true;
@@ -44,19 +38,19 @@ export class AuthService {
     else {
       return false;
     }
-  }
+  }// isLoggedIn
 
-  getUserProfile() {
-    let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
-    if (userData) {
-      const headers = new HttpHeaders().set('Authorization', 'Bearer ' + userData.access);
-      return this.http.get(this.apiUrl + `user-profile/`, { headers });
-    }
-    else {
-      console.log("no user data");
-      return null;
-    }
-  }
+  // getUserProfile() {
+  //   let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
+  //   if (userData) {
+  //     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + userData.access);
+  //     return this.http.get(this.apiUrl + `user-profile/`, { headers });
+  //   }
+  //   else {
+  //     console.log("no user data");
+  //     return null;
+  //   }
+  // }
 
   
 }

@@ -1,21 +1,28 @@
-// make border for table 
-.table{
-    border: 1px solid #000000;
-    border-collapse: collapse;
+.card-content {
+    padding: 0;
+  }
+  
+  table {
     width: 100%;
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-// .table th{
-//     border: 1px solid #000000;
-//     padding: 5px;
-//     background-color: #f2f2f2;
-// }
-
-// .table td{
-//     border: 1px solid #000000;
-//     padding: 5px;
-// }
-
+    border-collapse: collapse;
+  }
+  
+  thead th {
+    background-color: #f4f4f4;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tbody td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .edit,.delete {
+        text-decoration: none;
+        padding: 0 5px;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px; 
+        
+    }

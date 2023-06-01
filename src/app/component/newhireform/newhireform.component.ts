@@ -79,18 +79,6 @@ export class NewhireformComponent implements OnInit {
     }
     );
 
-    //
-    const uData =  this.authService.getUserProfile()
-    if (uData) {
-      uData.subscribe((data: any) => {
-        this.userProfile = data;
-        console.log(this.userProfile);
-      })
-    }
-    else {
-      console.log("no user data");
-    }
-
   }
 
   addRow() {

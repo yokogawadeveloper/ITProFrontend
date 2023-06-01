@@ -9,7 +9,15 @@ import { ApiService } from 'src/app/services/api.service';
 export class ProcurementviewPage implements OnInit {
 
   procurementData:any = [];
+  isAlertOpen = false;
+  public alertButtons = ['OK'];
   constructor(private apiService:ApiService) { }
+
+  
+
+  setOpen(isOpen: boolean) {
+    this.isAlertOpen = isOpen;
+  }
 
   ngOnInit() {
 
@@ -21,12 +29,16 @@ export class ProcurementviewPage implements OnInit {
       console.log(err);
     });
   }
-
-
-  
-
-
-
   
 
 }
+
+
+
+  
+
+
+
+  
+
+
