@@ -34,8 +34,70 @@
                     <ion-button (click)="setOpen(true)" class="edit" color="tertiary" fill="clear" size="small">
                       <ion-icon name="eye-off-outline"></ion-icon>
                     </ion-button>
-                    <ion-alert [isOpen]="isAlertOpen" header="Alert" subHeader="Important message"
-                      message="This is an alert!" [buttons]="alertButtons" (didDismiss)="setOpen(false)"></ion-alert>
+                    <!-- modal -->
+                    <ion-modal [isOpen]="isModalOpen" [enterAnimation]="enterAnimation"
+                      [leaveAnimation]="leaveAnimation">
+                      <ng-template>
+                        <ion-header>
+                          <ion-toolbar>
+                            <ion-title>Procurement</ion-title>
+                            <ion-buttons slot="end">
+                              <ion-button color="primary" (click)="setOpen(false)">Close</ion-button>
+                            </ion-buttons>
+                          </ion-toolbar>
+                        </ion-header>
+                        <ion-content class="ion-padding">
+                          <!-- create details table with inline items -->
+                          <ion-grid class="modal-table">
+                            <ion-row class="table-header">
+                              <ion-col>Vehicle Number</ion-col>
+                              <ion-col>Vendor Name</ion-col>
+                              <ion-col>Bill No</ion-col>
+                              <ion-col>Date</ion-col>
+                              <ion-col>Total</ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col>ABC123</ion-col>
+                              <ion-col>Vendor A</ion-col>
+                              <ion-col>12345</ion-col>
+                              <ion-col>2023-05-28</ion-col>
+                              <ion-col style="color: rgb(114, 10, 10);">$500</ion-col>
+                            </ion-row>
+                            <ion-row class="table-header">
+                              <ion-col>SL NO</ion-col>
+                              <ion-col>Product Name</ion-col>
+                              <ion-col>Quantity</ion-col>
+                              <ion-col>Cost</ion-col>
+                              <ion-col>Amount</ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col>1</ion-col>
+                              <ion-col>Spare Part A</ion-col>
+                              <ion-col>2</ion-col>
+                              <ion-col>$50</ion-col>
+                              <ion-col>$100</ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col>2</ion-col>
+                              <ion-col>Spare Part B</ion-col>
+                              <ion-col>3</ion-col>
+                              <ion-col>$20</ion-col>
+                              <ion-col>$60</ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col>3</ion-col>
+                              <ion-col>Spare Part C</ion-col>
+                              <ion-col>1</ion-col>
+                              <ion-col>$80</ion-col>
+                              <ion-col>$80</ion-col>
+                            </ion-row>
+                          </ion-grid>
+                          <ion-button color="primary" expand="block" (click)="setOpen(false)">Ok</ion-button>
+                          <!-- end details here  -->
+                        </ion-content>
+                      </ng-template>
+                    </ion-modal>
+                    <!-- end modal  -->
                     <ion-button class="delete" color="danger" fill="clear" size="small">
                       <ion-icon name="trash-outline"></ion-icon>
                     </ion-button>

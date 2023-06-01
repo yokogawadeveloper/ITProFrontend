@@ -1,28 +1,79 @@
 .card-content {
-    padding: 0;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  thead th {
-    background-color: #f4f4f4;
-    text-align: left;
-    padding: 8px;
-  }
-  
-  tbody td {
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .edit,.delete {
-        text-decoration: none;
-        padding: 0 5px;
-        color: #333;
-        border: 1px solid #ccc;
-        border-radius: 4px; 
-        
-    }
+  padding: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  background-color: #f4f4f4;
+  text-align: left;
+  padding: 8px;
+}
+
+tbody td {
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.edit,
+.delete {
+  text-decoration: none;
+  padding: 0 5px;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+}
+
+
+// for modal
+.modal-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+
+/* Style the table headers */
+.table-header {
+  background-color: #f2f2f2;
+}
+
+/* Style the table header cells */
+.table-header ion-col {
+  font-weight: bold;
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Style the table data rows */
+.modal-table ion-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Style the table data cells */
+.modal-table ion-row ion-col {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Add a specific style to the total cell */
+.modal-table ion-row:last-child ion-col:last-child {
+  font-weight: bold;
+  color: rgb(114, 10, 10);
+}
+
+/* Add hover effect to table rows */
+.modal-table ion-row:hover {
+  background-color: #e3e3e3;
+}
+
+/* Add border to last row */
+.modal-table ion-row:last-child {
+  border-bottom: 2px solid #ccc;
+}
+
