@@ -13,6 +13,7 @@ import { StockmanagementformModule } from './component/stockmanagementform/stock
 import { TemporaryformModule } from './component/temporaryform/temporaryform.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgToastModule } from 'ng-angular-popup';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     HttpClientModule,
     BrowserAnimationsModule,
     NgxDatatableModule,
+    NgToastModule,
     //register component
     NewhireformModule,
     ReplacementformModule,

@@ -24,17 +24,17 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/accounts/login/`, { username, password }, httpOptions)
       .pipe(map(user => {
         if (user && user.access) {
-          // localStorage.setItem('currentUser', JSON.stringify(user));
           sessionStorage.setItem('currentUser', JSON.stringify(user));
         }
         return user;
       }));
   } // login
 
-  logout() {
-    sessionStorage.removeItem('currentUser');
-    this.router.navigate(['/login']);
-  } // logout
+  // logout() {
+  //   sessionStorage.removeItem('currentUser');
+  //   localStorage.clear();
+  //   this.router.navigate(['/login']);
+  // } // logout
 
   isAuthenticated(): boolean{
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);

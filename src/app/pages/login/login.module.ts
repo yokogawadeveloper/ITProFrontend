@@ -10,6 +10,7 @@ import { LoginPage } from './login.page';
 
 // Import the module
 import { HttpClientModule } from '@angular/common/http';
+import { NgToastModule, } from 'ng-angular-popup';
 
 
 @NgModule({
@@ -18,7 +19,10 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     IonicModule,
     LoginPageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgToastModule,
+
+
   ],
   declarations: [LoginPage]
 })

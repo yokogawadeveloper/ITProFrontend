@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
+import { NgToastService } from 'ng-angular-popup';
 
 //Inline item interface
 interface InlineItem {
@@ -56,7 +57,7 @@ export class ReplacementformComponent implements OnInit {
   itemDropdown: any = [];
 
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService,private toast: NgToastService ) { }
 
   ngOnInit(): void {
     this.rows = [{
@@ -98,7 +99,12 @@ export class ReplacementformComponent implements OnInit {
 
   deleteRow(index: any) {
     if (this.rows.length == 1) {
-      alert("Atleast one row should be there")
+      this.toast.error({
+        detail: 'Atleast one row should be there',
+        position: 'bottom-right',
+        duration: 3000,
+        type: 'danger'
+      })
     }
     else {
       this.rows.splice(index, 1)

@@ -3,6 +3,7 @@ import { StockmanagementformComponent } from './stockmanagementform.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NgToastModule } from 'ng-angular-popup';
 
 
 
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+    NgToastModule,
 
   ],
   exports: [StockmanagementformComponent],

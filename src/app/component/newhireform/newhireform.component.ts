@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { NgToastService } from 'ng-angular-popup';
 
 
 // for inline item interface
@@ -52,7 +53,7 @@ export class NewhireformComponent implements OnInit {
   itemDropdown: any = [];
 
 
-  constructor(private apiService: ApiService, private authService: AuthService) { }
+  constructor(private apiService: ApiService, private authService: AuthService,private toast: NgToastService) { }
 
   ngOnInit(): void {
     this.rows = [{category: '',item: '',costCenter : '',quantity: 1,}];
@@ -103,7 +104,12 @@ export class NewhireformComponent implements OnInit {
 
   deleteRow(index: any) {
     if (this.rows.length == 1) {
-      alert("Atleast one row should be there")
+      this.toast.error({
+        detail: 'Atleast one row should be there',
+        position: 'bottom-right',
+        duration: 3000,
+        type: 'danger'
+      })
     }
     else {
       this.rows.splice(index, 1)
