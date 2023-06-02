@@ -1,4 +1,4 @@
-<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+<form [formGroup]="myForm" (ngSubmit)="presentAlert()">
   <div class="panel-group">
     <div class="panel panel-primary">
       <div class="panel-body">
@@ -13,7 +13,8 @@
               <option *ngFor="let option of departmentDropdown" [value]="option.id">{{ option.DepartmentName }}</option>
             </select>
           </div>
-          <div class="form-group col-md-6" [ngClass]="{'invalid': formSubmitted && myForm.get('isExpenditure')?.invalid}">
+          <div class="form-group col-md-6"
+            [ngClass]="{'invalid': formSubmitted && myForm.get('isExpenditure')?.invalid}">
             <label for="isExpenditure">Is Expenditure</label>
             <select class="form-control" formControlName="isExpenditure" required>
               <option value="">Choose...</option>
@@ -33,9 +34,9 @@
             <label for="attachment">Attachment</label>
             <input type="file" class="form-control" formControlName="attachment" />
           </div>
-          <div class="form-group col-md-4" >
+          <div class="form-group col-md-4">
             <label for="remarks">Remarks</label>
-            <textarea class="form-control" formControlName="remarks" rows="1" ></textarea>
+            <textarea class="form-control" formControlName="remarks" rows="1"></textarea>
           </div>
           <div class="panel-body">
             <table class="table table-bordered">
@@ -49,20 +50,25 @@
                 </tr>
               </thead>
               <tbody formArrayName="rows">
-                <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i" [ngClass]="{'invalid': formSubmitted && row.invalid}">
+                <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i"
+                  [ngClass]="{'invalid': formSubmitted && row.invalid}">
                   <td>
-                    <select formControlName="category" class="form-control" [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
-                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">{{ option.ItemCategory }}</option>
+                    <select formControlName="category" class="form-control"
+                      [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
+                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">{{
+                        option.ItemCategory }}</option>
                     </select>
                   </td>
                   <td>
                     <select formControlName="item" class="form-control">
-                      <option *ngFor="let option of itemDropdown" [value]="option.ItemName">{{ option.ItemName }}</option>
+                      <option *ngFor="let option of itemDropdown" [value]="option.ItemName">{{ option.ItemName }}
+                      </option>
                     </select>
                   </td>
                   <td>
                     <select formControlName="costCenter" class="form-control">
-                      <option *ngFor="let option of costCenterdropdown" [value]="option.id">{{ option.CostCenter }}</option>
+                      <option *ngFor="let option of costCenterdropdown" [value]="option.id">{{ option.CostCenter }}
+                      </option>
                     </select>
                   </td>
                   <td>

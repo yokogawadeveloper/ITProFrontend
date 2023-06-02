@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { NgToastService } from 'ng-angular-popup';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-newhireform',
@@ -19,7 +20,13 @@ export class NewhireformComponent implements OnInit {
   itemDropdown: any[] = []; // Add appropriate values
   costCenterdropdown: any[] = []; // Add appropriate values
 
-  constructor(private apiService: ApiService, private toast: NgToastService, private formBuilder: FormBuilder, private router: Router) { }
+  constructor(
+    private apiService: ApiService,
+    private toast: NgToastService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private alertController: AlertController
+  ) { }
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
@@ -55,6 +62,8 @@ export class NewhireformComponent implements OnInit {
       this.costCenterdropdown = res;
     }
     );
+
+
   }//end of ngOnInit
 
   get rows() {
@@ -86,12 +95,37 @@ export class NewhireformComponent implements OnInit {
   }
 
   // Getters for form controls
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Confirm Submission',
+      message: 'Are you sure you want to submit the form?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirmation canceled');
+          }
+        },
+        {
+          text: 'Submit',
+          handler: () => {
+            console.log('Submitting the form...');
+            this.submitForm();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   submitForm() {
     this.formSubmitted = true;
     if (this.myForm.valid) {
-      let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
-      if (userData && userData.access) {
         const formattedData = {
+          RequestType: 'NewHire',
           Name: this.myForm.value.name,
           DepartmentId: this.myForm.value.department,
           IsExpenditure: this.myForm.value.isExpenditure,
@@ -103,7 +137,8 @@ export class NewhireformComponent implements OnInit {
             item: row.item,
             costcenter: row.costCenter,
             quantity: row.quantity,
-          }))
+          })),
+          
         };
         this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
           if (res) {
@@ -119,15 +154,8 @@ export class NewhireformComponent implements OnInit {
           type: 'danger'
         })
       }
-    } else {
-      this.toast.error({
-        detail: 'OOPS !New Hire Form is invalid',
-        position: 'bottom-right',
-        duration: 3000,
-        type: 'danger'
-      })
-    }
+    } //end of submitForm
+
   }
-}
 
 
