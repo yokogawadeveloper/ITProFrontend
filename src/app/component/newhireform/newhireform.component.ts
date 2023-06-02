@@ -1,16 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { NgToastService } from 'ng-angular-popup';
-
-
-// for inline item interface
-interface InlineItem {
-  category: number;
-  item: number;
-  costCenter: number;
-  quantity: number;
-}
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-newhireform',
@@ -19,140 +11,123 @@ interface InlineItem {
 })
 
 export class NewhireformComponent implements OnInit {
-  formSubmitted = false;
-  //main form variables
-  name!: string;
-  department!: number;
-  isExpenditure!: string;
-  totalBudget!: number;
-  utilizedBudget!: number;
-  remarks!: string;
-  attachment!: FileList;
-  //for form data with inline item
-  formData: any = {
-    Name : '',
-    DepartmentId: null,
-    IsExpenditure: '',
-    TotalBudget: null,
-    UtilizedBudget: null,
-    Remarks: '',
-    Attachment: null,
-    inlineitem: []
-  };
-  inlineItem: InlineItem = {
-    category: 0,
-    item: 0,
-    costCenter: 0,
-    quantity: 0
-  };
 
-  //other variables for row and dropdown
-  rows: any = []
-  userProfile: any;
-  departmentDropdown: any = [];
-  costCenterdropdown: any = [];
-  categoryDropdown: any = [];
-  itemDropdown: any = [];
+  myForm!: FormGroup;
+  formSubmitted: boolean = false;
+  departmentDropdown: any[] = []; // Add appropriate values
+  categoryDropdown: any[] = []; // Add appropriate values
+  itemDropdown: any[] = []; // Add appropriate values
+  costCenterdropdown: any[] = []; // Add appropriate values
 
-
-  constructor(private apiService: ApiService, private authService: AuthService,private toast: NgToastService) { }
+  constructor(private apiService: ApiService, private toast: NgToastService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
-    this.rows = [{category: '',item: '',costCenter : '',quantity: 1,}];
+    this.myForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      department: ['', Validators.required],
+      isExpenditure: ['', Validators.required],
+      totalBudget: [''],
+      utilizedBudget: [''],
+      attachment: [''],
+      remarks: [''],
+      rows: this.formBuilder.array([])
+    });
+    this.addRow(); // Add one row by default
 
-    //for dropdown
+    // Get department dropdown values
     this.apiService.getDepartmentDropdownData().subscribe((res: any) => {
       this.departmentDropdown = res;
-    }
-    );
+    });
 
-    this.apiService.getCostCenterDropdownData().subscribe((res: any) => {
-      this.costCenterdropdown = res;
-    }
-    );
-
+    // Get category dropdown values
     this.apiService.getCategoryDropdownData().subscribe((res: any) => {
       this.categoryDropdown = res;
     }
     );
 
+    // Get item dropdown values
     this.apiService.getItemDropdownData().subscribe((res: any) => {
       this.itemDropdown = res;
     }
     );
+    // Get cost center dropdown values
+    this.apiService.getCostCenterDropdownData().subscribe((res: any) => {
+      this.costCenterdropdown = res;
+    }
+    );
+  }//end of ngOnInit
 
+  get rows() {
+    return this.myForm.get('rows') as FormArray;
   }
 
   addRow() {
-    this.rows.push({
-      category: '',
-      item: '',
-      costCenter : '',
-      quantity: 1,
+    const newRow = this.formBuilder.group({
+      category: ['', Validators.required],
+      item: ['', Validators.required],
+      costCenter: ['', Validators.required],
+      quantity: ['', Validators.required],
     });
+    this.rows.push(newRow);
   }
 
-  deleteRow(index: any) {
+  deleteRow(index: number) {
     if (this.rows.length == 1) {
       this.toast.error({
-        detail: 'Atleast one row should be there',
+        detail: 'Atleast one row is required',
+        position: 'bottom-right',
+        duration: 3000,
+        type: 'danger'
+      })
+    } else {
+      this.rows.removeAt(index);
+    }
+
+  }
+
+  // Getters for form controls
+  submitForm() {
+    this.formSubmitted = true;
+    if (this.myForm.valid) {
+      let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
+      if (userData && userData.access) {
+        const formattedData = {
+          Name: this.myForm.value.name,
+          DepartmentId: this.myForm.value.department,
+          IsExpenditure: this.myForm.value.isExpenditure,
+          TotalBudget: this.myForm.value.totalBudget,
+          UtilizedBudget: this.myForm.value.utilizedBudget,
+          Remarks: this.myForm.value.remarks,
+          inlineitem: this.myForm.value.rows.map((row: any) => ({
+            category: row.category,
+            item: row.item,
+            costcenter: row.costCenter,
+            quantity: row.quantity,
+          }))
+        };
+        this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
+          if (res) {
+            this.router.navigate(['/procurementview']);
+          }
+        });
+
+      } else {
+        this.toast.error({
+          detail: 'OOPS !Something went wrong',
+          position: 'bottom-right',
+          duration: 3000,
+          type: 'danger'
+        })
+      }
+    } else {
+      this.toast.error({
+        detail: 'OOPS !New Hire Form is invalid',
         position: 'bottom-right',
         duration: 3000,
         type: 'danger'
       })
     }
-    else {
-      this.rows.splice(index, 1)
-    }
   }
-
-  // submit(): void {
-  //   this.formData.Name = this.name;
-  //   this.formData.DepartmentId = this.department;
-  //   this.formData.IsExpenditure = this.isExpenditure;
-  //   this.formData.TotalBudget = this.totalBudget;
-  //   this.formData.UtilizedBudget = this.utilizedBudget;
-  //   this.formData.Remarks = this.remarks;
-  //   this.formData.Attachment = this.attachment;
-  //   this.formData.inlineitem = this.rows.map((row: any) => {
-  //     return {
-  //       category : row.category,
-  //       item : row.item,
-  //       costcenter : row.costCenter,
-  //       quantity : row.quantity
-  //     }
-  //   });
-
-  //   this.apiService.postProcurementData(this.formData).subscribe((res: any) => {
-  //     console.log(res);
-  //   }
-  //   );
-  // }
-
-  submitForm(){
-  
-    this.formSubmitted = true;
-    this.formData.Name = this.name;
-    this.formData.DepartmentId = this.department;
-    this.formData.IsExpenditure = this.isExpenditure;
-    this.formData.TotalBudget = this.totalBudget;
-    this.formData.UtilizedBudget = this.utilizedBudget;
-    this.formData.Remarks = this.remarks;
-    this.formData.Attachment = this.attachment;
-    this.formData.inlineitem = this.rows.map((row: any) => {
-      return {
-        category : row.category,
-        item : row.item,
-        costcenter : row.costCenter,
-        quantity : row.quantity
-      }
-    });
-
-    this.apiService.postProcurementData(this.formData).subscribe((res: any) => {
-      console.log(res);
-    }
-    );
-  }
-
-
 }
+
+

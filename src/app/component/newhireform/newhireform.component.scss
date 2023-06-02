@@ -1,3 +1,11 @@
-.invalid {
-    border-color: red;
-  }
+.invalid input.form-control {
+  border-color: red;
+}
+
+.invalid select.form-control {
+  border-color: red;
+}
+
+.invalid-inline {
+  border: 1px solid red;
+}
