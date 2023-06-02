@@ -16,8 +16,15 @@ export class ProcurementviewPage implements OnInit {
 
   constructor(private apiService: ApiService, private animationCtrl: AnimationController) { }
 
-  setOpen(isOpen: boolean) {
-    this.isModalOpen = isOpen;
+  setOpen(id:any,show:boolean) {
+    if(show){
+      this.apiService.getProcurementDataById(id).subscribe((res) => {
+        console.log(res);
+        this.procurementData = res;
+    })
+    }
+   
+    this.isModalOpen = show;
   }
 
   enterAnimation = (baseEl: HTMLElement) => {
@@ -67,6 +74,7 @@ export class ProcurementviewPage implements OnInit {
     //   console.log(this.procurementData);
     
   }
+
 
 
 

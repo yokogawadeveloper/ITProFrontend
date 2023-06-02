@@ -31,7 +31,7 @@
                   <td scope="col">{{data.department_name}}</td>
                   <td scope="col">{{data.department_name}}</td>
                   <td scope="col">
-                    <ion-button (click)="setOpen(true)"  class="edit" color="tertiary" fill="clear" size="small">
+                    <ion-button (click)="setOpen(data.id,true)"  class="edit" color="tertiary" fill="clear" size="small">
                       <ion-icon name="eye-off-outline"></ion-icon>
                     </ion-button>
                     <!-- modal -->
@@ -42,7 +42,7 @@
                           <ion-toolbar>
                             <ion-title>Procurement</ion-title>
                             <ion-buttons slot="end">
-                              <ion-button color="primary" (click)="setOpen(false)">Close</ion-button>
+                              <ion-button color="primary" (click)="setOpen(data.id,false)">Close</ion-button>
                             </ion-buttons>
                           </ion-toolbar>
                         </ion-header>
@@ -82,7 +82,7 @@
                             
                             
                           </ion-grid>
-                          <ion-button color="primary" expand="block" (click)="setOpen(false)">Ok</ion-button>
+                          <!-- <ion-button color="primary" expand="block" (click)="setOpen(,12false)">Ok</ion-button> -->
                           <!-- end details here  -->
                         </ion-content>
                       </ng-template>

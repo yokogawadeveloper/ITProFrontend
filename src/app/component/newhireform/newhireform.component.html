@@ -22,29 +22,30 @@
               <option value="No">No</option>
             </select>
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-6" [ngClass]="{'invalid': formSubmitted && myForm.get('totalBudget')?.invalid}">
             <label for="totalBudget">Total Budget</label>
             <input type="number" class="form-control" formControlName="totalBudget" placeholder="Total Budget" />
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-4"
+            [ngClass]="{'invalid': formSubmitted && myForm.get('utilizedBudget')?.invalid}">
             <label for="utilizedBudget">Utilized Budget</label>
             <input type="number" class="form-control" formControlName="utilizedBudget" placeholder="Utilized Budget" />
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('attachment')?.invalid}">
             <label for="attachment">Attachment</label>
             <input type="file" class="form-control" formControlName="attachment" />
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('remarks')?.invalid}">
             <label for="remarks">Remarks</label>
             <textarea class="form-control" formControlName="remarks" rows="1"></textarea>
           </div>
-          <div class="panel-body">
+          <div class="inline-table">
             <table class="table table-bordered">
               <thead class="text text-primary">
                 <tr>
+                  <th>Name</th>
                   <th>Category</th>
                   <th>Item</th>
-                  <th>Cost Center</th>
                   <th>Quantity</th>
                   <th>Action</th>
                 </tr>
@@ -55,8 +56,9 @@
                   <td>
                     <select formControlName="category" class="form-control"
                       [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
-                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">{{
-                        option.ItemCategory }}</option>
+                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">
+                        {{option.ItemCategory
+                        }}</option>
                     </select>
                   </td>
                   <td>
@@ -91,9 +93,9 @@
                 </tr>
               </tfoot>
             </table>
-            <button class="btn btn-info" type="submit">Submit</button>
           </div>
         </div>
+        <button class="btn btn-info" type="submit">Submit</button>
       </div>
     </div>
   </div>

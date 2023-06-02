@@ -30,6 +30,7 @@ export class NewhireformComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
+      requestType: 'NewHire',
       name: ['', Validators.required],
       department: ['', Validators.required],
       isExpenditure: ['', Validators.required],
@@ -125,7 +126,7 @@ export class NewhireformComponent implements OnInit {
     this.formSubmitted = true;
     if (this.myForm.valid) {
         const formattedData = {
-          RequestType: 'NewHire',
+          RequestType: this.myForm.value.requestType,
           Name: this.myForm.value.name,
           DepartmentId: this.myForm.value.department,
           IsExpenditure: this.myForm.value.isExpenditure,
