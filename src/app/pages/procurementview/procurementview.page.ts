@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { AnimationController } from '@ionic/angular';
-import { ModalController } from '@ionic/angular';
 
 
 @Component({
@@ -11,25 +10,14 @@ import { ModalController } from '@ionic/angular';
 })
 export class ProcurementviewPage implements OnInit {
 
-  procurementData:any = [];
+  procurementData: any = [];
 
   isModalOpen = false;
 
-  constructor(private apiService:ApiService,private animationCtrl: AnimationController) { }
+  constructor(private apiService: ApiService, private animationCtrl: AnimationController) { }
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
-  }
-
-  ngOnInit() {
-
-    this.apiService.getProcurementData().subscribe((res) => {
-      console.log(res);
-      this.procurementData = res;
-      console.log(this.procurementData);
-    }, (err) => {
-      console.log(err);
-    });
   }
 
   enterAnimation = (baseEl: HTMLElement) => {
@@ -60,16 +48,36 @@ export class ProcurementviewPage implements OnInit {
     return this.enterAnimation(baseEl).direction('reverse');
   }
 
-  
+
+
+  ngOnInit() {
+
+    this.apiService.getProcurementData().subscribe((res) => {
+      console.log(res);
+      this.procurementData = res;
+      console.log(this.procurementData);
+    }, (err) => {
+      console.log(err);
+    });
+
+    // detail page data
+    // this.apiService.getProcurementDataById(this.procurementData.id).subscribe((res) => {
+    //   console.log(res);
+    //   this.procurementData = res;
+    //   console.log(this.procurementData);
+    
+  }
+
+
 
 }
 
 
 
-  
 
 
 
-  
+
+
 
 

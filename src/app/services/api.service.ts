@@ -34,7 +34,6 @@ export class ApiService {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
     if (userData && userData.access) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
-      console.log("user data");
       return this.http.post(this.apiUrl + '/masterprocurement/', formData, { headers });
     } else {
       console.log("no user data");
@@ -53,5 +52,18 @@ export class ApiService {
       return new Observable<any>((observer) => observer.error("Data for Procurement not found"));
     }
   }
+
+  getProcurementDataById(id: any): Observable<any> {
+    let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
+    if (userData && userData.access) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
+      return this.http.get(this.apiUrl + '/masterprocurement/' + id + '/', { headers });
+    }
+    else {
+      return new Observable<any>((observer) => observer.error("Data for Procurement Details not found"));
+    }
+  }
+
+
 
 }

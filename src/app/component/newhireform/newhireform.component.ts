@@ -19,6 +19,8 @@ interface InlineItem {
 })
 
 export class NewhireformComponent implements OnInit {
+  formSubmitted = false;
+  //main form variables
   name!: string;
   department!: number;
   isExpenditure!: string;
@@ -104,7 +106,32 @@ export class NewhireformComponent implements OnInit {
     }
   }
 
-  submit(): void {
+  // submit(): void {
+  //   this.formData.Name = this.name;
+  //   this.formData.DepartmentId = this.department;
+  //   this.formData.IsExpenditure = this.isExpenditure;
+  //   this.formData.TotalBudget = this.totalBudget;
+  //   this.formData.UtilizedBudget = this.utilizedBudget;
+  //   this.formData.Remarks = this.remarks;
+  //   this.formData.Attachment = this.attachment;
+  //   this.formData.inlineitem = this.rows.map((row: any) => {
+  //     return {
+  //       category : row.category,
+  //       item : row.item,
+  //       costcenter : row.costCenter,
+  //       quantity : row.quantity
+  //     }
+  //   });
+
+  //   this.apiService.postProcurementData(this.formData).subscribe((res: any) => {
+  //     console.log(res);
+  //   }
+  //   );
+  // }
+
+  submitForm(){
+  
+    this.formSubmitted = true;
     this.formData.Name = this.name;
     this.formData.DepartmentId = this.department;
     this.formData.IsExpenditure = this.isExpenditure;
@@ -127,8 +154,5 @@ export class NewhireformComponent implements OnInit {
     );
   }
 
-  onFileChange(event: any) {
-    this.attachment = event.target.files;
-  }
 
 }

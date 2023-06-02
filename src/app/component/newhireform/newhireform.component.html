@@ -1,4 +1,4 @@
-<form action="">
+<form (ngSubmit)="submitForm()">
   <div class="panel-group">
     <div class="panel panel-primary">
       <div class="panel-body">
@@ -6,7 +6,7 @@
           <div class="form-group col-md-6">
             <label class="form-label required" for="name">Name</label>
             <input type="text" class="form-control" id="name" [(ngModel)]="name" name="name" placeholder="Name"
-              required />
+            [ngClass]="{'invalid': formSubmitted && !name}" required />
           </div>
           <div class="form-group col-md-6">
             <label for="department">Department</label>
@@ -93,7 +93,7 @@
                 </tr>
               </tfoot>
             </table>
-            <button class="btn btn-info" (click)="submit()">Submit</button>
+            <button class="btn btn-info" type="submit">Submit</button>
           </div>
         </div>
       </div>
