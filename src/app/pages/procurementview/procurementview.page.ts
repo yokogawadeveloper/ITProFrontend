@@ -10,23 +10,26 @@ import { AnimationController } from '@ionic/angular';
 })
 export class ProcurementviewPage implements OnInit {
 
+  // variables
   procurementData: any = [];
+  procurementDataById: any = [];
+  isModalOpen: boolean = false;
 
-  isModalOpen = false;
+  constructor(private apiService: ApiService, private animationCtrl: AnimationController,) {
+   }
 
-  constructor(private apiService: ApiService, private animationCtrl: AnimationController) { }
-
-  setOpen(id:any,show:boolean) {
-    if(show){
+  setOpen(id: number, isOpen: boolean) {
+    if (id) {
+      // get procurement data by id for modal
       this.apiService.getProcurementDataById(id).subscribe((res) => {
-        console.log(res);
-        this.procurementData = res;
-    })
+        this.procurementDataById = res;
+        console.log('procurementDataById', this.procurementDataById);
+      })
     }
-   
-    this.isModalOpen = show;
-  }
 
+    this.isModalOpen = isOpen;
+  }
+  // modal animation
   enterAnimation = (baseEl: HTMLElement) => {
     const root = baseEl.shadowRoot!;
 
@@ -58,26 +61,12 @@ export class ProcurementviewPage implements OnInit {
 
 
   ngOnInit() {
-
     this.apiService.getProcurementData().subscribe((res) => {
-      console.log(res);
       this.procurementData = res;
-      console.log(this.procurementData);
     }, (err) => {
       console.log(err);
     });
-
-    // detail page data
-    // this.apiService.getProcurementDataById(this.procurementData.id).subscribe((res) => {
-    //   console.log(res);
-    //   this.procurementData = res;
-    //   console.log(this.procurementData);
-    
-  }
-
-
-
-
+  }// end of ngOnInit
 }
 
 

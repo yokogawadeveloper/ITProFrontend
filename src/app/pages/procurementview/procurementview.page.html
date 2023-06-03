@@ -14,24 +14,26 @@
     </ion-card-header>
     <ion-card-content>
       <div class="row">
-        <div class="col-xl-12">
-          <table class="table">
+        <div class="inline-table">
+          <table class="table table-reponsive">
             <thead class="thead-light">
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Department Name</th>
                 <th scope="col">Request No</th>
+                <th scope="col">Request Type</th>
+                <th scope="col">Name</th>
+                <th scope="col">Staus</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
               <ng-container *ngFor="let data of procurementData">
                 <tr>
-                  <td scope="col">{{data.Name}}</td>
-                  <td scope="col">{{data.department_name}}</td>
-                  <td scope="col">{{data.department_name}}</td>
-                  <td scope="col">
-                    <ion-button (click)="setOpen(data.id,true)"  class="edit" color="tertiary" fill="clear" size="small">
+                  <td scope="col" data-title="Request No">{{data.RequestNumber}}</td>
+                  <td scope="col" data-title="Request No">{{data.RequestType}}</td>
+                  <td scope="col" data-title="Request No">{{data.Name}}</td>
+                  <td scope="col" data-title="Request No">{{data.Status}}</td>
+                  <td scope="col" data-title="Request No">
+                    <ion-button (click)="setOpen(data.id,true)" class="edit" color="tertiary" fill="clear" size="small">
                       <ion-icon name="eye-off-outline"></ion-icon>
                     </ion-button>
                     <!-- modal -->
@@ -49,38 +51,35 @@
                         <ion-content class="ion-padding">
                           <!-- create details table with inline items -->
                           <ion-grid class="modal-table">
-                            <ng-container>
+                            <ng-container *ngIf="procurementDataById">
                               <ion-row class="table-header">
-                                <ion-col>Vehicle Number</ion-col>
-                                <ion-col>Vendor Name</ion-col>
-                                <ion-col>Bill No</ion-col>
-                                <ion-col>Date</ion-col>
-                                <ion-col>Total</ion-col>
+                                <ion-col>Request No</ion-col>
+                                <ion-col>Name</ion-col>
+                                <ion-col>Department</ion-col>
+                                <ion-col>IsExpenditure</ion-col>
                               </ion-row>
                               <ion-row>
-                                <ion-col>HHH</ion-col>
-                                <ion-col>Vendor A</ion-col>
-                                <ion-col>12345</ion-col>
-                                <ion-col>2023-05-28</ion-col>
-                                <ion-col style="color: rgb(114, 10, 10);">$500</ion-col>
+                                <ion-col>{{procurementDataById.RequestNumber}}</ion-col>
+                                <ion-col>{{procurementDataById.Name}}</ion-col>
+                                <ion-col>{{procurementDataById.department_name}}</ion-col>
+                                <ion-col>{{procurementDataById.IsExpenditure}}</ion-col>
                               </ion-row>
                               <ion-row class="table-header">
-                                <ion-col>SL NO</ion-col>
-                                <ion-col>Product Name</ion-col>
+                                <ion-col>Category</ion-col>
+                                <ion-col>Item</ion-col>
+                                <ion-col>Cost Center</ion-col>
                                 <ion-col>Quantity</ion-col>
-                                <ion-col>Cost</ion-col>
-                                <ion-col>Amount</ion-col>
                               </ion-row>
                               <ion-row>
-                                <ion-col>1</ion-col>
+                                <ion-col>{{procurementDataById.cost}}</ion-col>
                                 <ion-col>Spare Part A</ion-col>
                                 <ion-col>2</ion-col>
                                 <ion-col>$50</ion-col>
                                 <ion-col>$100</ion-col>
                               </ion-row>
                             </ng-container>
-                            
-                            
+
+
                           </ion-grid>
                           <!-- <ion-button color="primary" expand="block" (click)="setOpen(,12false)">Ok</ion-button> -->
                           <!-- end details here  -->

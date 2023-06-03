@@ -1,79 +1,75 @@
-.card-content {
-  padding: 0;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
-}
-
-thead th {
-  background-color: #f4f4f4;
-  text-align: left;
-  padding: 8px;
-}
-
-tbody td {
-  padding: 8px;
-  border-bottom: 1px solid #ccc;
-}
-
-.edit,
-.delete {
-  text-decoration: none;
-  padding: 0 5px;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  margin: 0;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 
 }
 
+table tr {
+  border-bottom: 1px solid #ddd;
+  padding: .45em;
 
-// for modal
-.modal-table {
-  width: 100%;
-  border-collapse: collapse;
+
 }
 
+table th {
+  text-align: center;
+  padding: .625em;
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background-color: #84a9b2;
+  color: #000;
+}
 
-
-/* Style the table headers */
-.table-header {
+tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-/* Style the table header cells */
-.table-header ion-col {
-  font-weight: bold;
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ccc;
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
 }
 
-/* Style the table data rows */
-.modal-table ion-row:nth-child(even) {
-  background-color: #f9f9f9;
-}
+// @media screen and (max-width: 800px) {
+@media (max-width:768px) {
+  table {
+    border: 2px solid #ccc;
+  }
 
-/* Style the table data cells */
-.modal-table ion-row ion-col {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-}
+  table thead tr {
+    display: none;
+  }
 
-/* Add a specific style to the total cell */
-.modal-table ion-row:last-child ion-col:last-child {
-  font-weight: bold;
-  color: rgb(114, 10, 10);
-}
+  // table tr {
+  //   margin-bottom: 1em;
+  //   display: block;
+  //   border-bottom: 2px solid #ddd;
+  // }
 
-/* Add hover effect to table rows */
-.modal-table ion-row:hover {
-  background-color: #e3e3e3;
-}
+  table th,
+  table td {
+    padding: .5em;
+  }
 
-/* Add border to last row */
-.modal-table ion-row:last-child {
-  border-bottom: 2px solid #ccc;
-}
+  table td {
+    text-align: right;
+    display: block;
+    font-size: 1em;
+    border-bottom: 1px dotted #ccc;
+  }
 
+  table td:before {
+    content: attr(data-title) ":";
+    float: left;
+    font-weight: bold;
+
+
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
