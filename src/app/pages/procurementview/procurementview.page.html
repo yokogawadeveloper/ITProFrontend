@@ -39,7 +39,7 @@
                     <!-- modal -->
                     <ion-modal [isOpen]="isModalOpen" [enterAnimation]="enterAnimation"
                       [leaveAnimation]="leaveAnimation">
-                      <ng-template>
+                      <ng-template class="custom-modal">
                         <ion-header>
                           <ion-toolbar>
                             <ion-title>Procurement</ion-title>
@@ -52,37 +52,44 @@
                           <!-- create details table with inline items -->
                           <ion-grid class="modal-table">
                             <ng-container *ngIf="procurementDataById">
-                              <ion-row class="table-header">
-                                <ion-col>Request No</ion-col>
-                                <ion-col>Name</ion-col>
-                                <ion-col>Department</ion-col>
-                                <ion-col>IsExpenditure</ion-col>
-                              </ion-row>
-                              <ion-row>
-                                <ion-col>{{procurementDataById.RequestNumber}}</ion-col>
-                                <ion-col>{{procurementDataById.Name}}</ion-col>
-                                <ion-col>{{procurementDataById.department_name}}</ion-col>
-                                <ion-col>{{procurementDataById.IsExpenditure}}</ion-col>
-                              </ion-row>
-                              <ion-row class="table-header">
-                                <ion-col>Category</ion-col>
-                                <ion-col>Item</ion-col>
-                                <ion-col>Cost Center</ion-col>
-                                <ion-col>Quantity</ion-col>
-                              </ion-row>
-                              <ion-row>
-                                <ion-col>{{procurementDataById.cost}}</ion-col>
-                                <ion-col>Spare Part A</ion-col>
-                                <ion-col>2</ion-col>
-                                <ion-col>$50</ion-col>
-                                <ion-col>$100</ion-col>
-                              </ion-row>
+                              <ion-card>
+                                <ion-card-header>
+                                  <ion-avatar class="ion-align-self-center">
+                                    <img src="https://ionicframework.com/docs/demos/api/card/madison.jpg">
+                                  </ion-avatar>
+                                  <ion-card-title class="ion-align-self-center">Procurement Details</ion-card-title>
+                                </ion-card-header>
+                                <ion-card-content>
+                                  <ion-grid class="modern-table">
+                                    <ion-row>
+                                      <ion-col class="title-col"><p>Request No</p></ion-col>
+                                      <ion-col class="value-col"><p>{{procurementDataById.RequestNumber}}</p></ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                      <ion-col class="title-col"><p>Request Type</p></ion-col>
+                                      <ion-col class="value-col"><p>{{procurementDataById.RequestType}}</p></ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                      <ion-col class="title-col"><p>Name</p></ion-col>
+                                      <ion-col class="value-col"><p>{{procurementDataById.Name}}</p></ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                      <ion-col class="title-col"><p>Is Expenditure</p></ion-col>
+                                      <ion-col class="value-col"><p>{{procurementDataById.IsExpenditure}}</p></ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                      <ion-col class="title-col"><p>Status</p></ion-col>
+                                      <ion-col class="value-col"><p>{{procurementDataById.Status}}</p></ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                      <ion-col class="title-col"><p>Department</p></ion-col>
+                                      <ion-col class="value-col"><p>{{procurementDataById.department_name}}</p></ion-col>
+                                    </ion-row>
+                                  </ion-grid>
+                                </ion-card-content>
+                              </ion-card>
                             </ng-container>
-
-
                           </ion-grid>
-                          <!-- <ion-button color="primary" expand="block" (click)="setOpen(,12false)">Ok</ion-button> -->
-                          <!-- end details here  -->
                         </ion-content>
                       </ng-template>
                     </ion-modal>

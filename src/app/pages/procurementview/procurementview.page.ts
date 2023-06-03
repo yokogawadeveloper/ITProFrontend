@@ -32,12 +32,12 @@ export class ProcurementviewPage implements OnInit {
   // modal animation
   enterAnimation = (baseEl: HTMLElement) => {
     const root = baseEl.shadowRoot!;
-
+  
     const backdropAnimation = this.animationCtrl
       .create()
       .addElement(root.querySelector('ion-backdrop')!)
       .fromTo('opacity', '0.01', 'var(--backdrop-opacity)');
-
+  
     const wrapperAnimation = this.animationCtrl
       .create()
       .addElement(root.querySelector('.modal-wrapper')!)
@@ -45,7 +45,10 @@ export class ProcurementviewPage implements OnInit {
         { offset: 0, opacity: '0', transform: 'scale(0)' },
         { offset: 1, opacity: '0.99', transform: 'scale(1)' },
       ]);
-
+  
+    // Adjust the size of the modal wrapper element
+    wrapperAnimation.beforeStyles({ width: '90%', 'max-width': '600px', margin: 'auto' , height: '80%'});
+  
     return this.animationCtrl
       .create()
       .addElement(baseEl)
@@ -53,11 +56,10 @@ export class ProcurementviewPage implements OnInit {
       .duration(500)
       .addAnimation([backdropAnimation, wrapperAnimation]);
   };
-
+  
   leaveAnimation = (baseEl: HTMLElement) => {
     return this.enterAnimation(baseEl).direction('reverse');
-  }
-
+  };
 
 
   ngOnInit() {
