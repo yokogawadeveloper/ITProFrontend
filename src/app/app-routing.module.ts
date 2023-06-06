@@ -21,9 +21,14 @@ const routes: Routes = [
   {
     path: 'procurement',
     loadChildren: () => import('./pages/procurement/procurement.module').then( m => m.ProcurementPageModule)
-  },  {
+  },
+  {
     path: 'procurementview',
     loadChildren: () => import('./pages/procurementview/procurementview.module').then( m => m.ProcurementviewPageModule)
+  },
+  {
+    path: 'approvallist',
+    loadChildren: () => import('./pages/approvallist/approvallist.module').then( m => m.ApprovallistPageModule)
   },
 
 ];

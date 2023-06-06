@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 interface MenuItem {
   title: string;
   link: string;
   icon: string;
   submenuItems: SubmenuItem[];
+  submenuOpen: boolean; // Added property
 }
 
 interface SubmenuItem {
@@ -18,13 +20,28 @@ interface SubmenuItem {
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
+  animations: [
+    trigger('submenuAnimation', [
+      state('expanded', style({
+        height: '*',
+        visibility: 'visible',
+        opacity: 1
+      })),
+      state('collapsed', style({
+        height: '0',
+        visibility: 'hidden',
+        opacity: 0
+      })),
+      transition('expanded <=> collapsed', animate('300ms ease-in-out'))
+    ])
+  ]
 })
 export class AppComponent {
   public menuItems: MenuItem[] = [
     {
       title: 'Procurement',
       link: '/procurement',
-      icon: 'home-outline',
+      icon: 'add-circle-outline',
       submenuItems: [
         {
           title: 'Procurement Request',
@@ -34,35 +51,22 @@ export class AppComponent {
         {
           title: 'Procurement List',
           link: '/procurementview',
-          icon: 'bookmark-outline',
+          icon: 'clipboard-outline',
         },
         {
           title: 'Procurement Approval',
-          link: '/procurementview',
-          icon: 'bookmark-outline',
+          link: '/approvallist',
+          icon: 'timer-outline',
         },
+
       ],
-    },
-    {
-      title: 'Menu Item 2',
-      link: '/menu-item-2',
-      icon: 'settings-outline',
-      submenuItems: [
-        {
-          title: 'Submenu Item 3',
-          link: '/submenu-item-3',
-          icon: 'mail-outline',
-        },
-        {
-          title: 'Submenu Item 4',
-          link: '/submenu-item-4',
-          icon: 'person-outline',
-        },
-      ],
+      submenuOpen: false, // Initialize with false
     },
   ];
 
   public submenuState: Map<string, boolean> = new Map();
+  public userDropdownClicked: boolean = false;
+
 
   constructor(private router: Router) {}
 
@@ -73,12 +77,16 @@ export class AppComponent {
   } // logout
 
   toggleSubmenu(item: MenuItem) {
-    const submenuOpen = this.submenuState.get(item.title) || false;
-    this.submenuState.set(item.title, !submenuOpen);
+    item.submenuOpen = !item.submenuOpen;
   }
 
   isSubmenuOpen(item: MenuItem): boolean {
-    return this.submenuState.get(item.title) || false;
+    return item.submenuOpen;
   }
+
+  toggleUserDropdown() {
+    this.userDropdownClicked = !this.userDropdownClicked;
+  }
+
 
 }
