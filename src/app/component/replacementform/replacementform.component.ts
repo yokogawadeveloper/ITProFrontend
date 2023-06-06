@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { NgToastService } from 'ng-angular-popup';
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
-//Inline item interface
-interface InlineItem {
-  category: number;
-  item: number;
-  costCenter: number;
-  quantity: number;
-}
+
 
 // main component class
 @Component({
@@ -17,144 +14,144 @@ interface InlineItem {
   styleUrls: ['./replacementform.component.scss'],
 })
 export class ReplacementformComponent implements OnInit {
-  name!: string;
-  department!: number;
-  isExpenditure!: string;
-  totalBudget!: number;
-  utilizedBudget!: number;
-  remarks!: string;
-  purchaseDate!: string;
-  age!: number;
-  status!: string;
-  attachment!: FileList;
-  //age calulation
-  ageCalculated: boolean = false;
-  //for form data with inline item
-  formData: any = {
-    Name: '',
-    DepartmentId: null,
-    IsExpenditure: '',
-    TotalBudget: null,
-    UtilizedBudget: null,
-    Remarks: '',
-    PurchaseDate: null,
-    Age: null,
-    Status: '',
-    Attachment: null,
-    inlineitem: []
-  };
-  inlineItem: InlineItem = {
-    category: 0,
-    item: 0,
-    costCenter: 0,
-    quantity: 0
-  };
-  //other variables
-  rows: any = []
-  departmentDropdown: any = [];
-  costCenterdropdown: any = [];
-  categoryDropdown: any = [];
-  itemDropdown: any = [];
+  myForm!: FormGroup;
+  formSubmitted: boolean = false;
+  departmentDropdown: any[] = [];
+  categoryDropdown: any[] = []; 
+  itemDropdown: any[] = [];
+  costCenterdropdown: any[] = [];
+  isExpenditure: any;
 
-
-  constructor(private apiService: ApiService,private toast: NgToastService ) { }
+  constructor(
+    private apiService: ApiService,
+    private toast: NgToastService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private alertController: AlertController
+  ) { }
 
   ngOnInit(): void {
-    this.rows = [{
-      category: '',
-      item: '',
-      costCenter: '',
-      quantity: 1,
-    }];
-
-    //for dropdown
+    this.myForm = this.formBuilder.group({
+      requestType: 'NewHire',
+      name: ['', Validators.required],
+      department: ['', Validators.required],
+      isExpenditure: ['', Validators.required],
+      totalBudget: [''],
+      utilizedBudget: [''],
+      attachment: [''],
+      remarks: [''],
+      rows: this.formBuilder.array([])
+    });
+    this.addRow(); // Add one row by default
+    // Get department dropdown values
     this.apiService.getDepartmentDropdownData().subscribe((res: any) => {
       this.departmentDropdown = res;
-    }
-    );
+    });
 
-    this.apiService.getCostCenterDropdownData().subscribe((res: any) => {
-      this.costCenterdropdown = res;
-    }
-    );
-
+    // Get category dropdown values
     this.apiService.getCategoryDropdownData().subscribe((res: any) => {
       this.categoryDropdown = res;
     }
     );
 
+    // Get item dropdown values
     this.apiService.getItemDropdownData().subscribe((res: any) => {
       this.itemDropdown = res;
-    });
+    }
+    );
+    // Get cost center dropdown values
+    this.apiService.getCostCenterDropdownData().subscribe((res: any) => {
+      this.costCenterdropdown = res;
+    }
+    );
+  }// end of ngOnInit
+  get rows() {
+    return this.myForm.get('rows') as FormArray;
   }
 
   addRow() {
-    this.rows.push({
-      category: '',
-      item: '',
-      costCenter: '',
-      quantity: 1,
+    const newRow = this.formBuilder.group({
+      category: ['', Validators.required],
+      item: ['', Validators.required],
+      costCenter: ['', Validators.required],
+      quantity: ['', Validators.required],
     });
+    this.rows.push(newRow);
   }
 
-  deleteRow(index: any) {
+  deleteRow(index: number) {
     if (this.rows.length == 1) {
       this.toast.error({
-        detail: 'Atleast one row should be there',
+        detail: 'Atleast one row is required',
         position: 'bottom-right',
         duration: 3000,
         type: 'danger'
       })
+    } else {
+      this.rows.removeAt(index);
     }
-    else {
-      this.rows.splice(index, 1)
-    }
+
   }
 
-  submit(): void {
-    this.formData.Name = this.name;
-    this.formData.DepartmentId = this.department;
-    this.formData.IsExpenditure = this.isExpenditure;
-    this.formData.TotalBudget = this.totalBudget;
-    this.formData.UtilizedBudget = this.utilizedBudget;
-    this.formData.Remarks = this.remarks;
-    this.formData.PurchaseDate = this.purchaseDate;
-    this.formData.Age = this.age;
-    this.formData.Status = this.status;
-    this.formData.Attachment = this.attachment;
-    this.formData.inlineitem = this.rows.map((row: any) => {
-      return {
-        category: row.category,
-        item: row.item,
-        costcenter: row.costCenter,
-        quantity: row.quantity
-      }
+  // Getters for form controls
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Confirm Submission',
+      message: 'Are you sure you want to submit the form?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirmation canceled');
+          }
+        },
+        {
+          text: 'Submit',
+          handler: () => {
+            console.log('Submitting the form...');
+            this.submitForm();
+          }
+        }
+      ]
     });
 
-    this.apiService.postProcurementData(this.formData).subscribe((res: any) => {
-      console.log(res);
-    }
-    );
+    await alert.present();
   }
 
-  // age 
-  calculateAge(): void {
-    if (this.purchaseDate) {
-      const selectedDate = new Date(this.purchaseDate);
-      const today = new Date();
-      const age = today.getFullYear() - selectedDate.getFullYear();
-      const monthDiff = today.getMonth() - selectedDate.getMonth();
+  submitForm() {
+    this.formSubmitted = true;
+    if (this.myForm.valid) {
+        const formattedData = {
+          RequestType: this.myForm.value.requestType,
+          Name: this.myForm.value.name,
+          DepartmentId: this.myForm.value.department,
+          IsExpenditure: this.myForm.value.isExpenditure,
+          TotalBudget: this.myForm.value.totalBudget,
+          UtilizedBudget: this.myForm.value.utilizedBudget,
+          Remarks: this.myForm.value.remarks,
+          inlineitem: this.myForm.value.rows.map((row: any) => ({
+            category: row.category,
+            item: row.item,
+            costcenter: row.costCenter,
+            quantity: row.quantity,
+          })),
+          
+        };
+        this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
+          if (res) {
+            this.router.navigate(['/procurementview']);
+          }
+        });
 
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < selectedDate.getDate())) {
-        this.age = age - 1;
       } else {
-        this.age = age;
+        this.toast.error({
+          detail: 'OOPS !Something went wrong',
+          position: 'bottom-right',
+          duration: 3000,
+          type: 'danger'
+        })
       }
-
-      this.ageCalculated = true;
-    } else {
-      this.age = 0;
-      this.ageCalculated = false;
-    }
-  }
+    } //end of submitForm
 }

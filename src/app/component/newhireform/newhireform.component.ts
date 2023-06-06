@@ -12,7 +12,6 @@ import { AlertController } from '@ionic/angular';
 })
 
 export class NewhireformComponent implements OnInit {
-
   myForm!: FormGroup;
   formSubmitted: boolean = false;
   departmentDropdown: any[] = []; // Add appropriate values
