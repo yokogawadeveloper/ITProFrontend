@@ -1,41 +1,19 @@
-/* app.component.scss */
-.dropdown-icon {
-  transition: transform 0.3s ease-in-out;
+.user-dropdown{
+  margin-left: 5%;
+  ion-icon:hover{
+    color: #0000f0;
+  } 
+  ion-label:hover{
+    color: #0000f0;
+  }
 }
 
-.dropdown-icon.caret-up-outline {
-  transform: rotate(180deg);
-}
 
-ion-list {
-  overflow: hidden;
-}
-
-ion-list .ion-item {
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, height 0.3s ease-in-out;
-  opacity: 0;
-  visibility: hidden;
-  height: 0;
-}
-
-ion-list .ion-item.show {
-  opacity: 1;
-  visibility: visible;
-  height: auto;
-}
-
-ion-list .ion-item.clicked {
-  background-color: #f5f5f5; /* Change the background color when clicked */
-}
-
-.user-dropdown {
-  margin-top: 10px;
-  background-color: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.user-dropdown .ion-item {
-  padding: 10px;
-  font-size: 14px;
+.footer{
+  ion-toolbar{
+    background-color: #0000f0;
+  }
+  ion-item{
+    cursor: pointer;
+  }
 }
