@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './../app/guards/auth.guard';
 
 // New imports
 
@@ -11,7 +12,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule,),
+    canActivate: [AuthGuard]
   },
   {
     path: '',
@@ -30,6 +32,11 @@ const routes: Routes = [
     path: 'approvallist',
     loadChildren: () => import('./pages/approvallist/approvallist.module').then( m => m.ApprovallistPageModule)
   },
+  {
+    path: 'procurementdetails/:id',
+    loadChildren: () => import('./pages/procurementdetails/procurementdetails.module').then( m => m.ProcurementdetailsPageModule)
+  },
+
 
 ];
 

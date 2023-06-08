@@ -29,7 +29,7 @@ export class NewhireformComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
-      requestType: 'NewHire',
+      requestType: 'New Hire',
       name: ['', Validators.required],
       department: ['', Validators.required],
       isExpenditure: ['', Validators.required],

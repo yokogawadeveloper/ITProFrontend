@@ -40,6 +40,13 @@ export class AuthService {
     }
   }// isLoggedIn
 
+  autoLogin(): void {
+    if (this.isLoggedIn()) {
+      let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
+      this.router.navigate(['/home']);
+    }
+  }
+  
   // getUserProfile() {
   //   let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
   //   if (userData) {

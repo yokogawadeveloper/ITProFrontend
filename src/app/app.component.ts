@@ -1,17 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  
+
 })
-export class AppComponent {
- 
+export class AppComponent implements OnInit {
+
   public userDropdownClicked: boolean = false;
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) { }
+
+  ngOnInit() {
+    this.authService.autoLogin();
+  } // ngOnInit
+
 
   toggleUserDropdown() {
     this.userDropdownClicked = !this.userDropdownClicked;
@@ -21,8 +26,4 @@ export class AppComponent {
     sessionStorage.removeItem('currentUser');
     this.router.navigate(['/login']);
   } // logout
-
-  
-
-
 }

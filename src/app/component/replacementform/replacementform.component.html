@@ -3,18 +3,17 @@
     <div class="panel panel-primary">
       <div class="panel-body">
         <div class="form-row">
-          <div class="form-group col-md-6" [ngClass]="{'invalid': formSubmitted && myForm.get('name')?.invalid}">
+          <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('name')?.invalid}">
             <label class="form-label required" for="name">Name</label>
             <input type="text" class="form-control" id="name" formControlName="name" placeholder="Name" required />
           </div>
-          <div class="form-group col-md-6" [ngClass]="{'invalid': formSubmitted && myForm.get('department')?.invalid}">
+          <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('department')?.invalid}">
             <label for="department">Department</label>
             <select class="form-control" formControlName="department">
               <option *ngFor="let option of departmentDropdown" [value]="option.id">{{ option.DepartmentName }}</option>
             </select>
           </div>
-          <div class="form-group col-md-6"
-            [ngClass]="{'invalid': formSubmitted && myForm.get('isExpenditure')?.invalid}">
+          <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('isExpenditure')?.invalid}">
             <label for="isExpenditure">Is Expenditure</label>
             <select class="form-control" formControlName="isExpenditure" name="isExpenditure" required>
               <option value="">Choose...</option>
@@ -27,18 +26,19 @@
               <label for="totalBudget">Total Budget</label>
               <input type="number" class="form-control" formControlName="totalBudget" placeholder="Total Budget" />
             </div>
-            <div class="form-group col-md-4"
+            <div class="form-group col-md-6"
               [ngClass]="{'invalid': formSubmitted && myForm.get('utilizedBudget')?.invalid}">
               <label for="utilizedBudget">Utilized Budget</label>
               <input type="number" class="form-control" formControlName="utilizedBudget"
                 placeholder="Utilized Budget" />
             </div>
           </div>
-          <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('attachment')?.invalid}">
+          div
+          <div class="form-group col-md-6" [ngClass]="{'invalid': formSubmitted && myForm.get('attachment')?.invalid}">
             <label for="attachment">Attachment</label>
             <input type="file" class="form-control" formControlName="attachment" />
           </div>
-          <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('remarks')?.invalid}">
+          <div class="form-group col-md-6" [ngClass]="{'invalid': formSubmitted && myForm.get('remarks')?.invalid}">
             <label for="remarks">Remarks</label>
             <textarea class="form-control" formControlName="remarks" rows="1"></textarea>
           </div>

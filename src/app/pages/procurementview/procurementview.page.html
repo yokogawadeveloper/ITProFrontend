@@ -18,6 +18,7 @@
           <table class="table table-reponsive">
             <thead class="thead-light">
               <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Request No</th>
                 <th scope="col">Request Type</th>
                 <th scope="col">Name</th>
@@ -28,74 +29,14 @@
             <tbody>
               <ng-container *ngFor="let data of procurementData">
                 <tr>
+                  <td scope="col" data-title="Request No">{{data.id}}</td>
                   <td scope="col" data-title="Request No">{{data.RequestNumber}}</td>
-                  <td scope="col" data-title="Request No">{{data.RequestType}}</td>
-                  <td scope="col" data-title="Request No">{{data.Name}}</td>
-                  <td scope="col" data-title="Request No">{{data.Status}}</td>
-                  <td scope="col" data-title="Request No">
-                    <ion-button (click)="setOpen(data.id,true)" class="edit" color="tertiary" fill="clear" size="small">
+                  <td scope="col" data-title="RequestType">{{data.RequestType}}</td>
+                  <td scope="col" data-title="Name">{{data.Name}}</td>
+                  <td scope="col" data-title="Status">{{data.Status}}</td>
+                  <td scope="col" data-title="Action">
+                    <ion-button (click)="redirectToProcurementDetails(data.id)" class="edit" color="tertiary" fill="clear" size="small">
                       <ion-icon name="eye-off-outline"></ion-icon>
-                    </ion-button>
-                    <!-- modal -->
-                    <ion-modal [isOpen]="isModalOpen" [enterAnimation]="enterAnimation"
-                      [leaveAnimation]="leaveAnimation">
-                      <ng-template class="custom-modal">
-                        <ion-header>
-                          <ion-toolbar>
-                            <ion-title>Procurement</ion-title>
-                            <ion-buttons slot="end">
-                              <ion-button color="primary" (click)="setOpen(data.id,false)">Close</ion-button>
-                            </ion-buttons>
-                          </ion-toolbar>
-                        </ion-header>
-                        <ion-content class="ion-padding">
-                          <!-- create details table with inline items -->
-                          <ion-grid class="modal-table">
-                            <ng-container *ngIf="procurementDataById">
-                              <ion-card>
-                                <ion-card-header>
-                                  <ion-avatar class="ion-align-self-center">
-                                    <img src="https://ionicframework.com/docs/demos/api/card/madison.jpg">
-                                  </ion-avatar>
-                                  <ion-card-title class="ion-align-self-center">Procurement Details</ion-card-title>
-                                </ion-card-header>
-                                <ion-card-content>
-                                  <ion-grid class="modern-table">
-                                    <ion-row>
-                                      <ion-col class="title-col"><p>Request No</p></ion-col>
-                                      <ion-col class="value-col"><p>{{procurementDataById.RequestNumber}}</p></ion-col>
-                                    </ion-row>
-                                    <ion-row>
-                                      <ion-col class="title-col"><p>Request Type</p></ion-col>
-                                      <ion-col class="value-col"><p>{{procurementDataById.RequestType}}</p></ion-col>
-                                    </ion-row>
-                                    <ion-row>
-                                      <ion-col class="title-col"><p>Name</p></ion-col>
-                                      <ion-col class="value-col"><p>{{procurementDataById.Name}}</p></ion-col>
-                                    </ion-row>
-                                    <ion-row>
-                                      <ion-col class="title-col"><p>Is Expenditure</p></ion-col>
-                                      <ion-col class="value-col"><p>{{procurementDataById.IsExpenditure}}</p></ion-col>
-                                    </ion-row>
-                                    <ion-row>
-                                      <ion-col class="title-col"><p>Status</p></ion-col>
-                                      <ion-col class="value-col"><p>{{procurementDataById.Status}}</p></ion-col>
-                                    </ion-row>
-                                    <ion-row>
-                                      <ion-col class="title-col"><p>Department</p></ion-col>
-                                      <ion-col class="value-col"><p>{{procurementDataById.department_name}}</p></ion-col>
-                                    </ion-row>
-                                  </ion-grid>
-                                </ion-card-content>
-                              </ion-card>
-                            </ng-container>
-                          </ion-grid>
-                        </ion-content>
-                      </ng-template>
-                    </ion-modal>
-                    <!-- end modal  -->
-                    <ion-button class="delete" color="danger" fill="clear" size="small">
-                      <ion-icon name="trash-outline"></ion-icon>
                     </ion-button>
                   </td>
                 </tr>

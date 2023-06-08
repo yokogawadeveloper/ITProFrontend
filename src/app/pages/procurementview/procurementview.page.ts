@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { AnimationController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,51 +16,8 @@ export class ProcurementviewPage implements OnInit {
   procurementDataById: any = [];
   isModalOpen: boolean = false;
 
-  constructor(private apiService: ApiService, private animationCtrl: AnimationController,) {
+  constructor(private apiService: ApiService, private router: Router, private animationCtrl: AnimationController) {
    }
-
-  setOpen(id: number, isOpen: boolean) {
-    if (id) {
-      // get procurement data by id for modal
-      this.apiService.getProcurementDataById(id).subscribe((res) => {
-        this.procurementDataById = res;
-        console.log('procurementDataById', this.procurementDataById);
-      })
-    }
-
-    this.isModalOpen = isOpen;
-  }
-  // modal animation
-  enterAnimation = (baseEl: HTMLElement) => {
-    const root = baseEl.shadowRoot!;
-  
-    const backdropAnimation = this.animationCtrl
-      .create()
-      .addElement(root.querySelector('ion-backdrop')!)
-      .fromTo('opacity', '0.01', 'var(--backdrop-opacity)');
-  
-    const wrapperAnimation = this.animationCtrl
-      .create()
-      .addElement(root.querySelector('.modal-wrapper')!)
-      .keyframes([
-        { offset: 0, opacity: '0', transform: 'scale(0)' },
-        { offset: 1, opacity: '0.99', transform: 'scale(1)' },
-      ]);
-  
-    // Adjust the size of the modal wrapper element
-    wrapperAnimation.beforeStyles({ width: '90%', 'max-width': '600px', margin: 'auto' , height: '80%'});
-  
-    return this.animationCtrl
-      .create()
-      .addElement(baseEl)
-      .easing('ease-out')
-      .duration(500)
-      .addAnimation([backdropAnimation, wrapperAnimation]);
-  };
-  
-  leaveAnimation = (baseEl: HTMLElement) => {
-    return this.enterAnimation(baseEl).direction('reverse');
-  };
 
 
   ngOnInit() {
@@ -69,6 +27,12 @@ export class ProcurementviewPage implements OnInit {
       console.log(err);
     });
   }// end of ngOnInit
+
+
+  redirectToProcurementDetails(dataId: string) {
+    this.router.navigate(['/procurementdetails', dataId]);
+    console.log(dataId);
+  }
 }
 
 
