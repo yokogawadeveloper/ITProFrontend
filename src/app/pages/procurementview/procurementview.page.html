@@ -18,7 +18,6 @@
           <table class="table table-reponsive">
             <thead class="thead-light">
               <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Request No</th>
                 <th scope="col">Request Type</th>
                 <th scope="col">Name</th>
@@ -29,7 +28,6 @@
             <tbody>
               <ng-container *ngFor="let data of procurementData">
                 <tr>
-                  <td scope="col" data-title="Request No">{{data.id}}</td>
                   <td scope="col" data-title="Request No">{{data.RequestNumber}}</td>
                   <td scope="col" data-title="RequestType">{{data.RequestType}}</td>
                   <td scope="col" data-title="Name">{{data.Name}}</td>

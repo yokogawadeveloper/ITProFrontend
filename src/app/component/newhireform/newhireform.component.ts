@@ -75,7 +75,7 @@ export class NewhireformComponent implements OnInit {
       category: ['', Validators.required],
       item: ['', Validators.required],
       costCenter: ['', Validators.required],
-      quantity: ['', Validators.required],
+      quantity: ['1', Validators.required],
     });
     this.rows.push(newRow);
   }

@@ -1,0 +1,124 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Approval List Details</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"> </ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <ion-grid class="modal-table">
+    <ng-container *ngIf="approvalDataById">
+      <ion-card>
+        <ion-card-header>
+          <ion-toolbar class="card-toolbar">
+            <form [formGroup]="approvalForm" (ngSubmit)="updateApprovalStatus()">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="6" color="primary">
+                    <ion-select label="Select Status" formControlName="status" label-placement="floating" fill="outline">
+                      <ion-select-option value="Approved">Approved</ion-select-option>
+                      <ion-select-option value="Reject">Reject</ion-select-option>
+                    </ion-select>
+                  </ion-col>
+                  <ion-col size="6" color="primary">
+                    <!-- <ion-button class="full-width-button" expand="full" size="default">Block</ion-button> -->
+                    <ion-button class="full-width-button" type="submit" shape="round" size="default">Approved</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </form>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid class="modern-table">
+            <ion-row>
+              <ion-col class="title-col">
+                <p>Request No</p>
+              </ion-col>
+              <ion-col class="value-col">
+                <p>{{approvalDataById.RequestNumber}}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="title-col">
+                <p>Request Type</p>
+              </ion-col>
+              <ion-col class="value-col">
+                <p>{{approvalDataById.RequestType}}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="title-col">
+                <p>Name</p>
+              </ion-col>
+              <ion-col class="value-col">
+                <p>{{approvalDataById.Name}}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="title-col">
+                <p>Is Expenditure</p>
+              </ion-col>
+              <ion-col class="value-col">
+                <p>{{approvalDataById.IsExpenditure}}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="title-col">
+                <p>Status</p>
+              </ion-col>
+              <ion-col class="value-col">
+                <p>{{approvalDataById.Status}}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="title-col">
+                <p>Department</p>
+              </ion-col>
+              <ion-col class="value-col">
+                <p>{{approvalDataById.department_name}}</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-grid>
+            <div class="row">
+              <div class="inline-table">
+                <table class="table table-reponsive">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Sl.No</th>
+                      <th scope="col">Item Category</th>
+                      <th scope="col">Item</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Cost Center</th>
+                      <th scope="col">Unit Price</th>
+                      <th scope="col">Total Price</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let inlineitems of approvalDataById.inlineitem;let i=index">
+                      <tr>
+                        <td scope="col" data-title="Sl.No">{{i+1}}</td>
+                        <td scope="col" data-title="Item Category">{{inlineitems.category}}</td>
+                        <td scope="col" data-title="Item">{{inlineitems.item}}</td>
+                        <td scope="col" data-title="Quantity">{{inlineitems.quantity}}</td>
+                        <td scope="col" data-title="Cost Center">{{inlineitems.costcenter}}</td>
+                        <td scope="col" data-title="Unit Price">{{inlineitems.unitprice}}</td>
+                        <td scope="col" data-title="Total Price">{{inlineitems.totalprice}}</td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </ion-grid>
+
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+  </ion-grid>
+</ion-content>

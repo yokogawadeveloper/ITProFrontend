@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { AnimationController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 
@@ -13,10 +12,8 @@ export class ProcurementviewPage implements OnInit {
 
   // variables
   procurementData: any = [];
-  procurementDataById: any = [];
-  isModalOpen: boolean = false;
 
-  constructor(private apiService: ApiService, private router: Router, private animationCtrl: AnimationController) {
+  constructor(private apiService: ApiService, private router: Router) {
    }
 
 

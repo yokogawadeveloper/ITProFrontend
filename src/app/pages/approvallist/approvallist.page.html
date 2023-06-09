@@ -7,12 +7,46 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">approvallist</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content fullscreen="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-searchbar placeholder="Filter"></ion-searchbar>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="row">
+        <div class="inline-table">
+          <table class="table table-reponsive">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Request No</th>
+                <th scope="col">Request Type</th>
+                <th scope="col">Name</th>
+                <th scope="col">Staus</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let data of approvalData">
+                <tr>
+                  <td scope="col" data-title="SI No">{{data.id}}</td>
+                  <td scope="col" data-title="Request No">{{data.RequestNumber}}</td>
+                  <td scope="col" data-title="RequestType">{{data.RequestType}}</td>
+                  <td scope="col" data-title="Name">{{data.Name}}</td>
+                  <td scope="col" data-title="Status">{{data.Status}}</td>
+                  <td scope="col" data-title="Action">
+                    <ion-button (click)="redirectToApprovalListDetails(data.id)"  class="edit" color="tertiary"  size="small">
+                      <ion-icon name="open"></ion-icon>
+                    </ion-button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
 
 

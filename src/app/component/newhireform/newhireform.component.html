@@ -45,9 +45,9 @@
             <table class="table table-bordered">
               <thead class="text text-primary">
                 <tr>
-                  <th>Name</th>
                   <th>Category</th>
                   <th>Item</th>
+                  <th>Cost Center</th>
                   <th>Quantity</th>
                   <th>Action</th>
                 </tr>
@@ -76,7 +76,7 @@
                     </select>
                   </td>
                   <td>
-                    <input type="number" formControlName="quantity" class="form-control">
+                    <input type="number" formControlName="quantity" class="form-control" value="1">
                   </td>
                   <td>
                     <ion-button (click)="deleteRow(i)" color="danger" fill="solid" size="small">
