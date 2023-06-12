@@ -43,21 +43,38 @@ export class AuthService {
   autoLogin(): void {
     if (this.isLoggedIn()) {
       let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
-      this.router.navigate(['/home']);
+      if (userData && userData.access ){
+        this.router.navigate(['/home']);
+      }
+      else {
+        this.router.navigate(['/login']);
+      }
     }
-  }
-  
-  // getUserProfile() {
-  //   let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
-  //   if (userData) {
-  //     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + userData.access);
-  //     return this.http.get(this.apiUrl + `user-profile/`, { headers });
-  //   }
-  //   else {
-  //     console.log("no user data");
-  //     return null;
-  //   }
-  // }
+  }// autoLogin
+
+
+  getUserprofile(): any {
+    let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
+    if (userData && userData.access) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
+      return this.http.get(this.apiUrl + '/accounts/userprofile/', { headers });
+    }
+    else {
+      return null;
+    }
+  }// getUserprofile
+
+  getAuthenticationsApprovals(): any {
+    let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
+    if (userData && userData.access) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
+      return this.http.get(this.apiUrl + '/approval/approvalAuth/', { headers });
+    }
+    else {
+      return null;
+    }
+  }// getAuthenticationsApprovals
+
 
   
 }

@@ -23,23 +23,26 @@
           </ion-item>
 
           <ion-menu-toggle>
-          <ion-list *ngIf="userDropdownClicked" class="user-dropdown">
-            <ion-item [routerLink]="'/procurement'">
-              <ion-icon slot="start" name="documents-outline"></ion-icon>
-              <ion-label>Request</ion-label>
-            </ion-item>
-          
+            <ion-list *ngIf="userDropdownClicked" class="user-dropdown">
+              <ion-item [routerLink]="'/procurement'">
+                <ion-icon slot="start" name="documents-outline"></ion-icon>
+                <ion-label>Request</ion-label>
+              </ion-item>
 
-            <ion-item [routerLink]="'/procurementview'">
-              <ion-icon slot="start" name="file-tray-sharp"></ion-icon>
-              <ion-label>List</ion-label>
-            </ion-item>
 
-            <ion-item [routerLink]="'/approvallist'">
-              <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>
-              <ion-label>Approval</ion-label>
-            </ion-item>
-          </ion-list>
+              <ion-item [routerLink]="'/procurementview'">
+                <ion-icon slot="start" name="file-tray-sharp"></ion-icon>
+                <ion-label>List</ion-label>
+              </ion-item>
+
+
+                <ion-item  *ngIf="isApprover === true" [routerLink]="'/approvallist'">
+                  <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>
+                  <ion-label>Approval</ion-label>
+                </ion-item>
+
+
+            </ion-list>
           </ion-menu-toggle>
         </ion-toolbar>
 
