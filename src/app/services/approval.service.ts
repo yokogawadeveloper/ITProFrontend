@@ -19,6 +19,7 @@ export class ApprovalService {
     if(userData && userData.access){
       const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
       return this.http.get(this.apiUrl + 'approvalPendingList/', {headers});
+      
     }else{
       return new Observable<any>((observer) => observer.error("Data for Approval Pending List not found"));
     }

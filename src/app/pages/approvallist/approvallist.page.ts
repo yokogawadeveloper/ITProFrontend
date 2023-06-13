@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApprovalService } from 'src/app/services/approval.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-approvallist',
@@ -15,9 +16,11 @@ export class ApprovallistPage implements OnInit {
   constructor(private router: Router, private approverService: ApprovalService) { }
 
   ngOnInit() {
-    this.approverService.getApprovalPendingList().subscribe((response: any) => {
-      console.log(response);
-      this.approvalPendingList = response;
+    this.approverService.getApprovalPendingList().pipe(
+      map((response: any) => response.map((item: any) => item.procurementId))
+    ).subscribe((procurementIds: any[]) => {
+      // console.log(procurementIds);
+      this.approvalPendingList = procurementIds;
     });
 
   }// end of ngOnInit
