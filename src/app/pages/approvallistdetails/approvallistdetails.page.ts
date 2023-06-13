@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApprovalService } from 'src/app/services/approval.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
-import { id } from '@swimlane/ngx-datatable';
+import { NgToastService } from 'ng-angular-popup';
+
 
 
 
@@ -22,7 +22,8 @@ export class ApprovallistdetailsPage implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private alertCtrl: AlertController,
-    private http: HttpClient
+    private http: HttpClient,
+    private toast: NgToastService,
 
   ) {
     this.approvalForm = this.formBuilder.group({
@@ -52,7 +53,7 @@ export class ApprovallistdetailsPage implements OnInit {
       this.http.get(_url).subscribe((res: any) => {
         if (res) {
           this.approvalDataById = res;
-          console.log(this.approvalDataById);
+          // console.log(this.approvalDataById);
         }
       }
       );
@@ -74,12 +75,22 @@ export class ApprovallistdetailsPage implements OnInit {
 
         this.http.put(url, this.approvalForm.value).subscribe(async (res: any) => {
           if (res) {
-            const alert = await this.alertCtrl.create({
-              header: 'Success',
-              message: 'Approval Status Updated',
-              buttons: ['OK']
-            });
-            await alert.present();
+            this.toast.success({
+              detail: 'Approval Status Updated Successfully',
+              position: 'bottom-right',
+              duration: 3000,
+              type: 'success'
+            })
+            this.router.navigate(['/approvallist']);
+          }
+        }, async (error: any) => {
+          if (error) {
+            this.toast.error({
+              detail: error.error.error,
+              position: 'bottom-right',
+              duration: 3000,
+              type: 'danger'
+            })
             this.router.navigate(['/approvallist']);
           }
         });
