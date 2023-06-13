@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApprovalService } from 'src/app/services/approval.service';
 import { map } from 'rxjs/operators';
+import { sequence } from '@angular/animations';
 
 @Component({
   selector: 'app-approvallist',
@@ -25,9 +26,9 @@ export class ApprovallistPage implements OnInit {
 
   }// end of ngOnInit
 
-  redirectToApprovalListDetails(dataId: string) {
-    this.router.navigate(['/approvallistdetails', dataId]);
-    console.log(dataId);
+  redirectToApprovalListDetails(id: number, sequence: number) {
+    this.router.navigate(['/approvallistdetails', id, sequence]);
+
   }
 }
 

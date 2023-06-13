@@ -37,7 +37,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/procurementdetails/procurementdetails.module').then( m => m.ProcurementdetailsPageModule)
   },
   {
-    path: 'approvallistdetails/:id',
+    path: 'approvallistdetails/:id/:sequenceId',
     loadChildren: () => import('./pages/approvallistdetails/approvallistdetails.module').then( m => m.ApprovallistdetailsPageModule)
   },
 

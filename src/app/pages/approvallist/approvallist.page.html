@@ -18,6 +18,7 @@
           <table class="table table-reponsive">
             <thead class="thead-light">
               <tr>
+                <th scope="col">Procurement Id</th>
                 <th scope="col">Seqeunce No</th>
                 <th scope="col">Approver Type</th>
                 <th scope="col">Request No</th>
@@ -30,6 +31,7 @@
             <tbody>
               <ng-container *ngFor="let data of approvalPendingList">
                 <tr>
+                  <td scope="col" data-title="SI No">{{data.id}}</td>
                   <td scope="col" data-title="SI No">{{data.sequence}}</td>
                   <td scope="col" data-title="SI No">{{data.approverType}}</td>
                   <td scope="col" data-title="Request No">{{data.RequestNumber}}</td>
@@ -37,7 +39,7 @@
                   <td scope="col" data-title="Name">{{data.Name}}</td>
                   <td scope="col" data-title="Status">{{data.Status}}</td>
                   <td scope="col" data-title="Action">
-                    <ion-button (click)="redirectToApprovalListDetails(data.id)"  class="edit" color="tertiary"  size="small">
+                    <ion-button (click)="redirectToApprovalListDetails(data.id, data.sequence)"  class="edit" color="tertiary"  size="small">
                       <ion-icon name="open"></ion-icon>
                     </ion-button>
                   </td>

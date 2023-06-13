@@ -18,14 +18,14 @@
               <ion-grid>
                 <ion-row>
                   <ion-col size="6" color="primary">
-                    <ion-select label="Select Status" formControlName="status" label-placement="floating" fill="outline">
+                    <ion-select label="Select Status" formControlName="status" label-placement="floating"
+                      fill="outline">
                       <ion-select-option value="Approved">Approved</ion-select-option>
                       <ion-select-option value="Reject">Reject</ion-select-option>
                     </ion-select>
                   </ion-col>
                   <ion-col size="6" color="primary">
-                    <!-- <ion-button class="full-width-button" expand="full" size="default">Block</ion-button> -->
-                    <ion-button class="full-width-button" type="submit" shape="round" size="default">Approved</ion-button>
+                    <ion-button class="full-width-button" type="submit" shape="round" size="default" >Approved</ion-button>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -34,6 +34,22 @@
         </ion-card-header>
         <ion-card-content>
           <ion-grid class="modern-table">
+            <!-- <ion-row>
+              <ion-col class="title-col">
+                <p>Approver Type</p>
+              </ion-col>
+              <ion-col class="value-col">
+                <p>{{approvalDataById.approverType}}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="title-col">
+                <p>Sequence No</p>
+              </ion-col>
+              <ion-col class="value-col">
+                <p>{{approvalDataById.sequence}}</p>
+              </ion-col>
+            </ion-row> -->
             <ion-row>
               <ion-col class="title-col">
                 <p>Request No</p>
@@ -116,7 +132,6 @@
               </div>
             </div>
           </ion-grid>
-
         </ion-card-content>
       </ion-card>
     </ng-container>
