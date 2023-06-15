@@ -10,7 +10,7 @@
           <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('department')?.invalid}">
             <label for="department">Department</label>
             <select class="form-control" formControlName="department">
-              <option *ngFor="let option of departmentDropdown" [value]="option.id">{{ option.DepartmentName }}</option>
+              <option *ngFor="let option of departmentDropdown" [value]="option.DepartmentName">{{ option.DepartmentName }}</option>
             </select>
           </div>
           <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('isExpenditure')?.invalid}">
@@ -59,8 +59,7 @@
                     <select formControlName="category" class="form-control"
                       [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
                       <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">
-                        {{option.ItemCategory
-                        }}</option>
+                        {{option.ItemCategory}}</option>
                     </select>
                   </td>
                   <td>

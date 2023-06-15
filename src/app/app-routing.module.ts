@@ -39,7 +39,11 @@ const routes: Routes = [
   {
     path: 'approvallistdetails/:id/:sequenceId',
     loadChildren: () => import('./pages/approvallistdetails/approvallistdetails.module').then( m => m.ApprovallistdetailsPageModule)
+  },  {
+    path: 'modification',
+    loadChildren: () => import('./pages/modification/modification.module').then( m => m.ModificationPageModule)
   },
+
 
 
 

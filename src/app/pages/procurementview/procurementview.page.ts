@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class ProcurementviewPage implements OnInit {
   ngOnInit() {
     this.apiService.getProcurementData().subscribe((res) => {
       this.procurementData = res;
+      // console.log(this.procurementData);
     }, (err) => {
       console.log(err);
     });
@@ -28,7 +30,7 @@ export class ProcurementviewPage implements OnInit {
 
   redirectToProcurementDetails(dataId: string) {
     this.router.navigate(['/procurementdetails', dataId]);
-    console.log(dataId);
+    // console.log(dataId);
   }
 }
 

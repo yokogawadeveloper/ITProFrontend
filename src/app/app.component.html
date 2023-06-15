@@ -35,6 +35,11 @@
                 <ion-label>List</ion-label>
               </ion-item>
 
+              <ion-item [routerLink]="'/modification'">
+                <ion-icon slot="start" name="build"></ion-icon>
+                <ion-label>Modification</ion-label>
+              </ion-item>
+
 
                 <ion-item  *ngIf="isApprover === true" [routerLink]="'/approvallist'">
                   <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>

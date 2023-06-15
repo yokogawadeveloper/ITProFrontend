@@ -37,15 +37,12 @@ export class ApprovallistdetailsPage implements OnInit {
       let id = params.get('id');
       let sequence = params.get('sequenceId');
       this.fetchApprovalDetails(id, sequence);
-    }
-    );
+    });// end of route.paramMap.subscribe
   }
 
   fetchApprovalDetails(_id: any, _sequence: any) {
     let id = parseInt(_id);
     let sequence = parseInt(_sequence);
-    // console.log(id);
-    // console.log(sequence);
     if (id && sequence) {
       const _baseUrl = 'http://127.0.0.1:8000/approval/approvalDetailsList';
       const _url = `${_baseUrl}/?procurementId=${id}&sequenceId=${sequence}`;

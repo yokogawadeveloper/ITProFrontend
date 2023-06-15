@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Procurement</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"> </ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-searchbar placeholder="Filter"></ion-searchbar>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="row">
+        <div class="inline-table">
+          <table class="table table-reponsive">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Request No</th>
+                <th scope="col">Request Type</th>
+                <th scope="col">Name</th>
+                <th scope="col">Staus</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let data of modificationData">
+                <tr>
+                  <td scope="col" data-title="Request No">{{data.title}}</td>
+                  <td scope="col" data-title="RequestType">{{data.description}}</td>
+                  <td scope="col" data-title="Name">{{data.image}}</td>
+                  <td scope="col" data-title="Status">{{data.status}}</td>
+                  <td scope="col" data-title="Action">
+                    <ion-button class="edit" color="tertiary" fill="clear" size="small">
+                      <ion-icon name="eye-off-outline"></ion-icon>
+                    </ion-button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

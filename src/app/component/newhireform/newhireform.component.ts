@@ -18,6 +18,7 @@ export class NewhireformComponent implements OnInit {
   categoryDropdown: any[] = []; // Add appropriate values
   itemDropdown: any[] = []; // Add appropriate values
   costCenterdropdown: any[] = []; // Add appropriate values
+  procurementData: any = []; // Add appropriate values
 
   constructor(
     private apiService: ApiService,
@@ -142,7 +143,23 @@ export class NewhireformComponent implements OnInit {
         };
         this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
           if (res) {
-            this.router.navigate(['/procurementview']);
+            // Update procurementData array with the newly retrieved data
+            this.apiService.getProcurementData().subscribe((res: any) => {
+              this.procurementData = res;
+              this.router.navigate(['/procurementview']);
+            },
+
+              (err: any) => {
+                this.toast.error({
+                  detail: 'OOPS !Something went wrong',
+                  position: 'bottom-right',
+                  duration: 3000,
+                  type: 'danger'
+                })
+              }
+
+            );
+          
           }
         });
 
