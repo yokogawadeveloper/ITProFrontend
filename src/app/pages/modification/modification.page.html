@@ -1,6 +1,9 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>Procurement</ion-title>
+    <div class="back-circle">
+      <ion-img src="https://yokogawa.service-now.com/6749beaf1bbfe300b6351028bd4bcb1a.iix"></ion-img>
+      <ion-title class="custom-font">IT Procurement</ion-title>
+    </div>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"> </ion-menu-button>
     </ion-buttons>
@@ -26,14 +29,15 @@
               </tr>
             </thead>
             <tbody>
-              <ng-container *ngFor="let data of modificationData">
+              <ng-container *ngFor="let data of userProcurementModifiedList">
                 <tr>
-                  <td scope="col" data-title="Request No">{{data.title}}</td>
-                  <td scope="col" data-title="RequestType">{{data.description}}</td>
-                  <td scope="col" data-title="Name">{{data.image}}</td>
-                  <td scope="col" data-title="Status">{{data.status}}</td>
+                  <td scope="col" data-title="Request No">{{data.RequestNumber}}</td>
+                  <td scope="col" data-title="RequestType">{{data.RequestType}}</td>
+                  <td scope="col" data-title="Name">{{data.Name}}</td>
+                  <td scope="col" data-title="Status">{{data.Status}}</td>
                   <td scope="col" data-title="Action">
-                    <ion-button class="edit" color="tertiary" fill="clear" size="small">
+                    <ion-button (click)="navigateToUpdatePage()" class="edit" color="tertiary" fill="clear"
+                      size="small">
                       <ion-icon name="eye-off-outline"></ion-icon>
                     </ion-button>
                   </td>
@@ -45,4 +49,4 @@
       </div>
     </ion-card-content>
   </ion-card>
-</ion-content>
+  </ion-content>

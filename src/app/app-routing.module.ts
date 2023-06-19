@@ -43,6 +43,10 @@ const routes: Routes = [
     path: 'modification',
     loadChildren: () => import('./pages/modification/modification.module').then( m => m.ModificationPageModule)
   },
+  {
+    path: 'updatemodification',
+    loadChildren: () => import('./pages/updatemodification/updatemodification.module').then( m => m.UpdatemodificationPageModule)
+  },
 
 
 

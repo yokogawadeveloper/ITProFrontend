@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-modification',
@@ -6,27 +8,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./modification.page.scss'],
 })
 export class ModificationPage implements OnInit {
-  modificationData = [
-    {
-      title: 'Modification 1',
-      description: 'Description 1',
-      image: 'assets/images/1.jpg',
-      status : 'Pending'
-    },
-    {
-      title: 'Modification 2',
-      description: 'Description 2',
-      image: 'assets/images/2.jpg',
-      status : 'Pending'
-    },
-  ];
+  userProcurementModifiedList: any = [];
 
-  constructor() { }
+  constructor(private apiServie: ApiService, private router: Router) { }
 
- 
+
 
   ngOnInit() {
-    
+    this.apiServie.getModificationData().subscribe((response: any) => {
+      this.userProcurementModifiedList = response;
+    });
+  } // End of ngOnInit
+
+  navigateToUpdatePage() {
+    this.router.navigate(['/updatemodification']);
   }
 
 }

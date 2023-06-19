@@ -1,12 +1,15 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>ITProcurement</ion-title>
+    <div class="back-circle">
+      <ion-img src="https://yokogawa.service-now.com/6749beaf1bbfe300b6351028bd4bcb1a.iix"></ion-img>
+      <ion-title class="custom-font">IT Procurement</ion-title>
+    </div>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"> </ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
+<!-- 
 <ion-content [fullscreen]="true">
   <ion-card class="main-card">
     <ion-card-content>
@@ -41,5 +44,40 @@
       </ion-card>
     </div>
   </div>
+</ion-content> -->
+
+
+<ion-content [fullscreen]="true">
+  <ion-card class="main-card">
+    <ion-card-header class="ion-text-center">
+      <ion-card-title class="Cardtitle">Welcome To IT Procurement Portal</ion-card-title>
+      <p>ITProcurement is a web application that allows you to manage your IT procurement process.</p>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="row">
+        <div class="triangle-container">
+          <ion-card class="triangle-card card1" routerLink="/procurement">
+            <ion-card-header>
+              <ion-card-title>End user Pc Procurement</ion-card-title>
+              <ion-card-subtitle>To Create Request of Items</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+          <ion-card class="triangle-card card2">
+            <ion-card-header>
+              <ion-card-title>DS-IN</ion-card-title>
+              <ion-card-subtitle>Procurement Aprovers</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+          <ion-card class="triangle-card card3">
+            <ion-card-header>
+              <ion-card-title>Customer Project IT Requirements</ion-card-title>
+              <ion-card-subtitle>Customer Requirement Gathering</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
 

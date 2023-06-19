@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
-// httpOptions is used to set the headers for the HTTP requests.
+
+// httpOptions 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -16,9 +18,9 @@ const httpOptions = {
 })
 export class AuthService {
 
-  private apiUrl = 'http://127.0.0.1:8000';
+  private apiUrl: string = environment.apiUrl; //main url
 
-  constructor(private http: HttpClient , private router:Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string) {
     return this.http.post<any>(`${this.apiUrl}/accounts/login/`, { username, password }, httpOptions)
@@ -26,11 +28,12 @@ export class AuthService {
         if (user && user.access) {
           sessionStorage.setItem('currentUser', JSON.stringify(user));
         }
+        console.log(this.apiUrl);
         return user;
       }));
   } // login
 
-  isLoggedIn(): boolean{
+  isLoggedIn(): boolean {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
     if (userData && userData.access) {
       return true;
@@ -43,7 +46,7 @@ export class AuthService {
   autoLogin(): void {
     if (this.isLoggedIn()) {
       let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
-      if (userData && userData.access ){
+      if (userData && userData.access) {
         this.router.navigate(['/home']);
       }
       else {
@@ -64,6 +67,7 @@ export class AuthService {
     }
   }// getUserprofile
 
+
   getAuthenticationsApprovals(): any {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
     if (userData && userData.access) {
@@ -76,5 +80,5 @@ export class AuthService {
   }// getAuthenticationsApprovals
 
 
-  
+
 }

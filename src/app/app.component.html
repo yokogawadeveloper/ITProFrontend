@@ -10,7 +10,7 @@
       <ion-list>
         <ion-menu-toggle>
           <ion-item routerLink="/home">
-            <ion-icon name="home" slot="start"></ion-icon>
+            <ion-icon slot="start" name="home-outline"></ion-icon>
             <ion-label>Home</ion-label>
           </ion-item>
         </ion-menu-toggle>
@@ -24,28 +24,22 @@
 
           <ion-menu-toggle>
             <ion-list *ngIf="userDropdownClicked" class="user-dropdown">
-              <ion-item [routerLink]="'/procurement'">
-                <ion-icon slot="start" name="documents-outline"></ion-icon>
-                <ion-label>Request</ion-label>
-              </ion-item>
-
 
               <ion-item [routerLink]="'/procurementview'">
-                <ion-icon slot="start" name="file-tray-sharp"></ion-icon>
-                <ion-label>List</ion-label>
+                <ion-icon slot="start" name="newspaper-outline"></ion-icon>
+                <ion-label>My Request</ion-label>
               </ion-item>
 
               <ion-item [routerLink]="'/modification'">
-                <ion-icon slot="start" name="build"></ion-icon>
-                <ion-label>Modification</ion-label>
+                <ion-icon slot="start" name="build-outline"></ion-icon>
+                <ion-label>My Modified</ion-label>
               </ion-item>
 
 
-                <ion-item  *ngIf="isApprover === true" [routerLink]="'/approvallist'">
-                  <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>
-                  <ion-label>Approval</ion-label>
-                </ion-item>
-
+              <ion-item *ngIf="isApprover === true" [routerLink]="'/approvallist'">
+                <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>
+                <ion-label>Approval</ion-label>
+              </ion-item>
 
             </ion-list>
           </ion-menu-toggle>

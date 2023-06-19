@@ -1,29 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup';
-
-
-
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-approvallistdetails',
   templateUrl: './approvallistdetails.page.html',
   styleUrls: ['./approvallistdetails.page.scss'],
 })
+
+
+
 export class ApprovallistdetailsPage implements OnInit {
   approvalDataById: any;
   approvalForm!: FormGroup;
+  private apiUrl: string = environment.apiUrl; //main url
+
+
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
-    private alertCtrl: AlertController,
     private http: HttpClient,
-    private toast: NgToastService,
+    private toast: NgToastService
 
   ) {
     this.approvalForm = this.formBuilder.group({
@@ -44,9 +46,8 @@ export class ApprovallistdetailsPage implements OnInit {
     let id = parseInt(_id);
     let sequence = parseInt(_sequence);
     if (id && sequence) {
-      const _baseUrl = 'http://127.0.0.1:8000/approval/approvalDetailsList';
+      const _baseUrl = this.apiUrl + '/approval/approvalDetailsList';
       const _url = `${_baseUrl}/?procurementId=${id}&sequenceId=${sequence}`;
-
       this.http.get(_url).subscribe((res: any) => {
         if (res) {
           this.approvalDataById = res;
@@ -65,19 +66,21 @@ export class ApprovallistdetailsPage implements OnInit {
     if (this.approvalForm.valid) {
       let procurementId = this.approvalDataById.procurementId;
       let sequenceId = this.approvalDataById.sequence;
-      // Check if procurementId and sequenceId are not null
-      if (procurementId && sequenceId) {
-        const baseUrl = 'http://127.0.0.1:8000/approval/approvalUpdateStatus';
+      let userData = JSON.parse(sessionStorage.getItem('currentUser')!)
+      // check if procurementId and sequenceId is not null
+      if (procurementId && sequenceId && userData.access) {
+        const baseUrl = this.apiUrl + '/approval/approvalUpdateStatus';
         const url = `${baseUrl}/?procurementId=${procurementId}&sequenceId=${sequenceId}`;
-
-        this.http.put(url, this.approvalForm.value).subscribe(async (res: any) => {
+        const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${userData.access}` }) };
+        // PUT request to update approval status
+        this.http.put(url, this.approvalForm.value, httpOptions).subscribe(async (res: any) => {
           if (res) {
             this.toast.success({
-              detail: 'Approval Status Updated Successfully',
+              detail: 'Approval status updated successfully',
               position: 'bottom-right',
               duration: 3000,
               type: 'success'
-            })
+            });
             this.router.navigate(['/approvallist']);
           }
         }, async (error: any) => {

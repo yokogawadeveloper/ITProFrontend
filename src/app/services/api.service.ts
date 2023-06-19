@@ -76,5 +76,19 @@ export class ApiService {
       }
   }
 
+
+  //Current User Modification Data
+  getModificationData(): Observable<any> {
+    let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
+    if (userData && userData.access) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
+      return this.http.get(this.apiUrl + '/masterprocurement/modifiedprocurement/', { headers });
+
+    }
+    else {
+      return new Observable<any>((observer) => observer.error("Data for Modification not found"));
+    }
+  }
+
   
 }

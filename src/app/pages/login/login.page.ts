@@ -6,6 +6,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -51,25 +52,6 @@ export class LoginPage {
           this.router.navigate(['/login']);
         });
   }
-
-  // onSuccessfulLogin() {
-  //   let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
-  //   if (userData && userData.access) {
-  //    this.authService.getUserprofile().subscribe(
-  //      (data: any) => {
-  //         sessionStorage.setItem('userprofile', JSON.stringify(data));
-  //         if (data.is_staff) {
-  //           this.router.navigate(['/home']);
-  //         }
-  //         else {
-  //           this.router.navigate(['/home']);
-  //         }
-  //       }
-  //     );
-  // }
-  // else {
-  //   console.log("login failed");
-  // }
 
   onSuccessfulLogin() {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);

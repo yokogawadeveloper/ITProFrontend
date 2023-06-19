@@ -1,6 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Procurement Approval</ion-title>
+    <div class="back-circle">
+      <ion-img src="https://yokogawa.service-now.com/6749beaf1bbfe300b6351028bd4bcb1a.iix"></ion-img>
+      <ion-title class="custom-font">IT Procurement</ion-title>
+    </div>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"> </ion-menu-button>
     </ion-buttons>
@@ -39,7 +42,8 @@
                   <td scope="col" data-title="Name">{{data.Name}}</td>
                   <td scope="col" data-title="Status">{{data.Status}}</td>
                   <td scope="col" data-title="Action">
-                    <ion-button (click)="redirectToApprovalListDetails(data.id, data.sequence)"  class="edit" color="tertiary"  size="small">
+                    <ion-button (click)="redirectToApprovalListDetails(data.id, data.sequence)" class="edit"
+                      color="tertiary" size="small">
                       <ion-icon name="open"></ion-icon>
                     </ion-button>
                   </td>
@@ -52,5 +56,3 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
-
-
