@@ -17,11 +17,15 @@ export class ModificationPage implements OnInit {
   ngOnInit() {
     this.apiServie.getModificationData().subscribe((response: any) => {
       this.userProcurementModifiedList = response;
-    });
+    },
+      (error: any) => {
+        console.log(error);
+      });
   } // End of ngOnInit
 
-  navigateToUpdatePage() {
-    this.router.navigate(['/updatemodification']);
-  }
+
+  redirectToUpdateModification(dataId: string) {
+    this.router.navigate(['/updatemodification', dataId]);
+  }// End of redirectToUpdateModification
 
 }

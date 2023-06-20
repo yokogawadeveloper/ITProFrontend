@@ -8,11 +8,11 @@ import { AuthGuard } from './../app/guards/auth.guard';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule,),
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule,),
     canActivate: [AuthGuard]
   },
   {
@@ -22,30 +22,31 @@ const routes: Routes = [
   },
   {
     path: 'procurement',
-    loadChildren: () => import('./pages/procurement/procurement.module').then( m => m.ProcurementPageModule)
+    loadChildren: () => import('./pages/procurement/procurement.module').then(m => m.ProcurementPageModule)
   },
   {
     path: 'procurementview',
-    loadChildren: () => import('./pages/procurementview/procurementview.module').then( m => m.ProcurementviewPageModule)
+    loadChildren: () => import('./pages/procurementview/procurementview.module').then(m => m.ProcurementviewPageModule)
   },
   {
     path: 'approvallist',
-    loadChildren: () => import('./pages/approvallist/approvallist.module').then( m => m.ApprovallistPageModule)
+    loadChildren: () => import('./pages/approvallist/approvallist.module').then(m => m.ApprovallistPageModule)
   },
   {
     path: 'procurementdetails/:id',
-    loadChildren: () => import('./pages/procurementdetails/procurementdetails.module').then( m => m.ProcurementdetailsPageModule)
+    loadChildren: () => import('./pages/procurementdetails/procurementdetails.module').then(m => m.ProcurementdetailsPageModule)
   },
   {
     path: 'approvallistdetails/:id/:sequenceId',
-    loadChildren: () => import('./pages/approvallistdetails/approvallistdetails.module').then( m => m.ApprovallistdetailsPageModule)
-  },  {
-    path: 'modification',
-    loadChildren: () => import('./pages/modification/modification.module').then( m => m.ModificationPageModule)
+    loadChildren: () => import('./pages/approvallistdetails/approvallistdetails.module').then(m => m.ApprovallistdetailsPageModule)
   },
   {
-    path: 'updatemodification',
-    loadChildren: () => import('./pages/updatemodification/updatemodification.module').then( m => m.UpdatemodificationPageModule)
+    path: 'modification',
+    loadChildren: () => import('./pages/modification/modification.module').then(m => m.ModificationPageModule)
+  },
+  {
+    path: 'updatemodification/:id',
+    loadChildren: () => import('./pages/updatemodification/updatemodification.module').then(m => m.UpdatemodificationPageModule)
   },
 
 

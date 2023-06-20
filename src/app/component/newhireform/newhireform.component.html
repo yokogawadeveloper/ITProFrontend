@@ -10,8 +10,7 @@
           <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('department')?.invalid}">
             <label class="form-label required" for="department">Department<span>*</span></label>
             <select class="form-control" formControlName="department">
-              <option *ngFor="let option of departmentDropdown" [value]="option.DepartmentName">{{ option.DepartmentName
-                }}</option>
+              <option *ngFor="let option of departmentDropdown" [value]="option.DepartmentName">{{ option.DepartmentName}}</option>
             </select>
           </div>
           <div class="form-group col-md-4"
@@ -55,13 +54,10 @@
                 </tr>
               </thead>
               <tbody formArrayName="rows">
-                <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i"
-                  [ngClass]="{'invalid': formSubmitted && row.invalid}">
+                <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i" [ngClass]="{'invalid': formSubmitted && row.invalid}">
                   <td>
-                    <select formControlName="category" class="form-control"
-                      [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
-                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">
-                        {{option.ItemCategory}}</option>
+                    <select formControlName="category" class="form-control" [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
+                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">{{option.ItemCategory}}</option>
                     </select>
                   </td>
                   <td>

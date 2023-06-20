@@ -21,6 +21,7 @@
           <table class="table table-reponsive">
             <thead class="thead-light">
               <tr>
+                <th scope="col">SI No</th>
                 <th scope="col">Request No</th>
                 <th scope="col">Request Type</th>
                 <th scope="col">Name</th>
@@ -31,14 +32,15 @@
             <tbody>
               <ng-container *ngFor="let data of userProcurementModifiedList">
                 <tr>
+                  <td scope="col" data-title="Request No">{{data.id}}</td>
                   <td scope="col" data-title="Request No">{{data.RequestNumber}}</td>
                   <td scope="col" data-title="RequestType">{{data.RequestType}}</td>
                   <td scope="col" data-title="Name">{{data.Name}}</td>
                   <td scope="col" data-title="Status">{{data.Status}}</td>
                   <td scope="col" data-title="Action">
-                    <ion-button (click)="navigateToUpdatePage()" class="edit" color="tertiary" fill="clear"
+                    <ion-button (click)="redirectToUpdateModification(data.id)" class="edit" color="tertiary"
                       size="small">
-                      <ion-icon name="eye-off-outline"></ion-icon>
+                      <ion-icon name="open"></ion-icon>
                     </ion-button>
                   </td>
                 </tr>

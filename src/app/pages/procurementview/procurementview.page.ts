@@ -27,10 +27,8 @@ export class ProcurementviewPage implements OnInit {
     });
   }// end of ngOnInit
 
-
   redirectToProcurementDetails(dataId: string) {
     this.router.navigate(['/procurementdetails', dataId]);
-    // console.log(dataId);
   }
 }
 

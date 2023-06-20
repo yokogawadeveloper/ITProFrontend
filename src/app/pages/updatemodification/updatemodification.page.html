@@ -22,17 +22,13 @@
                   [ngClass]="{'invalid': formSubmitted && modificationForm.get('name')?.invalid}">
                   <label class="form-label required" for="name">Name</label>
                   <input type="text" class="form-control" id="name" formControlName="name" placeholder="Name"
-                    required />
+                    readonly />
                 </div>
                 <div class="form-group col-md-4"
                   [ngClass]="{'invalid': formSubmitted && modificationForm.get('department')?.invalid}">
                   <label for="department">Department</label>
-                  <select class="form-control" formControlName="department">
-                    <option value="">Choose...</option>
-                    <option value="IT">IT</option>
-                    <option value="HR">HR</option>
-                    <option value="Finance">Finance</option>
-                  </select>
+                  <input type="text" class="form-control" id="department" formControlName="department"
+                    placeholder="Department" readonly />
                 </div>
                 <div class="form-group col-md-4"
                   [ngClass]="{'invalid': formSubmitted && modificationForm.get('isExpenditure')?.invalid}">
@@ -81,23 +77,24 @@
                         <td>
                           <select formControlName="category" class="form-control"
                             [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
-                            <option value="">Choose...</option>
-                            <option value="Hardware">Hardware</option>
-                            <option value="Software">Software</option>
-
+                            <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">
+                              {{option.ItemCategory}}</option>
                           </select>
                         </td>
                         <td>
                           <select formControlName="item" class="form-control">
+                            <option *ngFor="let option of itemDropdown" [value]="option.ItemName">{{ option.ItemName }}
+                            </option>
                           </select>
                         </td>
                         <td>
                           <select formControlName="costCenter" class="form-control">
-
+                            <option *ngFor="let option of costCenterdropdown" [value]="option.id">{{ option.CostCenter}}
+                            </option>
                           </select>
                         </td>
                         <td>
-                          <input type="number" formControlName="quantity" class="form-control" value="1">
+                          <input type="number" formControlName="quantity" class="form-control" name="quantity">
                         </td>
                         <td>
                           <ion-button (click)="deleteRow(i)" color="danger" fill="solid" size="small">
@@ -124,6 +121,5 @@
         </div>
       </form>
     </ion-card-content>
-
   </ion-card>
 </ion-content>
