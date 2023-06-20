@@ -118,7 +118,6 @@ export class NewhireformComponent implements OnInit {
         }
       ]
     });
-
     await alert.present();
   }
 
@@ -139,7 +138,6 @@ export class NewhireformComponent implements OnInit {
           costcenter: row.costCenter,
           quantity: row.quantity,
         })),
-
       };
       this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
         if (res) {
@@ -157,7 +155,6 @@ export class NewhireformComponent implements OnInit {
                 type: 'danger'
               })
             }
-
           );
 
         }

@@ -12,8 +12,11 @@
 
 <ion-content [fullscreen]="true">
   <ion-card>
+    <ion-card-header>
+      <ion-card-title class="text-center">Update Modification</ion-card-title>
+    </ion-card-header>
     <ion-card-content>
-      <form [formGroup]="modificationForm">
+      <form [formGroup]="modificationForm" (ngSubmit)="presentAlert()">
         <div class="panel-group">
           <div class="panel panel-primary">
             <div class="panel-body">
@@ -73,9 +76,9 @@
                     </thead>
                     <tbody formArrayName="rows">
                       <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i"
-                        [ngClass]="{'invalid': formSubmitted && row.invalid}">
+                        [ngClass]="{'invalid1': formSubmitted && row.invalid}">
                         <td>
-                          <select formControlName="category" class="form-control"
+                          <select class="form-control" id="category" formControlName="category"
                             [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
                             <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">
                               {{option.ItemCategory}}</option>
