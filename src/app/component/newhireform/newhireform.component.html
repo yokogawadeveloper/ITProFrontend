@@ -4,17 +4,19 @@
       <div class="panel-body">
         <div class="form-row">
           <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('name')?.invalid}">
-            <label class="form-label required" for="name">Name</label>
+            <label class="form-label required" for="name">Name<span>*</span></label>
             <input type="text" class="form-control" id="name" formControlName="name" placeholder="Name" required />
           </div>
           <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('department')?.invalid}">
-            <label for="department">Department</label>
+            <label class="form-label required" for="department">Department<span>*</span></label>
             <select class="form-control" formControlName="department">
-              <option *ngFor="let option of departmentDropdown" [value]="option.DepartmentName">{{ option.DepartmentName }}</option>
+              <option *ngFor="let option of departmentDropdown" [value]="option.DepartmentName">{{ option.DepartmentName
+                }}</option>
             </select>
           </div>
-          <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('isExpenditure')?.invalid}">
-            <label for="isExpenditure">Is Expenditure</label>
+          <div class="form-group col-md-4"
+            [ngClass]="{'invalid': formSubmitted && myForm.get('isExpenditure')?.invalid}">
+            <label class="form-label required" for="isExpenditure">Is Expenditure<span>*</span></label>
             <select class="form-control" formControlName="isExpenditure" required>
               <option value="">Choose...</option>
               <option value="Yes">Yes</option>
@@ -33,17 +35,17 @@
                 placeholder="Utilized Budget" />
             </div>
           </div>
-          <div class="form-group col-md-6" >
+          <div class="form-group col-md-6">
             <label for="attachment">Attachment</label>
             <input type="file" class="form-control" formControlName="attachment" />
           </div>
-          <div class="form-group col-md-6" >
+          <div class="form-group col-md-6">
             <label for="remarks">Remarks</label>
             <textarea class="form-control" formControlName="remarks" rows="1"></textarea>
           </div>
           <div class="inline-table">
             <table class="table table-bordered">
-              <thead class="text text-primary">
+              <thead class="thead-dark">
                 <tr>
                   <th>Category</th>
                   <th>Item</th>

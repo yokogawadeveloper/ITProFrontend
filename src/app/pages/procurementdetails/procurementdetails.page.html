@@ -1,6 +1,9 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>Procurement Details</ion-title>
+    <div class="back-circle">
+      <ion-img src="https://yokogawa.service-now.com/6749beaf1bbfe300b6351028bd4bcb1a.iix"></ion-img>
+      <ion-title class="custom-font">IT Procurement</ion-title>
+    </div>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"> </ion-menu-button>
     </ion-buttons>
@@ -61,7 +64,7 @@
                 <p>Department</p>
               </ion-col>
               <ion-col class="value-col">
-                <p>{{procurementDataById.department_name}}</p>
+                <p>{{procurementDataById.Department}}</p>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -71,34 +74,32 @@
                 <table class="table table-reponsive">
                   <thead class="thead-light">
                     <tr>
-                      <th scope="col">Sl.No</th>
+                      <th scope="col">Sl No</th>
                       <th scope="col">Item Category</th>
                       <th scope="col">Item</th>
                       <th scope="col">Quantity</th>
                       <th scope="col">Cost Center</th>
                       <th scope="col">Unit Price</th>
                       <th scope="col">Total Price</th>
-
                     </tr>
                   </thead>
                   <tbody>
                     <ng-container *ngFor="let inlineitems of procurementDataById.inlineitem;let i=index">
                       <tr>
-                        <td scope="col" data-title="Sl.No">{{i+1}}</td>
+                        <td scope="col" data-title="Sl No">{{i+1}}</td>
                         <td scope="col" data-title="Item Category">{{inlineitems.category}}</td>
                         <td scope="col" data-title="Item">{{inlineitems.item}}</td>
                         <td scope="col" data-title="Quantity">{{inlineitems.quantity}}</td>
                         <td scope="col" data-title="Cost Center">{{inlineitems.costcenter}}</td>
                         <td scope="col" data-title="Unit Price">{{inlineitems.unitprice}}</td>
                         <td scope="col" data-title="Total Price">{{inlineitems.totalprice}}</td>
-                      </tr>                               
+                      </tr>
                     </ng-container>
                   </tbody>
                 </table>
               </div>
             </div>
           </ion-grid>
-
         </ion-card-content>
       </ion-card>
     </ng-container>

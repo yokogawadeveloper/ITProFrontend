@@ -26,7 +26,7 @@ table th {
     font-size: .85em;
     letter-spacing: .1em;
     text-transform: uppercase;
-    background-color: darkgray;
+    background-color: #428bca !important;
     color: #000;
 }
 
@@ -38,49 +38,6 @@ table th,
 table td {
     padding: .625em;
     text-align: center;
-}
-
-// @media screen and (max-width: 800px) {
-@media (max-width:768px) {
-    table {
-        border: 2px solid #ccc;
-    }
-
-    table thead tr {
-        display: none;
-    }
-
-    // table tr {
-    //   margin-bottom: 1em;
-    //   display: block;
-    //   border-bottom: 2px solid #ddd;
-    // }
-
-    table th,
-    table td {
-        padding: .5em;
-    }
-
-    tbody tr:nth-child(even) {
-        background-color: #c9ebfd;
-    }
-
-    table td {
-        text-align: right;
-        display: block;
-        font-size: 1em;
-        border-bottom: 1px dotted #ccc;
-    }
-
-    table td:before {
-        content: attr(data-title) ":";
-        float: left;
-        font-weight: bold;
-    }
-
-    table td:last-child {
-        border-bottom: 0;
-    }
 }
 
 // Modal Css
@@ -105,8 +62,45 @@ table td {
     }
 
     ion-card-header {
-        background-color: #83b4c8;
+        background-color: #428bca !important;
         font-weight: bold;
     }
 
+}
+
+// @media screen and (max-width: 800px) {
+@media (max-width:768px) {
+    table {
+        border: 2px solid #ccc;
+    }
+
+    table thead tr {
+        display: none;
+    }
+
+    table th,
+    table td {
+        padding: .5em;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: silver;
+    }
+
+    table td {
+        text-align: right;
+        display: block;
+        font-size: 1em;
+        border-bottom: 1px dotted #ccc;
+    }
+
+    table td:before {
+        content: attr(data-title) ":";
+        float: left;
+        font-weight: bold;
+    }
+
+    table td:last-child {
+        border-bottom: 0;
+    }
 }

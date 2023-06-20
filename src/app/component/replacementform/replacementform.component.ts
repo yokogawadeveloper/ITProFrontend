@@ -17,7 +17,7 @@ export class ReplacementformComponent implements OnInit {
   myForm!: FormGroup;
   formSubmitted: boolean = false;
   departmentDropdown: any[] = [];
-  categoryDropdown: any[] = []; 
+  categoryDropdown: any[] = [];
   itemDropdown: any[] = [];
   costCenterdropdown: any[] = [];
   isExpenditure: any;
@@ -123,35 +123,34 @@ export class ReplacementformComponent implements OnInit {
   submitForm() {
     this.formSubmitted = true;
     if (this.myForm.valid) {
-        const formattedData = {
-          RequestType: this.myForm.value.requestType,
-          Name: this.myForm.value.name,
-          DepartmentId: this.myForm.value.department,
-          IsExpenditure: this.myForm.value.isExpenditure,
-          TotalBudget: this.myForm.value.totalBudget,
-          UtilizedBudget: this.myForm.value.utilizedBudget,
-          Remarks: this.myForm.value.remarks,
-          inlineitem: this.myForm.value.rows.map((row: any) => ({
-            category: row.category,
-            item: row.item,
-            costcenter: row.costCenter,
-            quantity: row.quantity,
-          })),
-          
-        };
-        this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
-          if (res) {
-            this.router.navigate(['/procurementview']);
-          }
-        });
+      const formattedData = {
+        RequestType: this.myForm.value.requestType,
+        Name: this.myForm.value.name,
+        DepartmentId: this.myForm.value.department,
+        IsExpenditure: this.myForm.value.isExpenditure,
+        TotalBudget: this.myForm.value.totalBudget,
+        UtilizedBudget: this.myForm.value.utilizedBudget,
+        Remarks: this.myForm.value.remarks,
+        inlineitem: this.myForm.value.rows.map((row: any) => ({
+          category: row.category,
+          item: row.item,
+          costcenter: row.costCenter,
+          quantity: row.quantity,
+        })),
+      };
+      this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
+        if (res) {
+          this.router.navigate(['/procurementview']);
+        }
+      });
 
-      } else {
-        this.toast.error({
-          detail: 'OOPS !Something went wrong',
-          position: 'bottom-right',
-          duration: 3000,
-          type: 'danger'
-        })
-      }
-    } //end of submitForm
+    } else {
+      this.toast.error({
+        detail: 'OOPS !Something went wrong',
+        position: 'bottom-right',
+        duration: 3000,
+        type: 'danger'
+      })
+    }
+  } //end of submitForm
 }

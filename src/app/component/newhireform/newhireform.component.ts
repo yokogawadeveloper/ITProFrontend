@@ -125,54 +125,54 @@ export class NewhireformComponent implements OnInit {
   submitForm() {
     this.formSubmitted = true;
     if (this.myForm.valid) {
-        const formattedData = {
-          RequestType: this.myForm.value.requestType,
-          Name: this.myForm.value.name,
-          DepartmentId: this.myForm.value.department,
-          IsExpenditure: this.myForm.value.isExpenditure,
-          TotalBudget: this.myForm.value.totalBudget,
-          UtilizedBudget: this.myForm.value.utilizedBudget,
-          Remarks: this.myForm.value.remarks,
-          inlineitem: this.myForm.value.rows.map((row: any) => ({
-            category: row.category,
-            item: row.item,
-            costcenter: row.costCenter,
-            quantity: row.quantity,
-          })),
-          
-        };
-        this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
-          if (res) {
-            // Update procurementData array with the newly retrieved data
-            this.apiService.getProcurementData().subscribe((res: any) => {
-              this.procurementData = res;
-              this.router.navigate(['/procurementview']);
-            },
+      const formattedData = {
+        RequestType: this.myForm.value.requestType,
+        Name: this.myForm.value.name,
+        Department: this.myForm.value.department,
+        IsExpenditure: this.myForm.value.isExpenditure,
+        TotalBudget: this.myForm.value.totalBudget,
+        UtilizedBudget: this.myForm.value.utilizedBudget,
+        Remarks: this.myForm.value.remarks,
+        inlineitem: this.myForm.value.rows.map((row: any) => ({
+          category: row.category,
+          item: row.item,
+          costcenter: row.costCenter,
+          quantity: row.quantity,
+        })),
 
-              (err: any) => {
-                this.toast.error({
-                  detail: 'OOPS !Something went wrong',
-                  position: 'bottom-right',
-                  duration: 3000,
-                  type: 'danger'
-                })
-              }
+      };
+      this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
+        if (res) {
+          // Update procurementData array with the newly retrieved data
+          this.apiService.getProcurementData().subscribe((res: any) => {
+            this.procurementData = res;
+            this.router.navigate(['/procurementview']);
+          },
 
-            );
-          
-          }
-        });
+            (err: any) => {
+              this.toast.error({
+                detail: 'OOPS !Something went wrong',
+                position: 'bottom-right',
+                duration: 3000,
+                type: 'danger'
+              })
+            }
 
-      } else {
-        this.toast.error({
-          detail: 'OOPS !Something went wrong',
-          position: 'bottom-right',
-          duration: 3000,
-          type: 'danger'
-        })
-      }
-    } //end of submitForm
+          );
 
-  }
+        }
+      });
+
+    } else {
+      this.toast.error({
+        detail: 'OOPS !Something went wrong',
+        position: 'bottom-right',
+        duration: 3000,
+        type: 'danger'
+      })
+    }
+  } //end of submitForm
+
+}
 
 

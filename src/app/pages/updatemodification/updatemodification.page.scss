@@ -1,0 +1,12 @@
+.inline-table table thead {
+    background: #428bca !important;
+    color: azure !important;
+}
+
+.inline-table table thead th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 1.2rem;
+    text-align: center;
+    white-space: nowrap;
+}

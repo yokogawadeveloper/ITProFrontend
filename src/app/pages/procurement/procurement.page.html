@@ -13,12 +13,6 @@
 <ion-content fullscreen="true">
   <ion-card>
     <ion-card-header>
-      <ion-card-title>
-        <ion-button expand="block" color="light">
-          <ion-label>Choose RequestType</ion-label>
-          <ion-icon name="arrow-down-circle-outline"></ion-icon>
-        </ion-button>
-      </ion-card-title>
       <ion-radio-group [(ngModel)]="formType" (ionChange)="handleFormTypeChange()">
         <ion-item>
           <ion-radio checked="true" value="NewHire">New Hire</ion-radio>
@@ -34,29 +28,29 @@
         </ion-item>
       </ion-radio-group>
     </ion-card-header>
-    <br />
 
     <ion-card-content>
       <ng-container *ngIf="formType === 'NewHire'">
-        <h3 class="text-center text-info">New Hire Form</h3>
+        <h3 class="text-center text-info"><span>New Hire Form</span></h3>
         <app-newhireform></app-newhireform>
       </ng-container>
 
       <ng-container *ngIf="formType === 'Replacement'">
-        <h3 class="text-center text-info">Replacement Form</h3>
+        <h3 class="text-center text-info"><span>Replacement Form</span></h3>
         <app-replacementform></app-replacementform>
       </ng-container>
 
       <ng-container *ngIf="formType === 'StockManagement'">
-        <h3 class="text-center text-info">Stock Management Form</h3>
+        <h3 class="text-center text-info"><span>Stock Management Form</span></h3>
         <app-stockmanagementform></app-stockmanagementform>
       </ng-container>
 
       <ng-container *ngIf="formType === 'TemporaryArrangements'">
-        <h3 class="text-center text-info">Temporary Arrangements Form</h3>
+        <h3 class="text-center text-info"><span>Temporary Arrangements Form</span></h3>
         <app-temporaryform></app-temporaryform>
       </ng-container>
 
     </ion-card-content>
   </ion-card>
 </ion-content>
+
