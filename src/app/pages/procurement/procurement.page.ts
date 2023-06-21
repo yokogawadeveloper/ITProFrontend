@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class ProcurementPage implements OnInit {
 
   //forms
-  formType: string | undefined;
+  formType: string = 'NewHire';
   selectedForm: string | undefined;
 
   NewHire: FormGroup;
@@ -61,8 +61,6 @@ export class ProcurementPage implements OnInit {
     else if (this.formType == "StockManagement") {
       this.selectedForm = "StockManagement";
     }
-    console.log(this.formType)
-
   }
 
 

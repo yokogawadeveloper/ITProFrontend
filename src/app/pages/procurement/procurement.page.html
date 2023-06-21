@@ -15,23 +15,24 @@
     <ion-card-header>
       <ion-radio-group [(ngModel)]="formType" (ionChange)="handleFormTypeChange()">
         <ion-item>
-          <ion-radio checked="true" value="NewHire">New Hire</ion-radio>
+          <ion-radio value="NewHire" labelPlacement="end" justify="start">New Hire IT Request</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-radio value="Replacement">Replacement</ion-radio>
+          <ion-radio value="Replacement" labelPlacement="end" justify="start">Replacement</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-radio value="StockManagement">Stock Management</ion-radio>
+          <ion-radio value="StockManagement" labelPlacement="end" justify="start">Stock Management</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-radio value="TemporaryArrangements">Temporary Arrangements</ion-radio>
+          <ion-radio value="TemporaryArrangements" labelPlacement="end" justify="start">Temporary
+            Arrangements</ion-radio>
         </ion-item>
       </ion-radio-group>
     </ion-card-header>
 
     <ion-card-content>
       <ng-container *ngIf="formType === 'NewHire'">
-        <h3 class="text-center text-info"><span>New Hire Form</span></h3>
+        <h3 class="text-center text-info"><span>IT Request Form For New Hire/Joinee</span></h3>
         <app-newhireform></app-newhireform>
       </ng-container>
 
@@ -53,4 +54,3 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
-

@@ -11,8 +11,6 @@
   text-align: center;
   margin: auto;
   border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(218, 29, 29, 0.2);
-
 }
 
 .triangle-container .triangle-card {
@@ -188,6 +186,13 @@
   100% {
     width: 32ch;
   }
+}
+
+
+.Cardsubtitle{
+  font-size: 1em;
+  text-align: center;
+  color: #f9f8f8f3;
 }
 
 

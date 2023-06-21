@@ -10,12 +10,13 @@
           <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('department')?.invalid}">
             <label class="form-label required" for="department">Department<span>*</span></label>
             <select class="form-control" formControlName="department">
-              <option *ngFor="let option of departmentDropdown" [value]="option.DepartmentName">{{ option.DepartmentName}}</option>
+              <option *ngFor="let option of departmentDropdown" [value]="option.DepartmentName">{{
+                option.DepartmentName}}</option>
             </select>
           </div>
           <div class="form-group col-md-4"
             [ngClass]="{'invalid': formSubmitted && myForm.get('isExpenditure')?.invalid}">
-            <label class="form-label required" for="isExpenditure">Is Expenditure<span>*</span></label>
+            <label class="form-label required" for="isExpenditure">Is Expenditure Budgted<span>*</span></label>
             <select class="form-control" formControlName="isExpenditure" required>
               <option value="">Choose...</option>
               <option value="Yes">Yes</option>
@@ -35,12 +36,16 @@
             </div>
           </div>
           <div class="form-group col-md-6">
-            <label for="attachment">Attachment</label>
-            <input type="file" class="form-control" formControlName="attachment" />
-          </div>
-          <div class="form-group col-md-6">
             <label for="remarks">Remarks</label>
             <textarea class="form-control" formControlName="remarks" rows="1"></textarea>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="attachment">Attachment</label>
+            <ion-button id="open-modal" expand="block">Open</ion-button>
+
+            
+            
+            
           </div>
           <div class="inline-table">
             <table class="table table-bordered">
@@ -54,10 +59,13 @@
                 </tr>
               </thead>
               <tbody formArrayName="rows">
-                <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i" [ngClass]="{'invalid': formSubmitted && row.invalid}">
+                <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i"
+                  [ngClass]="{'invalid': formSubmitted && row.invalid}">
                   <td>
-                    <select formControlName="category" class="form-control" [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
-                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">{{option.ItemCategory}}</option>
+                    <select formControlName="category" class="form-control"
+                      [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
+                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">
+                        {{option.ItemCategory}}</option>
                     </select>
                   </td>
                   <td>
@@ -73,7 +81,7 @@
                     </select>
                   </td>
                   <td>
-                    <input type="number" formControlName="quantity" class="form-control" value="1">
+                    <input type="number" formControlName="quantity" class="form-control" value="1" readonly>
                   </td>
                   <td>
                     <ion-button (click)="deleteRow(i)" color="danger" fill="solid" size="small">

@@ -26,7 +26,7 @@ table th {
     font-size: .85em;
     letter-spacing: .1em;
     text-transform: uppercase;
-    background-color: darkgray;
+    background-color: #428bca !important;
     color: #000;
 }
 
@@ -81,7 +81,9 @@ table td {
     table td:last-child {
         border-bottom: 0;
     }
-} // End of media query
+}
+
+// End of media query
 
 
 .modal-table {
@@ -103,15 +105,17 @@ table td {
             }
         }
     }
-}// Modal Css
+}
 
-.card-toolbar{
-    ion-select{
+// Modal Css
+
+.card-toolbar {
+    ion-select {
         width: 100%;
-        
+
     }
 }
 
 .full-width-button {
     width: 100%;
-  }
+}
