@@ -101,27 +101,38 @@ export class NewhireformComponent implements OnInit {
     return this.myForm.get('additionalAttachments') as FormArray;
   }
 
+  addAttachmentField(): void {
+    const attachmentFormGroup = this.formBuilder.group({
+      attachments: ['']
+    });
+    this.additionalAttachments.push(attachmentFormGroup);
+  }
+
   handleFileChange(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     const files = inputElement.files;
 
     if (files && files.length > 0) {
       const selectedFile = files[0];
-      this.fileNames.push(selectedFile.name);
+      // Perform further processing with the selected file
+      console.log(selectedFile);
     }
   }
 
 
+  // addAttachmentField() {
+  //   this.additionalAttachments.push(this.formBuilder.control(''));
 
-  addAttachmentField() {
-    this.additionalAttachments.push(this.formBuilder.control(''));
+  // }
 
-  }
-
-  removeAttachmentField(index: number) {
+  removeAttachmentField(index: number): void {
     this.additionalAttachments.removeAt(index);
-    this.fileNames.splice(index, 1);
   }
+
+  // removeAttachmentField(index: number) {
+  //   this.additionalAttachments.removeAt(index);
+  //   this.fileNames.splice(index, 1);
+  // }
 
   // Getters for form controls
   async presentAlert() {
@@ -153,25 +164,21 @@ export class NewhireformComponent implements OnInit {
     console.log("hi", this.myForm.value);
     this.formSubmitted = true;
     if (this.myForm.valid) {
-      const formattedData = {
-        RequestType: this.myForm.value.requestType,
-        Name: this.myForm.value.name,
-        Department: this.myForm.value.department,
-        IsExpenditure: this.myForm.value.isExpenditure,
-        TotalBudget: this.myForm.value.totalBudget,
-        UtilizedBudget: this.myForm.value.utilizedBudget,
-        Remarks: this.myForm.value.remarks,
-        AdditionalAttachments: this.myForm.value.additionalAttachments,
-        inlineitem: this.myForm.value.rows.map((row: any) => ({
-          category: row.category,
-          item: row.item,
-          costcenter: row.costCenter,
-          quantity: row.quantity,
-        })),
-      };
-      console.log("formattedData", formattedData);
-
-
+      // const formattedData = {
+      //   RequestType: this.myForm.value.requestType,
+      //   Name: this.myForm.value.name,
+      //   Department: this.myForm.value.department,
+      //   IsExpenditure: this.myForm.value.isExpenditure,
+      //   TotalBudget: this.myForm.value.totalBudget,
+      //   UtilizedBudget: this.myForm.value.utilizedBudget,
+      //   Remarks: this.myForm.value.remarks,
+      //   inlineitem: this.myForm.value.rows.map((row: any) => ({
+      //     category: row.category,
+      //     item: row.item,
+      //     costcenter: row.costCenter,
+      //     quantity: row.quantity,
+      //   })),
+      // };
       // this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
       //   if (res) {
       //     // Update procurementData array with the newly retrieved data
@@ -192,7 +199,7 @@ export class NewhireformComponent implements OnInit {
 
       //   }
       // });
-
+      
 
     } else {
       this.toast.error({
