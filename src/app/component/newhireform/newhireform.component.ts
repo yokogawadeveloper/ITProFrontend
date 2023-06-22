@@ -20,6 +20,8 @@ export class NewhireformComponent implements OnInit {
   itemDropdown: any[] = []; // Add appropriate values
   costCenterdropdown: any[] = []; // Add appropriate values
   procurementData: any = []; // Add appropriate values
+  presentingElement = document.querySelector('.ion-page');
+  fileList: File[] = [];
 
   constructor(
     private apiService: ApiService,
@@ -65,6 +67,10 @@ export class NewhireformComponent implements OnInit {
     }
     );
 
+    // Modal page
+    this.presentingElement = document.querySelector('.ion-page');
+
+
 
   }//end of ngOnInit
 
@@ -94,6 +100,12 @@ export class NewhireformComponent implements OnInit {
       this.rows.removeAt(index);
     }
 
+  }
+
+  //get file list with name and title
+  handleFileInput(event: any) {
+    const files: FileList = event.target.files;
+    this.fileList = Array.from(files);
   }
 
   // Getters for form controls
