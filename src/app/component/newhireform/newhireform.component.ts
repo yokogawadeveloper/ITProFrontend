@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { NgToastService } from 'ng-angular-popup';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -14,20 +13,18 @@ import { AlertController } from '@ionic/angular';
 export class NewhireformComponent implements OnInit {
   myForm!: FormGroup;
   formSubmitted: boolean = false;
-  departmentDropdown: any[] = []; // Add appropriate values
-  categoryDropdown: any[] = []; // Add appropriate values
-  itemDropdown: any[] = []; // Add appropriate values
-  costCenterdropdown: any[] = []; // Add appropriate values
-  procurementData: any = []; // Add appropriate values
-
-  fileNames: string[] = [];
+  departmentDropdown: any[] = [];
+  categoryDropdown: any[] = [];
+  itemDropdown: any[] = [];
+  costCenterdropdown: any[] = [];
+  procurementData: any = [];
+  fileNames: string[] = []; //each file name
 
 
   constructor(
     private apiService: ApiService,
     private toast: NgToastService,
     private formBuilder: FormBuilder,
-    private router: Router,
     private alertController: AlertController
   ) { }
 
@@ -40,8 +37,8 @@ export class NewhireformComponent implements OnInit {
       totalBudget: [''],
       utilizedBudget: [''],
       remarks: [''],
+      rows: this.formBuilder.array([]),
       additionalAttachments: this.formBuilder.array([]),
-      rows: this.formBuilder.array([])
     });
     this.addRow(); // Add one row by default
 
@@ -104,25 +101,28 @@ export class NewhireformComponent implements OnInit {
     return this.myForm.get('additionalAttachments') as FormArray;
   }
 
-  handleFileChange(event: Event, index: number) {
+  handleFileChange(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    const file = inputElement.files?.item(0);
-    this.fileNames[index] = file ? file.name : '';
-    this.additionalAttachments.at(index).setValue(file);
-    
+    const files = inputElement.files;
+
+    if (files && files.length > 0) {
+      const selectedFile = files[0];
+      this.fileNames.push(selectedFile.name);
+    }
   }
+
+
 
   addAttachmentField() {
     this.additionalAttachments.push(this.formBuilder.control(''));
-    
-  }
 
-  
+  }
 
   removeAttachmentField(index: number) {
     this.additionalAttachments.removeAt(index);
     this.fileNames.splice(index, 1);
   }
+
   // Getters for form controls
   async presentAlert() {
     const alert = await this.alertController.create({
@@ -150,6 +150,7 @@ export class NewhireformComponent implements OnInit {
   }
 
   submitForm() {
+    console.log("hi", this.myForm.value);
     this.formSubmitted = true;
     if (this.myForm.valid) {
       const formattedData = {
@@ -160,6 +161,7 @@ export class NewhireformComponent implements OnInit {
         TotalBudget: this.myForm.value.totalBudget,
         UtilizedBudget: this.myForm.value.utilizedBudget,
         Remarks: this.myForm.value.remarks,
+        AdditionalAttachments: this.myForm.value.additionalAttachments,
         inlineitem: this.myForm.value.rows.map((row: any) => ({
           category: row.category,
           item: row.item,
@@ -167,26 +169,30 @@ export class NewhireformComponent implements OnInit {
           quantity: row.quantity,
         })),
       };
-      this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
-        if (res) {
-          // Update procurementData array with the newly retrieved data
-          this.apiService.getProcurementData().subscribe((res: any) => {
-            this.procurementData = res;
-            this.router.navigate(['/procurementview']);
-          },
+      console.log("formattedData", formattedData);
 
-            (err: any) => {
-              this.toast.error({
-                detail: 'OOPS !Something went wrong',
-                position: 'bottom-right',
-                duration: 3000,
-                type: 'danger'
-              })
-            }
-          );
 
-        }
-      });
+      // this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
+      //   if (res) {
+      //     // Update procurementData array with the newly retrieved data
+      //     this.apiService.getProcurementData().subscribe((res: any) => {
+      //       this.procurementData = res;
+      //       this.router.navigate(['/procurementview']);
+      //     },
+
+      //       (err: any) => {
+      //         this.toast.error({
+      //           detail: 'OOPS !Something went wrong',
+      //           position: 'bottom-right',
+      //           duration: 3000,
+      //           type: 'danger'
+      //         })
+      //       }
+      //     );
+
+      //   }
+      // });
+
 
     } else {
       this.toast.error({
