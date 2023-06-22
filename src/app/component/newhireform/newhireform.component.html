@@ -3,25 +3,25 @@
     <div class="panel panel-primary">
       <div class="panel-body">
         <div class="form-row">
-          <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('name')?.invalid}">
-            <label class="form-label required" for="name">RequestType<span>*</span></label>
-            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Name" required />
-          </div>
-          <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('name')?.invalid}">
+          
+          <div class="form-group col-md-6" [ngClass]="{'invalid': formSubmitted && myForm.get('name')?.invalid}">
             <label class="form-label required" for="name">Name<span>*</span></label>
             <input type="text" class="form-control" id="name" formControlName="name" placeholder="Name" required />
           </div>
-          <div class="form-group col-md-4" [ngClass]="{'invalid': formSubmitted && myForm.get('department')?.invalid}">
+
+          <div class="form-group col-md-6" [ngClass]="{'invalid': formSubmitted && myForm.get('department')?.invalid}">
             <label class="form-label required" for="department">Department<span>*</span></label>
             <select class="form-control" formControlName="department">
               <option *ngFor="let option of departmentDropdown" [value]="option.DepartmentName">
                 {{option.DepartmentName}}</option>
             </select>
           </div>
+
           <div class="form-group col-md-6">
             <label for="remarks">Remarks</label>
             <textarea class="form-control" formControlName="remarks" rows="1"></textarea>
           </div>
+
           <div class="form-group col-md-6"
             [ngClass]="{'invalid': formSubmitted && myForm.get('isExpenditure')?.invalid}">
             <label class="form-label required" for="isExpenditure">Is Expenditure Budgted<span>*</span></label>
@@ -31,6 +31,7 @@
               <option value="No">No</option>
             </select>
           </div>
+
           <div *ngIf="myForm.get('isExpenditure')?.value === 'Yes'">
             <div class="form-group col-md-6">
               <label for="totalBudget">Total Budget</label>
@@ -43,29 +44,31 @@
                 placeholder="Utilized Budget" />
             </div>
           </div>
-
-
-
-          <div class="form-group col-md-6">
-            <label for="attachment">Attachment</label>
-            <input type="file" class="form-control" formControlName="attachment" (change)="handleFileInput($event)" multiple />
-
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" >
-                <i class="fa fa-eye"></i>
+          <!-- Start of Additional Attachments -->
+          <div class="form-group col-md-12 additional-attachments">
+            <label for="additionalAttachments">Additional Attachments</label>
+            <div *ngFor="let attachment of additionalAttachments.controls; let i = index" class="mt-2">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <input type="file" class="form-control" formControlName="{{'attachment' + i}}"
+                    (change)="handleFileChange($event, i)">
+                </div>
+                <div class="col-md-6 delete">
+                  <ion-button expand="block" color="medium" (click)="removeAttachmentField(i)"><ion-icon
+                      name="trash-outline"></ion-icon></ion-button>
+                </div>
+                <!-- <div class="col-md-3 name">
+                  <span>{{ fileNames[i] }}</span>
+                </div> -->
+              </div>
+            </div>
+            <div class="input-group">
+              <button class="btn btn-outline-secondary" type="button" id="button-addon1" (click)="addAttachmentField()">
+                <ion-icon name="cloud-upload-outline"></ion-icon>Add More Attachments
               </button>
             </div>
-            <div *ngIf="fileList.length > 0">
-              <h5>Uploaded Files:</h5>
-              <ul>
-                <li *ngFor="let file of fileList">{{ file.name }}</li>
-              </ul>
-            </div>
           </div>
-
-
-
-
+          <!-- End of Additional Attachments -->
           <div class="inline-table">
             <table class="table table-bordered">
               <thead class="thead-dark">

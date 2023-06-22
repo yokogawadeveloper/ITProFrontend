@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { NgToastService } from 'ng-angular-popup';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { CheckboxCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'app-newhireform',
@@ -20,8 +19,9 @@ export class NewhireformComponent implements OnInit {
   itemDropdown: any[] = []; // Add appropriate values
   costCenterdropdown: any[] = []; // Add appropriate values
   procurementData: any = []; // Add appropriate values
-  presentingElement = document.querySelector('.ion-page');
-  fileList: File[] = [];
+
+  fileNames: string[] = [];
+
 
   constructor(
     private apiService: ApiService,
@@ -39,8 +39,8 @@ export class NewhireformComponent implements OnInit {
       isExpenditure: ['', Validators.required],
       totalBudget: [''],
       utilizedBudget: [''],
-      attachment: [''],
       remarks: [''],
+      additionalAttachments: this.formBuilder.array([]),
       rows: this.formBuilder.array([])
     });
     this.addRow(); // Add one row by default
@@ -61,16 +61,12 @@ export class NewhireformComponent implements OnInit {
       this.itemDropdown = res;
     }
     );
+
     // Get cost center dropdown values
     this.apiService.getCostCenterDropdownData().subscribe((res: any) => {
       this.costCenterdropdown = res;
     }
     );
-
-    // Modal page
-    this.presentingElement = document.querySelector('.ion-page');
-
-
 
   }//end of ngOnInit
 
@@ -103,11 +99,30 @@ export class NewhireformComponent implements OnInit {
   }
 
   //get file list with name and title
-  handleFileInput(event: any) {
-    const files: FileList = event.target.files;
-    this.fileList = Array.from(files);
+
+  get additionalAttachments(): FormArray {
+    return this.myForm.get('additionalAttachments') as FormArray;
   }
 
+  handleFileChange(event: Event, index: number) {
+    const inputElement = event.target as HTMLInputElement;
+    const file = inputElement.files?.item(0);
+    this.fileNames[index] = file ? file.name : '';
+    this.additionalAttachments.at(index).setValue(file);
+    
+  }
+
+  addAttachmentField() {
+    this.additionalAttachments.push(this.formBuilder.control(''));
+    
+  }
+
+  
+
+  removeAttachmentField(index: number) {
+    this.additionalAttachments.removeAt(index);
+    this.fileNames.splice(index, 1);
+  }
   // Getters for form controls
   async presentAlert() {
     const alert = await this.alertController.create({
