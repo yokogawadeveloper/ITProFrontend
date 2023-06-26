@@ -46,27 +46,10 @@
           </div>
 
           <!-- Start of Additional Attachments -->
-          <div class="form-group col-md-12 additional-attachments">
+
+          <div class="form-group col-md-6">
             <label for="additionalAttachments">Additional Attachments</label>
-            <div formArrayName="additionalAttachments">
-              <div *ngFor="let attachment of additionalAttachments.controls; let i = index" [formGroupName]="i">
-                <div class="row align-items-center">
-                  <div class="col-md-6">
-                    <input type="file" class="form-control" formControlName="attachments" (change)="handleFileChange($event)" ngDefaultControl>
-                  </div>
-                  <div class="col-md-6 delete">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon1" (click)="removeAttachmentField(i)">
-                      <ion-icon name="trash-outline"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="input-group">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon1" (click)="addAttachmentField()">
-                  <ion-icon name="cloud-upload-outline"></ion-icon>Add More Attachments
-                </button>
-              </div>
-            </div>
+            <input type="file" name="image_url" accept="image/jpeg,image/png,image/gif" (click)="handleImageChange($event)">
           </div>
           <!-- End of Additional Attachments -->
           <div class="inline-table">
@@ -77,6 +60,7 @@
                   <th>Item</th>
                   <th>Cost Center</th>
                   <th>Quantity</th>
+                  <th>Unit Cost</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -93,6 +77,12 @@
                   <td>
                     <select formControlName="item" class="form-control">
                       <option *ngFor="let option of itemDropdown" [value]="option.ItemName">{{ option.ItemName }}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                    <select formControlName="costCenter" class="form-control">
+                      <option *ngFor="let option of costCenterdropdown" [value]="option.id">{{ option.CostCenter }}
                       </option>
                     </select>
                   </td>

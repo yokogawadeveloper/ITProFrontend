@@ -38,11 +38,9 @@ export class ReplacementformComponent implements OnInit {
       isExpenditure: ['', Validators.required],
       totalBudget: [''],
       utilizedBudget: [''],
-      attachment: [''],
       remarks: [''],
-      rows: this.formBuilder.array([])
+      Files: File // need to check
     });
-    this.addRow(); // Add one row by default
     // Get department dropdown values
     this.apiService.getDepartmentDropdownData().subscribe((res: any) => {
       this.departmentDropdown = res;
@@ -65,33 +63,7 @@ export class ReplacementformComponent implements OnInit {
     }
     );
   }// end of ngOnInit
-  get rows() {
-    return this.myForm.get('rows') as FormArray;
-  }
 
-  addRow() {
-    const newRow = this.formBuilder.group({
-      category: ['', Validators.required],
-      item: ['', Validators.required],
-      costCenter: ['', Validators.required],
-      quantity: ['', Validators.required],
-    });
-    this.rows.push(newRow);
-  }
-
-  deleteRow(index: number) {
-    if (this.rows.length == 1) {
-      this.toast.error({
-        detail: 'Atleast one row is required',
-        position: 'bottom-right',
-        duration: 3000,
-        type: 'danger'
-      })
-    } else {
-      this.rows.removeAt(index);
-    }
-
-  }
 
   // Getters for form controls
   async presentAlert() {
@@ -123,26 +95,28 @@ export class ReplacementformComponent implements OnInit {
   submitForm() {
     this.formSubmitted = true;
     if (this.myForm.valid) {
-      const formattedData = {
-        RequestType: this.myForm.value.requestType,
-        Name: this.myForm.value.name,
-        DepartmentId: this.myForm.value.department,
-        IsExpenditure: this.myForm.value.isExpenditure,
-        TotalBudget: this.myForm.value.totalBudget,
-        UtilizedBudget: this.myForm.value.utilizedBudget,
-        Remarks: this.myForm.value.remarks,
-        inlineitem: this.myForm.value.rows.map((row: any) => ({
-          category: row.category,
-          item: row.item,
-          costcenter: row.costCenter,
-          quantity: row.quantity,
-        })),
-      };
-      this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
-        if (res) {
-          this.router.navigate(['/procurementview']);
-        }
-      });
+      const formData = new FormData();
+      for (let i = 0; i < this.myForm.value.Files.length; i++) {
+        formData.append("Files", this.myForm.value.Files[i]);
+      }
+      let formattedData = {
+        "RequestType": this.myForm.value.requestType,
+        "Name": this.myForm.value.name,
+        "Department": this.myForm.value.department,
+        "IsExpenditure": this.myForm.value.isExpenditure,
+        "TotalBudget": this.myForm.value.totalBudget,
+        "UtilizedBudget": this.myForm.value.utilizedBudget,
+        "Remarks": this.myForm.value.remarks,
+        "Files": formData
+      }
+      console.log(formattedData);
+
+
+      // this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
+      //   if (res) {
+      //     this.router.navigate(['/procurementview']);
+      //   }
+      // });
 
     } else {
       this.toast.error({
