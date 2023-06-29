@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { NgToastService } from 'ng-angular-popup';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup,FormArray, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core/components';
 
 
 @Component({
@@ -44,7 +43,7 @@ export class StockmanagementformComponent implements OnInit {
       utilizedBudget: [''],
       remarks: [''],
       rows: this.formBuilder.array([]),
-      additionalAttachments: this.formBuilder.array([]),
+      attachments: this.formBuilder.array([]),
     });
     this.addRow(); // Add one row by default
 
@@ -101,13 +100,32 @@ export class StockmanagementformComponent implements OnInit {
 
   }
 
-  //get file list with name and title
-  OnAttachmnetUpload(event: any) {
-    const file = event.target.files[0];
-    this.attachmentCover = file;
+
+  
+
+  get attachments() {
+    return this.myForm.get('attachments') as FormArray;
   }
 
-  // Getters for form controls
+  addMoreAttachments() {
+    const attachmentControl = new FormControl(null);
+    this.attachments.push(attachmentControl);
+  }
+
+  onAttachmentUpload(event: any, index: number) {
+    const file = event.target.files[0];
+    const attachmentControl = this.attachments.controls[index] as FormControl;
+    attachmentControl.setValue(file);
+
+    // Set the file name in the corresponding input field
+    const fileNameInput = document.getElementById(`attachment${index}`) as HTMLInputElement;
+    if (fileNameInput) {
+      fileNameInput.value = file ? file.name : '';
+    }
+  }
+  
+
+//Submit form
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Confirm Submission',
@@ -134,7 +152,6 @@ export class StockmanagementformComponent implements OnInit {
   }
 
 
-
   submitForm() {
     // console.log(this.myForm.value);
     this.formSubmitted = true;
@@ -153,15 +170,15 @@ export class StockmanagementformComponent implements OnInit {
           costcenter: row.costCenter,
           quantity: row.quantity,
         })),
-        additionalAttachments: this.myForm.value.additionalAttachments.map((attachment: any) => ({
-          attachments: attachment.attachments,
-        })),
       };
       this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
         if (res) {
+          const attachments = this.myForm.value.attachments.filter((attachment: File) => attachment !== null);
           const formData = new FormData();
           formData.append('procurement_id', res.id);
-          formData.append('attachment', this.attachmentCover, this.attachmentCover.name);
+          for (let i = 0; i < attachments.length; i++) {
+            formData.append('attachment', attachments[i], attachments[i].name);
+          }
           this.apiService.postAttachment(formData).subscribe((res: any) => {
             if (res) {
               this.toast.success({
