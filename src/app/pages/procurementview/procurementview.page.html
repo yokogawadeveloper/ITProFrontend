@@ -16,39 +16,47 @@
       <ion-searchbar placeholder="Filter"></ion-searchbar>
     </ion-card-header>
     <ion-card-content>
-      <div class="row">
-        <div class="inline-table">
-          <table class="table table-reponsive">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">SI No</th>
-                <th scope="col">Request No</th>
-                <th scope="col">Request Type</th>
-                <th scope="col">Name</th>
-                <th scope="col">Staus</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <ng-container *ngFor="let data of procurementData; let i=index">
+        <div class="row">
+          <div class="inline-table">
+            <table class="table table-reponsive">
+              <thead class="thead-light">
                 <tr>
-                  <td scope="col" data-title="SI No">{{i+1}}</td>
-                  <td scope="col" data-title="Request No">{{data.RequestNumber}}</td>
-                  <td scope="col" data-title="RequestType">{{data.RequestType}}</td>
-                  <td scope="col" data-title="Name">{{data.Name}}</td>
-                  <td scope="col" data-title="Status">{{data.Status}}</td>
-                  <td scope="col" data-title="Action">
-                    <ion-button (click)="redirectToProcurementDetails(data.id)" class="edit" color="tertiary"
-                      fill="clear" size="small">
-                      <ion-icon name="eye-off-outline"></ion-icon>
-                    </ion-button>
-                  </td>
+                  <th scope="col">SI No</th>
+                  <th scope="col">Request No</th>
+                  <th scope="col">Request Type</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Staus</th>
+                  <th scope="col">Action</th>
                 </tr>
-              </ng-container>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let data of procurementData; let i=index">
+                  <tr>
+                    <td scope="col" data-title="SI No">{{i+1}}</td>
+                    <td scope="col" data-title="Request No">{{data.RequestNumber}}</td>
+                    <td scope="col" data-title="RequestType">{{data.RequestType}}</td>
+                    <td scope="col" data-title="Name">{{data.Name}}</td>
+                    <td scope="col" data-title="Status">{{data.Status}}</td>
+                    <td scope="col" data-title="Action">
+                      <ion-button (click)="redirectToProcurementDetails(data.id)" class="edit" color="tertiary" fill="clear"
+                        size="small">
+                        <ion-icon name="eye-off-outline"></ion-icon>
+                      </ion-button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
     </ion-card-content>
   </ion-card>
+  
 </ion-content>
+
+<ion-footer>
+  <div class="pagination-controls">
+    <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">Previous</button>
+    <button (click)="goToNextPage()" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</ion-footer>

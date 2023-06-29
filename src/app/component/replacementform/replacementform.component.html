@@ -48,9 +48,8 @@
           <!-- Start of Additional Attachments -->
           <div class="form-group col-md-6">
             <label for="attachments">Attachments</label>
-            <input type="file" class="form-control" formControlName="fileUpload" name="fileUpload" #fileUpload />
+            <input type="file" class="form-control" formControlName="Files" name="Files" #fileUpload (change)="FileUploadChange($event)"/>
           </div>
-
           <!-- End of Additional Attachments -->
         </div>
         <button class="btn btn-info" type="submit">Submit</button>

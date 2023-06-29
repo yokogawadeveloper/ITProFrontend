@@ -19,7 +19,8 @@ export class NewhireformComponent implements OnInit {
   itemDropdown: any[] = [];
   costCenterdropdown: any[] = [];
   procurementData: any = [];
-  allFiles: any[] = [];
+
+  attachment!: File;  //for file upload
 
 
   constructor(
@@ -39,8 +40,8 @@ export class NewhireformComponent implements OnInit {
       totalBudget: [''],
       utilizedBudget: [''],
       remarks: [''],
-      rows: this.formBuilder.array([]),
-      additionalAttachments: this.formBuilder.array([]),
+      Files: File,
+      inlineitem: this.formBuilder.array([]),
     });
     this.addRow(); // Add one row by default
 
@@ -70,17 +71,17 @@ export class NewhireformComponent implements OnInit {
   }//end of ngOnInit
 
   get rows() {
-    return this.myForm.get('rows') as FormArray;
+    return this.myForm.get('inlineitem') as FormArray;
   }
 
   addRow() {
-    const newRow = this.formBuilder.group({
+    const inlineitemsRows = this.formBuilder.group({
       category: ['', Validators.required],
       item: ['', Validators.required],
       costCenter: ['', Validators.required],
       quantity: ['1', Validators.required],
     });
-    this.rows.push(newRow);
+    this.rows.push(inlineitemsRows);
   }
 
   deleteRow(index: number) {
@@ -99,32 +100,10 @@ export class NewhireformComponent implements OnInit {
 
   //get file list with name and title
 
-  handleImageChange(event: Event) {
-    const file = (event.target as HTMLInputElement).files![0];
-    this.allFiles.push(file);
-  }
-
-  get additionalAttachments(): FormArray {
-    return this.myForm.get('additionalAttachments') as FormArray;
-  }
-
-  addAttachmentField(): void {
-    const attachmentFormGroup = this.formBuilder.group({
-      attachments: ['']
-    });
-    this.additionalAttachments.push(attachmentFormGroup);
-  }
-
-  handleFileChange(event: Event , index: number) {
-    const file = (event.target as HTMLInputElement).files![0];
-    this.additionalAttachments.controls[index].patchValue({
-      attachments: file ? file.name : ''
-    });
-    this.additionalAttachments.controls[index].get('attachments')?.updateValueAndValidity();
-
-  }
-  removeAttachmentField(index: number): void {
-    this.additionalAttachments.removeAt(index);
+  FileUploadChange(event: any) {
+    if (event.target.files && event.target.files.length > 0) {
+      this.attachment = event.target.files[0];
+    }
   }
   // Getters for form controls
   async presentAlert() {
@@ -153,50 +132,60 @@ export class NewhireformComponent implements OnInit {
   }
 
   submitForm() {
-    // console.log(this.myForm.value);
     this.formSubmitted = true;
+    const formateData = {
+      inlineitem: this.myForm.get('inlineitem')?.value
+    }
+
     if (this.myForm.valid) {
-      const formattedData = {
-        RequestType: this.myForm.value.requestType,
-        Name: this.myForm.value.name,
-        Department: this.myForm.value.department,
-        IsExpenditure: this.myForm.value.isExpenditure,
-        TotalBudget: this.myForm.value.totalBudget,
-        UtilizedBudget: this.myForm.value.utilizedBudget,
-        Remarks: this.myForm.value.remarks,
-        inlineitem: this.myForm.value.rows.map((row: any) => ({
-          category: row.category,
-          item: row.item,
-          costcenter: row.costCenter,
-          quantity: row.quantity,
-        })),
-        additionalAttachments: this.myForm.value.additionalAttachments.map((attachment: any) => ({
-          attachments: attachment.attachments,
-        })),
-      };
-      this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
-        if (res) {
-          // Update procurementData array with the newly retrieved data
-          this.apiService.getProcurementData().subscribe((res: any) => {
-            this.procurementData = res;
-            this.router.navigate(['/procurementview']);
-          },
+      const formData = new FormData();
 
-            (err: any) => {
-              this.toast.error({
-                detail: 'OOPS !Something went wrong',
-                position: 'bottom-right',
-                duration: 3000,
-                type: 'danger'
-              })
-            }
-          );
 
-        }
+
+      formData.append('RequestType', this.myForm.get('requestType')?.value);
+      formData.append('Name', this.myForm.get('name')?.value);
+      formData.append('Department', this.myForm.get('department')?.value);
+      formData.append('IsExpenditure', this.myForm.get('isExpenditure')?.value);
+      formData.append('TotalBudget', this.myForm.get('totalBudget')?.value);
+      formData.append('UtilizedBudget', this.myForm.get('utilizedBudget')?.value);
+      formData.append('Remarks', this.myForm.get('remarks')?.value);
+      formData.append('Files', this.attachment);
+
+
+
+      const inlineItems = this.myForm.get('inlineitem') as FormArray;
+      //  get category data from form array
+
+      
+
+
+
+      for (let i = 0; i < inlineItems.length; i++) {
+        const row = inlineItems.at(i) as FormGroup;
+        formData.append(`inlineitem[${i}][category]`, row.get('category')?.value);
+        formData.append(`inlineitem[${i}][item]`, row.get('item')?.value);
+        formData.append(`inlineitem[${i}][costCenter]`, row.get('costCenter')?.value);
+        formData.append(`inlineitem[${i}][quantity]`, row.get('quantity')?.value);
+      }
+      
+      this.apiService.postMasterProcurementData(formData).subscribe((res: any) => {
+        console.log(res);
+        this.toast.success({
+          detail: 'Form submitted successfully',
+          position: 'bottom-right',
+          duration: 3000,
+          type: 'success'
+        })
+        this.router.navigate(['/home']);
+      }, (err: any) => {
+        console.log(err);
+        this.toast.error({
+          detail: 'OOPS !Something went wrong',
+          position: 'bottom-right',
+          duration: 3000,
+          type: 'danger'
+        })
       });
-      console.log(this.myForm.value);
-
-
     } else {
       this.toast.error({
         detail: 'OOPS !Something went wrong',

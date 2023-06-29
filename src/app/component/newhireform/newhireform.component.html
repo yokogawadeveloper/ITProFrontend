@@ -46,10 +46,10 @@
           </div>
 
           <!-- Start of Additional Attachments -->
-
           <div class="form-group col-md-6">
-            <label for="additionalAttachments">Additional Attachments</label>
-            <input type="file" name="image_url" accept="image/jpeg,image/png,image/gif" (click)="handleImageChange($event)">
+            <label for="attachments">Attachments</label>
+            <input type="file" class="form-control" formControlName="Files" name="Files" #fileUpload
+              (change)="FileUploadChange($event)" />
           </div>
           <!-- End of Additional Attachments -->
           <div class="inline-table">
@@ -60,18 +60,14 @@
                   <th>Item</th>
                   <th>Cost Center</th>
                   <th>Quantity</th>
-                  <th>Unit Cost</th>
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody formArrayName="rows">
-                <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i"
-                  [ngClass]="{'invalid': formSubmitted && row.invalid}">
+              <tbody formArrayName="inlineitem">
+                <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i" [ngClass]="{'invalid': formSubmitted && row.invalid}">
                   <td>
-                    <select formControlName="category" class="form-control"
-                      [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
-                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">
-                        {{option.ItemCategory}}</option>
+                    <select formControlName="category" class="form-control" [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
+                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">{{option.ItemCategory}}</option>
                     </select>
                   </td>
                   <td>
@@ -87,13 +83,7 @@
                     </select>
                   </td>
                   <td>
-                    <select formControlName="costCenter" class="form-control">
-                      <option *ngFor="let option of costCenterdropdown" [value]="option.id">{{ option.CostCenter }}
-                      </option>
-                    </select>
-                  </td>
-                  <td>
-                    <input type="number" formControlName="quantity" class="form-control" value="1" readonly>
+                    <input type="number" formControlName="quantity" class="form-control" value="1" readonly/>
                   </td>
                   <td>
                     <ion-button (click)="deleteRow(i)" color="danger" fill="solid" size="small">

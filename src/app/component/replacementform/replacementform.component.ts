@@ -21,6 +21,7 @@ export class ReplacementformComponent implements OnInit {
   itemDropdown: any[] = [];
   costCenterdropdown: any[] = [];
   isExpenditure: any;
+  cover!: File;
 
   constructor(
     private apiService: ApiService,
@@ -64,6 +65,12 @@ export class ReplacementformComponent implements OnInit {
     );
   }// end of ngOnInit
 
+  FileUploadChange(event: any) {
+    if (event.target.files && event.target.files.length > 0) {
+      this.cover = event.target.files[0];
+    }
+  }
+
 
   // Getters for form controls
   async presentAlert() {
@@ -95,28 +102,26 @@ export class ReplacementformComponent implements OnInit {
   submitForm() {
     this.formSubmitted = true;
     if (this.myForm.valid) {
-      const formData = new FormData();
-      for (let i = 0; i < this.myForm.value.Files.length; i++) {
-        formData.append("Files", this.myForm.value.Files[i]);
-      }
-      let formattedData = {
-        "RequestType": this.myForm.value.requestType,
-        "Name": this.myForm.value.name,
-        "Department": this.myForm.value.department,
-        "IsExpenditure": this.myForm.value.isExpenditure,
-        "TotalBudget": this.myForm.value.totalBudget,
-        "UtilizedBudget": this.myForm.value.utilizedBudget,
-        "Remarks": this.myForm.value.remarks,
-        "Files": formData
-      }
-      console.log(formattedData);
+      const uploadFormData = new FormData();
+      uploadFormData.append('RequestType', 'NewHire');
+      uploadFormData.append('Name', this.myForm.value.name);
+      uploadFormData.append('Department', this.myForm.value.department);
+      uploadFormData.append('IsExpenditure', this.myForm.value.isExpenditure);
+      uploadFormData.append('TotalBudget', this.myForm.value.totalBudget);
+      uploadFormData.append('UtilizedBudget', this.myForm.value.utilizedBudget);
+      uploadFormData.append('Remarks', this.myForm.value.remarks);
+      uploadFormData.append('Files', this.cover, this.cover.name);
 
+      
 
-      // this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
-      //   if (res) {
-      //     this.router.navigate(['/procurementview']);
-      //   }
-      // });
+      
+      
+      console.log('RepuploadFormData', uploadFormData);
+      this.apiService.postMasterProcurementData(uploadFormData).subscribe((res: any) => {
+        if (res) {
+          this.router.navigate(['/procurementview']);
+        }
+      });
 
     } else {
       this.toast.error({

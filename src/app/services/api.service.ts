@@ -75,10 +75,27 @@ export class ApiService {
       console.log("no user data");
       return new Observable<any>((observer) => observer.error("No user data"));
     }
-  }
+  }//create master procurement data
 
 
-  //Current User Modification Data
+  postAttachment(uploadData: any): Observable<any> {
+    let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
+    if (userData && userData.access) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
+      return this.http.post(this.apiUrl + '/moreattachments/', uploadData, { headers });
+    } else {
+      console.log("no user data");
+      return new Observable<any>((observer) => observer.error("No user data"));
+    }
+  }//create More attachments
+
+
+
+
+
+
+
+
   getModificationData(): Observable<any> {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
     if (userData && userData.access) {
