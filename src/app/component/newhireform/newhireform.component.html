@@ -44,12 +44,13 @@
                 placeholder="Utilized Budget" />
             </div>
           </div>
-
-          <!-- Start of Additional Attachments -->
-          <div class="form-group col-md-6">
-            <label for="attachments">Attachments</label>
-            <input type="file" class="form-control" formControlName="Files" name="Files" #fileUpload
-              (change)="FileUploadChange($event)" />
+          <!-- Add more file fields -->
+          <div class="form-group col-md-6" *ngFor="let fileControl of myForm.get('attachments')?.value; let i = index">
+            <label for="attachment{{ i }}">Attachment {{ i + 1 }}</label>
+            <input type="file" class="form-control" [formControlName]="'attachment' + i" [id]="'attachment' + i" (change)="onAttachmentUpload($event, i)" />
+          </div>
+          <div class="form-group col-md-12">
+            <ion-button (click)="addMoreAttachments()" color="medium" fill="solid" size="small"><ion-icon name="cloud-upload-outline"></ion-icon></ion-button>
           </div>
           <!-- End of Additional Attachments -->
           <div class="inline-table">
@@ -63,11 +64,14 @@
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody formArrayName="inlineitem">
-                <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i" [ngClass]="{'invalid': formSubmitted && row.invalid}">
+              <tbody formArrayName="rows">
+                <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i"
+                  [ngClass]="{'invalid': formSubmitted && row.invalid}">
                   <td>
-                    <select formControlName="category" class="form-control" [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
-                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">{{option.ItemCategory}}</option>
+                    <select formControlName="category" class="form-control"
+                      [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
+                      <option *ngFor="let option of categoryDropdown" [value]="option.ItemCategory">
+                        {{option.ItemCategory}}</option>
                     </select>
                   </td>
                   <td>
@@ -83,7 +87,7 @@
                     </select>
                   </td>
                   <td>
-                    <input type="number" formControlName="quantity" class="form-control" value="1" readonly/>
+                    <input type="number" formControlName="quantity" class="form-control" value="1" readonly>
                   </td>
                   <td>
                     <ion-button (click)="deleteRow(i)" color="danger" fill="solid" size="small">

@@ -43,14 +43,7 @@
               <input type="number" class="form-control" formControlName="utilizedBudget"
                 placeholder="Utilized Budget" />
             </div>
-          </div>
-          <!-- Start of Additional Attachments -->
-          <!-- <div class="form-group col-md-6">
-            <label for="attachments">Attachments</label>
-            <input type="file" class="form-control" formControlName="attachments" (change)="onAttachmentUpload($event)"
-              multiple />
-          </div> -->
-          
+          </div>          
           <!-- Add more file fields -->
           <div *ngFor="let fileControl of myForm.get('attachments')?.value; let i = index" class="form-group col-md-6">
             <label for="attachment{{ i }}">Attachment {{ i + 1 }}</label>
@@ -63,7 +56,9 @@
             Add More Attachments
           </ion-button>
 
+          <!-- delete file field button -->
           
+
           <!-- End of Additional Attachments -->
           <div class="inline-table">
             <table class="table table-bordered">

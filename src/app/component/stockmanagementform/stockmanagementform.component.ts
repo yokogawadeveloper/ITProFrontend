@@ -123,6 +123,8 @@ export class StockmanagementformComponent implements OnInit {
       fileNameInput.value = file ? file.name : '';
     }
   }
+
+  
   
 
 //Submit form

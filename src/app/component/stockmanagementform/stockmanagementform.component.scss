@@ -8,3 +8,100 @@
     box-shadow: 0 0 5px #ccc;
     position: relative;
 }
+
+
+.invalid input.form-control {
+    border-color: red;
+}
+
+.invalid select.form-control {
+    border-color: red;
+}
+
+.invalid-inline {
+    border: 1px solid red;
+}
+
+.invalid-inline input.form-control {
+    border-color: red;
+}
+
+
+.inline-table table thead {
+    background: #428bca !important;
+    color: azure !important;
+}
+
+.inline-table table thead th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 1.2rem;
+    text-align: center;
+    white-space: nowrap;
+}
+
+
+label.required>span {
+    color: red;
+}
+
+
+tbody tr:nth-child(odd) {
+    background-color: #ebebeb;
+}
+
+// for mobile view only
+@media (max-width: 768px) {
+    .inline-table {
+        overflow-x: auto;
+    }
+
+    .inline-table table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 0;
+        border-collapse: collapse;
+    }
+
+    .inline-table table thead th {
+        white-space: nowrap;
+    }
+
+    .inline-table {
+        width: 100%;
+        -webkit-overflow-scrolling: touch;
+        overflow-y: hidden;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        border: 1px solid #ddd;
+        margin-bottom: 15px;
+    }
+
+    .inline-table table {
+        margin-bottom: 0;
+    }
+
+    .inline-table table thead th {
+        white-space: nowrap;
+    }
+}
+
+
+form {
+    margin-bottom: 0;
+    background: #428bca;
+}
+
+
+
+
+input[type=file] {
+    display: block;
+    margin-bottom: 12px;
+}
+
+.additional-attachments .name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #428bca;
+    background: greenyellow;
+}
