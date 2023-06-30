@@ -47,7 +47,8 @@
           <!-- Add more file fields -->
           <div class="form-group col-md-6" *ngFor="let fileControl of myForm.get('attachments')?.value; let i = index">
             <label for="attachment{{ i }}">Attachment {{ i + 1 }}</label>
-            <input type="file" class="form-control" [formControlName]="'attachment' + i" [id]="'attachment' + i" (change)="onAttachmentUpload($event, i)" />
+            <input type="file" class="form-control" [formControlName]="'attachment' + i" [id]="'attachment' + i" (change)="onAttachmentUpload($event, i)" #fileInput accept="image/*,.pdf" />
+            <p>Selected file: {{ selectedFileNames[i] }}</p>
           </div>
           <div class="form-group col-md-12">
             <ion-button (click)="addMoreAttachments()" color="medium" fill="solid" size="small"><ion-icon name="cloud-upload-outline"></ion-icon></ion-button>
