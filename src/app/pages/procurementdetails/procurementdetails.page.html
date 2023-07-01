@@ -51,6 +51,26 @@
                 <p>{{procurementDataById.IsExpenditure}}</p>
               </ion-col>
             </ion-row>
+            <ion-row *ngIf="procurementDataById.IsExpenditure=='Yes'">
+              <ion-col class="title-col">
+                <p>Total Budget</p>
+              </ion-col>
+              <ion-col class="value-col">
+                <p>{{procurementDataById.TotalBudget}}</p>
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="procurementDataById.IsExpenditure=='Yes'">
+              <ion-col class="title-col">
+                <p>Utilized Budget</p>
+              </ion-col>
+              <ion-col class="value-col">
+                <p>{{procurementDataById.UtilizedBudget}}</p>
+              </ion-col>
+            </ion-row>
+
+
+
             <ion-row>
               <ion-col class="title-col">
                 <p>Status</p>

@@ -1,3 +1,16 @@
+.inline-table table thead {
+  background: #428bca !important;
+  color: azure !important;
+}
+
+.inline-table table thead th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  font-size: 1.2rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
 .invalid input.form-control {
   border-color: red;
 }
@@ -15,19 +28,30 @@
 }
 
 
-.inline-table table thead {
-  background: #428bca !important;
-  color: azure !important;
+input[type=file] {
+  display: inline-block;
+  margin-bottom: 12px;
 }
 
-.inline-table table thead th {
-  border: 1px solid #ddd;
-  padding: 8px;
-  font-size: 1.2rem;
+.invalid-file {
+  border-color: red;
+}
+
+.attachments .filename {
+  color: #428bca;
+}
+
+.unit-price-column {
+  text-align: right;
+}
+
+.total-column {
+  font-weight: bold;
+}
+
+.add-row-column {
   text-align: center;
-  white-space: nowrap;
 }
-
 
 label.required>span {
   color: red;
@@ -35,8 +59,13 @@ label.required>span {
 
 
 tbody tr:nth-child(odd) {
-  background-color: #ebebeb;
+  // background-color: #ebebeb;
+  background-color: #d5de4c14;
 }
+
+
+
+
 
 // for mobile view only
 @media (max-width: 768px) {
@@ -74,22 +103,5 @@ tbody tr:nth-child(odd) {
 }
 
 
-form {
-  margin-bottom: 0;
-  background: #428bca;
-}
 
 
-
-
-input[type=file] {
-  display: block;
-  margin-bottom: 12px;
-}
-
-.additional-attachments .name{
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #428bca;
-  background: greenyellow;
-}

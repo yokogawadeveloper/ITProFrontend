@@ -6,13 +6,14 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
 
-
-// main component class
 @Component({
   selector: 'app-replacementform',
   templateUrl: './replacementform.component.html',
   styleUrls: ['./replacementform.component.scss'],
 })
+  
+
+
 export class ReplacementformComponent implements OnInit {
   myForm!: FormGroup;
   formSubmitted: boolean = false;
@@ -20,59 +21,156 @@ export class ReplacementformComponent implements OnInit {
   categoryDropdown: any[] = [];
   itemDropdown: any[] = [];
   costCenterdropdown: any[] = [];
-  isExpenditure: any;
-  cover!: File;
+  procurementData: any = [];
+  selectedFileNames: string[] = [];
+
 
   constructor(
     private apiService: ApiService,
     private toast: NgToastService,
     private formBuilder: FormBuilder,
-    private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
-      requestType: 'NewHire',
+      requestType: 'Replacement',
       name: ['', Validators.required],
       department: ['', Validators.required],
       isExpenditure: ['', Validators.required],
       totalBudget: [''],
       utilizedBudget: [''],
       remarks: [''],
-      Files: File // need to check
+      rows: this.formBuilder.array([]),
+      additionalAttachments: this.formBuilder.array([]),
     });
-    // Get department dropdown values
+    this.addRow(); 
+    this.addMoreAttachments(); 
+
     this.apiService.getDepartmentDropdownData().subscribe((res: any) => {
       this.departmentDropdown = res;
     });
 
-    // Get category dropdown values
     this.apiService.getCategoryDropdownData().subscribe((res: any) => {
       this.categoryDropdown = res;
     }
     );
 
-    // Get item dropdown values
     this.apiService.getItemDropdownData().subscribe((res: any) => {
       this.itemDropdown = res;
     }
     );
-    // Get cost center dropdown values
+
     this.apiService.getCostCenterDropdownData().subscribe((res: any) => {
       this.costCenterdropdown = res;
     }
     );
-  }// end of ngOnInit
 
-  FileUploadChange(event: any) {
-    if (event.target.files && event.target.files.length > 0) {
-      this.cover = event.target.files[0];
+  }//end of ngOnInit
+
+  get rows() {
+    return this.myForm.get('rows') as FormArray;
+  }
+
+  addRow() {
+    const newRow = this.formBuilder.group({
+      category: ['', Validators.required],
+      item: ['', Validators.required],
+      costCenter: ['', Validators.required],
+      unitPrice: ['', Validators.required],
+      quantity: ['1', Validators.required],
+    });
+    this.rows.push(newRow);
+  }
+
+  deleteRow(index: number) {
+    if (this.rows.length == 1) {
+      this.toast.error({
+        detail: 'Atleast one row is required',
+        position: 'bottom-right',
+        duration: 3000,
+        type: 'danger'
+      })
+    } else {
+      this.rows.removeAt(index);
     }
+
+  }
+
+  // More attachment
+  get additionalAttachments(): FormArray {
+    return this.myForm.get('additionalAttachments') as FormArray;
+  }
+
+  addMoreAttachments() {
+    const newAttachment = this.formBuilder.control('', Validators.required);
+    this.additionalAttachments.push(newAttachment);
   }
 
 
-  // Getters for form controls
+  handleFileChange(event: any, index: number) {
+    const fileInput = event.target as HTMLInputElement;
+    const file = fileInput.files?.[0];
+    if (file) {
+      (this.myForm.get('additionalAttachments') as FormArray).at(index).setValue(file);
+      this.selectedFileNames.push(file.name);
+    }
+  }
+
+  addAttachmentField() {
+    this.addMoreAttachments();
+  }
+
+  removeAttachmentField(index: number) {
+    if (this.additionalAttachments.length == 1) {
+      this.toast.error({
+        detail: 'Atleast one attachment is required',
+        position: 'bottom-right',
+        duration: 3000,
+        type: 'danger'
+      })
+    }
+    else {
+      this.additionalAttachments.removeAt(index);
+      this.selectedFileNames.splice(index, 1);
+    }
+  }
+
+  populateUnitPrice(event: any, index: number) {
+    const selectedItem = event.target.value;
+    // Find the selected item in your itemDropdown array or fetch it from an API
+    const selectedOption = this.itemDropdown.find(option => option.ItemName === selectedItem);
+    // Update the unit price for the corresponding row index
+    if (selectedOption) {
+      const unitPrice = this.rows.at(index).get('unitPrice');
+      if (unitPrice) {
+        unitPrice.setValue(selectedOption.UnitPrice);
+      }
+
+    }
+  }
+
+  calculateTotal(): number {
+    const rowsArray = this.myForm.get('rows') as FormArray;
+    let total = 0;
+
+    rowsArray.controls.forEach(row => {
+      const quantity = row.get('quantity')?.value;
+      const unitPrice = row.get('unitPrice')?.value;
+      const rowTotal = quantity * unitPrice;
+      total += rowTotal;
+    });
+
+    return total;
+  }
+
+  get total(): number {
+    return this.calculateTotal();
+  }
+
+
+  // Submit form
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Confirm Submission',
@@ -95,41 +193,76 @@ export class ReplacementformComponent implements OnInit {
         }
       ]
     });
-
     await alert.present();
   }
+
 
   submitForm() {
     this.formSubmitted = true;
     if (this.myForm.valid) {
-      const uploadFormData = new FormData();
-      uploadFormData.append('RequestType', 'NewHire');
-      uploadFormData.append('Name', this.myForm.value.name);
-      uploadFormData.append('Department', this.myForm.value.department);
-      uploadFormData.append('IsExpenditure', this.myForm.value.isExpenditure);
-      uploadFormData.append('TotalBudget', this.myForm.value.totalBudget);
-      uploadFormData.append('UtilizedBudget', this.myForm.value.utilizedBudget);
-      uploadFormData.append('Remarks', this.myForm.value.remarks);
-      uploadFormData.append('Files', this.cover, this.cover.name);
-
-      
-
-      
-      
-      console.log('RepuploadFormData', uploadFormData);
-      this.apiService.postMasterProcurementData(uploadFormData).subscribe((res: any) => {
+      const formattedData = {
+        RequestType: this.myForm.value.requestType,
+        Name: this.myForm.value.name,
+        Department: this.myForm.value.department,
+        IsExpenditure: this.myForm.value.isExpenditure,
+        TotalBudget: this.myForm.value.totalBudget,
+        UtilizedBudget: this.myForm.value.utilizedBudget,
+        Remarks: this.myForm.value.remarks,
+        inlineitem: this.myForm.value.rows.map((row: any) => ({
+          category: row.category,
+          item: row.item,
+          costcenter: row.costCenter,
+          quantity: row.quantity,
+          unitprice: row.unitPrice,
+          totalprice: row.quantity * row.unitPrice
+        })),
+      };
+      this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
         if (res) {
-          this.router.navigate(['/procurementview']);
+          //more attachment
+          const formData = new FormData();
+          formData.append('procurement_id', res.id);
+          for (let i = 0; i < this.myForm.value.additionalAttachments.length; i++) {
+            formData.append('attachment', this.myForm.value.additionalAttachments[i]);
+          }
+          this.apiService.postAttachment(formData).subscribe((res: any) => {
+            if (res) {
+              this.toast.success({
+                detail: 'Application submitted successfully',
+                position: 'bottom-right',
+                duration: 3000,
+                type: 'success'
+              });
+              this.router.navigate(['/procurementview']);
+            }
+          },
+            (err: any) => {
+              this.toast.error({
+                detail: 'OOPS !Something went wrong',
+                position: 'bottom-right',
+                duration: 3000,
+                type: 'danger'
+              })
+            }
+          );
         }
       });
-
     } else {
       this.toast.error({
-        detail: 'OOPS !Something went wrong',
+        detail: 'Please fill all the required fields',
         position: 'bottom-right',
         duration: 3000,
         type: 'danger'
       })
     }
   } //end of submitForm
+
+
+
+
 }
+
+
+
+
+

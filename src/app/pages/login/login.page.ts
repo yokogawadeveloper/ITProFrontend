@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { HttpHeaders } from '@angular/common/http';
+import { Animation, AnimationController } from '@ionic/angular';
 
 
 
@@ -22,7 +23,10 @@ export class LoginPage {
     private authService: AuthService,
     private router: Router,
     private toast: NgToastService,
-    ) { }
+    private animationCtrl: AnimationController
+  ) { 
+    this.animationCtrl.create()
+    }
 
   login() {
     this.authService.login(this.username, this.password,)

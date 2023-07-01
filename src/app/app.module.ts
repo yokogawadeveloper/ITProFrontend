@@ -16,8 +16,11 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgToastModule } from 'ng-angular-popup';
 
 
+
 @NgModule({
-  declarations: [AppComponent,],
+  declarations: [
+    AppComponent,
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

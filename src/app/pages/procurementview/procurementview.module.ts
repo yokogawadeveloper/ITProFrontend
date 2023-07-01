@@ -10,13 +10,14 @@ import { ProcurementviewPage } from './procurementview.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     ProcurementviewPageRoutingModule,
-    NgxDatatableModule
+    NgxDatatableModule,
   ],
   declarations: [ProcurementviewPage]
 })

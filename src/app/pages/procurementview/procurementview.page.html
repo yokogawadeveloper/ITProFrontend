@@ -11,52 +11,48 @@
 </ion-header>
 
 <ion-content fullscreen="true">
-  <ion-card>
+  <ion-card class="card">
     <ion-card-header>
-      <ion-searchbar  placeholder="Filter"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="statusFilter" (ionChange)="filterItems()" placeholder="Filter By Name & Status"></ion-searchbar>
     </ion-card-header>
     <ion-card-content>
-        <div class="row">
-          <div class="inline-table">
-            <table class="table table-reponsive">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">SI No</th>
-                  <th scope="col">Request No</th>
-                  <th scope="col">Request Type</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <ng-container *ngFor="let data of procurementData; let i=index">
-                  <tr>
-                    <td scope="col" data-title="SI No">{{i+1}}</td>
-                    <td scope="col" data-title="Request No">{{data.RequestNumber}}</td>
-                    <td scope="col" data-title="RequestType">{{data.RequestType}}</td>
-                    <td scope="col" data-title="Name">{{data.Name}}</td>
-                    <td scope="col" data-title="Status">{{data.Status}}</td>
-                    <td scope="col" data-title="Action">
-                      <ion-button (click)="redirectToProcurementDetails(data.id)" class="edit" color="tertiary" fill="clear"
-                        size="small">
-                        <ion-icon name="eye-off-outline"></ion-icon>
-                      </ion-button>
-                    </td>
-                  </tr>
-                </ng-container>
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">SI No</th>
+              <th scope="col">Request No</th>
+              <th scope="col">Request Type</th>
+              <th scope="col">Name</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of getPageItems(); let i = index">
+                <td scope="col" data-title="SI No">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+                <td scope="col" data-title="Request No">{{ data.RequestNumber }}</td>
+                <td scope="col" data-title="RequestType">{{ data.RequestType }}</td>
+                <td scope="col" data-title="Name">{{ data.Name }}</td>
+                <td scope="col" data-title="Status">{{ data.Status }}</td>
+                <td scope="col" data-title="Action">
+                  <ion-button (click)="redirectToProcurementDetails(data.id)" class="edit" color="tertiary" fill="clear"
+                    size="small">
+                    <ion-icon name="eye-off-outline"></ion-icon>
+                  </ion-button>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
     </ion-card-content>
+    <div class="pagination-controls">
+      <ion-button (click)="goToPreviousPage()" [disabled]="currentPage === 1" class="pagination-button" fill="clear"><ion-icon name="arrow-back-circle"></ion-icon></ion-button>
+      <div class="pagination-info">
+        Page {{ currentPage }} of {{ totalPages }}
+      </div>
+      <ion-button (click)="goToNextPage()" [disabled]="currentPage === totalPages" class="pagination-button" fill="clear" ><ion-icon name="arrow-forward-circle"></ion-icon></ion-button>
+    </div>
   </ion-card>
-  
 </ion-content>
 
-<ion-footer>
-  <div class="pagination-controls">
-    <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">Previous</button>
-    <button (click)="goToNextPage()" [disabled]="currentPage === totalPages">Next</button>
-  </div>
-</ion-footer>

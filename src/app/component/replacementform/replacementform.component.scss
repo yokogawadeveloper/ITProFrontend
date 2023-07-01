@@ -1,3 +1,16 @@
+.inline-table table thead {
+  background: #428bca !important;
+  color: azure !important;
+}
+
+.inline-table table thead th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  font-size: 1.2rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
 .invalid input.form-control {
   border-color: red;
 }
@@ -14,23 +27,63 @@
   border-color: red;
 }
 
+
+input[type=file] {
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.invalid-file {
+  border-color: red;
+}
+
+.attachments .filename {
+  color: #428bca;
+}
+
+.unit-price-column {
+  text-align: right;
+}
+
+.total-column {
+  font-weight: bold;
+}
+
+.add-row-column {
+  text-align: center;
+}
+
+label.required>span {
+  color: red;
+}
+
+
+tbody tr:nth-child(odd) {
+  // background-color: #ebebeb;
+  background-color: #d5de4c14;
+}
+
+
+
+
+
 // for mobile view only
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .inline-table {
     overflow-x: auto;
   }
-  
+
   .inline-table table {
     width: 100%;
     max-width: 100%;
     margin-bottom: 0;
     border-collapse: collapse;
   }
-  
+
   .inline-table table thead th {
     white-space: nowrap;
   }
-  
+
   .inline-table {
     width: 100%;
     -webkit-overflow-scrolling: touch;
@@ -48,8 +101,3 @@
     white-space: nowrap;
   }
 }
-
-
-
-
-
