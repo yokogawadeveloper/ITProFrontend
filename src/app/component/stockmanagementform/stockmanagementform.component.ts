@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { NgToastService } from 'ng-angular-popup';
-import { FormBuilder, FormGroup,FormArray, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
@@ -13,7 +13,6 @@ import { AlertController } from '@ionic/angular';
 })
 
 
-
 export class StockmanagementformComponent implements OnInit {
   myForm!: FormGroup;
   formSubmitted: boolean = false;
@@ -22,7 +21,7 @@ export class StockmanagementformComponent implements OnInit {
   itemDropdown: any[] = [];
   costCenterdropdown: any[] = [];
   procurementData: any = [];
-  attachmentCover !: File;
+  selectedFileNames: string[] = [];
 
 
   constructor(
@@ -35,7 +34,7 @@ export class StockmanagementformComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
-      requestType: 'New Hire',
+      requestType: 'Stock Management',
       name: ['', Validators.required],
       department: ['', Validators.required],
       isExpenditure: ['', Validators.required],
@@ -43,28 +42,25 @@ export class StockmanagementformComponent implements OnInit {
       utilizedBudget: [''],
       remarks: [''],
       rows: this.formBuilder.array([]),
-      attachments: this.formBuilder.array([]),
+      additionalAttachments: this.formBuilder.array([]),
     });
-    this.addRow(); // Add one row by default
+    this.addRow();
+    this.addMoreAttachments();
 
-    // Get department dropdown values
     this.apiService.getDepartmentDropdownData().subscribe((res: any) => {
       this.departmentDropdown = res;
     });
 
-    // Get category dropdown values
     this.apiService.getCategoryDropdownData().subscribe((res: any) => {
       this.categoryDropdown = res;
     }
     );
 
-    // Get item dropdown values
     this.apiService.getItemDropdownData().subscribe((res: any) => {
       this.itemDropdown = res;
     }
     );
 
-    // Get cost center dropdown values
     this.apiService.getCostCenterDropdownData().subscribe((res: any) => {
       this.costCenterdropdown = res;
     }
@@ -81,6 +77,7 @@ export class StockmanagementformComponent implements OnInit {
       category: ['', Validators.required],
       item: ['', Validators.required],
       costCenter: ['', Validators.required],
+      unitPrice: ['', Validators.required],
       quantity: ['1', Validators.required],
     });
     this.rows.push(newRow);
@@ -100,34 +97,79 @@ export class StockmanagementformComponent implements OnInit {
 
   }
 
-
-  
-
-  get attachments() {
-    return this.myForm.get('attachments') as FormArray;
+  // More attachment
+  get additionalAttachments(): FormArray {
+    return this.myForm.get('additionalAttachments') as FormArray;
   }
 
   addMoreAttachments() {
-    const attachmentControl = new FormControl(null);
-    this.attachments.push(attachmentControl);
+    const newAttachment = this.formBuilder.control('', Validators.required);
+    this.additionalAttachments.push(newAttachment);
   }
 
-  onAttachmentUpload(event: any, index: number) {
-    const file = event.target.files[0];
-    const attachmentControl = this.attachments.controls[index] as FormControl;
-    attachmentControl.setValue(file);
 
-    // Set the file name in the corresponding input field
-    const fileNameInput = document.getElementById(`attachment${index}`) as HTMLInputElement;
-    if (fileNameInput) {
-      fileNameInput.value = file ? file.name : '';
+  handleFileChange(event: any, index: number) {
+    const fileInput = event.target as HTMLInputElement;
+    const file = fileInput.files?.[0];
+    if (file) {
+      (this.myForm.get('additionalAttachments') as FormArray).at(index).setValue(file);
+      this.selectedFileNames.push(file.name);
     }
   }
 
-  
-  
+  addAttachmentField() {
+    this.addMoreAttachments();
+  }
 
-//Submit form
+  removeAttachmentField(index: number) {
+    if (this.additionalAttachments.length == 1) {
+      this.toast.error({
+        detail: 'Atleast one attachment is required',
+        position: 'bottom-right',
+        duration: 3000,
+        type: 'danger'
+      })
+    }
+    else {
+      this.additionalAttachments.removeAt(index);
+      this.selectedFileNames.splice(index, 1);
+    }
+  }
+
+  populateUnitPrice(event: any, index: number) {
+    const selectedItem = event.target.value;
+    // Find the selected item in your itemDropdown array or fetch it from an API
+    const selectedOption = this.itemDropdown.find(option => option.ItemName === selectedItem);
+    // Update the unit price for the corresponding row index
+    if (selectedOption) {
+      const unitPrice = this.rows.at(index).get('unitPrice');
+      if (unitPrice) {
+        unitPrice.setValue(selectedOption.UnitPrice);
+      }
+
+    }
+  }
+
+  calculateTotal(): number {
+    const rowsArray = this.myForm.get('rows') as FormArray;
+    let total = 0;
+
+    rowsArray.controls.forEach(row => {
+      const quantity = row.get('quantity')?.value;
+      const unitPrice = row.get('unitPrice')?.value;
+      const rowTotal = quantity * unitPrice;
+      total += rowTotal;
+    });
+
+    return total;
+  }
+
+  get total(): number {
+    return this.calculateTotal();
+  }
+
+
+  // Submit form
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Confirm Submission',
@@ -155,7 +197,6 @@ export class StockmanagementformComponent implements OnInit {
 
 
   submitForm() {
-    // console.log(this.myForm.value);
     this.formSubmitted = true;
     if (this.myForm.valid) {
       const formattedData = {
@@ -171,15 +212,17 @@ export class StockmanagementformComponent implements OnInit {
           item: row.item,
           costcenter: row.costCenter,
           quantity: row.quantity,
+          unitprice: row.unitPrice,
+          totalprice: row.quantity * row.unitPrice
         })),
       };
       this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
         if (res) {
-          const attachments = this.myForm.value.attachments.filter((attachment: File) => attachment !== null);
+          //more attachment
           const formData = new FormData();
           formData.append('procurement_id', res.id);
-          for (let i = 0; i < attachments.length; i++) {
-            formData.append('attachment', attachments[i], attachments[i].name);
+          for (let i = 0; i < this.myForm.value.additionalAttachments.length; i++) {
+            formData.append('attachment', this.myForm.value.additionalAttachments[i]);
           }
           this.apiService.postAttachment(formData).subscribe((res: any) => {
             if (res) {
@@ -203,12 +246,9 @@ export class StockmanagementformComponent implements OnInit {
           );
         }
       });
-      console.log(this.myForm.value);
-
-
     } else {
       this.toast.error({
-        detail: 'OOPS !Something went wrong',
+        detail: 'Please fill all the required fields',
         position: 'bottom-right',
         duration: 3000,
         type: 'danger'
@@ -216,4 +256,11 @@ export class StockmanagementformComponent implements OnInit {
     }
   } //end of submitForm
 
+
+
+
 }
+
+
+
+
