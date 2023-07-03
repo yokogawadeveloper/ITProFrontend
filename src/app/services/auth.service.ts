@@ -19,7 +19,6 @@ const httpOptions = {
 export class AuthService {
 
   private apiUrl: string = environment.apiUrl; //main url
-
   constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string) {
@@ -28,7 +27,6 @@ export class AuthService {
         if (user && user.access) {
           sessionStorage.setItem('currentUser', JSON.stringify(user));
         }
-        console.log(this.apiUrl);
         return user;
       }));
   } // login

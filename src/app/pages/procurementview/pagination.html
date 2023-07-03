@@ -1,0 +1,93 @@
+<ion-header>
+    <ion-toolbar>
+        <div class="back-circle">
+            <ion-img src="https://yokogawa.service-now.com/6749beaf1bbfe300b6351028bd4bcb1a.iix"></ion-img>
+            <ion-title class="custom-font">IT Procurement</ion-title>
+        </div>
+        <ion-buttons slot="start">
+            <ion-menu-button menu="main-menu"> </ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content fullscreen="true">
+    <ion-card class="card">
+        <ion-card-header>
+            <ion-searchbar [(ngModel)]="statusFilter" (ionChange)="filterItems()"
+                placeholder="Filter By Name & Status"></ion-searchbar>
+        </ion-card-header>
+        <ion-card-content>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">SI No</th>
+                            <th scope="col">Request No</th>
+                            <th scope="col">Request Type</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of getPageItems(); let i = index">
+                            <td scope="col" data-title="SI No">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+                            <td scope="col" data-title="Request No">{{ data.RequestNumber }}</td>
+                            <td scope="col" data-title="RequestType">{{ data.RequestType }}</td>
+                            <td scope="col" data-title="Name">{{ data.Name }}</td>
+                            <td scope="col" data-title="Status">{{ data.Status }}</td>
+                            <td scope="col" data-title="Action">
+                                <ion-button (click)="redirectToProcurementDetails(data.id)" class="edit"
+                                    color="tertiary" fill="clear" size="small">
+                                    <ion-icon name="eye-off-outline"></ion-icon>
+                                </ion-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </ion-card-content>
+        <!-- <div class="pagination-controls">
+      <ion-button (click)="goToPreviousPage()" [disabled]="currentPage === 1" class="pagination-button" fill="clear">
+        <ion-icon name="arrow-back-circle"></ion-icon>
+      </ion-button>
+    
+      <div class="pagination-info">
+        Page {{ currentPage }} of {{ totalPages }}
+      </div>
+    
+      <ion-button (click)="goToNextPage()" [disabled]="currentPage === totalPages" class="pagination-button" fill="clear">
+        <ion-icon name="arrow-forward-circle"></ion-icon>
+      </ion-button>
+    
+      <div class="jump-page">
+        <input type="number" min="1" max="{{ totalPages }}" [(ngModel)]="jumpPageNumber">
+        <ion-button (click)="jumpToPage()" class="jump-button" fill="clear">Go</ion-button>
+      </div>
+    </div> -->
+
+
+        <div class="pagination-controls">
+            <div class="pagination-buttons">
+                <ion-button (click)="goToPreviousPage()" [disabled]="currentPage === 1" class="pagination-button"
+                    fill="clear">
+                    <ion-icon name="arrow-back-circle"></ion-icon>
+                </ion-button>
+
+                <div class="jump-page">
+                    <input type="number" min="1" max="{{ totalPages }}" [(ngModel)]="jumpPageNumber">
+                    <ion-button (click)="jumpToPage()" class="jump-button" fill="clear">Go</ion-button>
+                </div>
+
+                <ion-button (click)="goToNextPage()" [disabled]="currentPage === totalPages" class="pagination-button"
+                    fill="clear">
+                    <ion-icon name="arrow-forward-circle"></ion-icon>
+                </ion-button>
+            </div>
+
+            <div class="pagination-info">
+                Page {{ currentPage }} of {{ totalPages }}
+            </div>
+        </div>
+
+    </ion-card>
+</ion-content>

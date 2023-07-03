@@ -12,6 +12,11 @@ export class ProcurementviewPage implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalPages: number = 0;
+  jumpPageNumber: number = 1;
+
+  //sorting
+  sortColumn: string = ''; // Column name for sorting
+  sortDirection: string = 'asc'; // Sort direction: 'asc' or 'desc'
 
   procurementData: any = [];
   statusFilter: string = '';
@@ -30,7 +35,7 @@ export class ProcurementviewPage implements OnInit {
     );
     this.filterItems();
   }//end ngOnInit
-  
+
 
   redirectToProcurementDetails(dataId: string) {
     this.router.navigate(['/procurementdetails', dataId]);
@@ -53,27 +58,35 @@ export class ProcurementviewPage implements OnInit {
   }
 
   getPageItems() {
+    let sortedItems = this.procurementData.sort((a: any, b: any) => {
+      if (this.sortColumn === 'Request No') {
+        let valA = parseInt(a.RequestNumber);
+        let valB = parseInt(b.RequestNumber);
+        if (valA < valB) {
+          return this.sortDirection === 'asc' ? -1 : 1;
+        } else if (valA > valB) {
+          return this.sortDirection === 'asc' ? 1 : -1;
+        } else {
+          return 0;
+        }
+      } else {
+        let valA = a[this.sortColumn];
+        let valB = b[this.sortColumn];
+        if (valA < valB) {
+          return this.sortDirection === 'asc' ? -1 : 1;
+        } else if (valA > valB) {
+          return this.sortDirection === 'asc' ? 1 : -1;
+        } else {
+          return 0;
+        }
+      }
+    });
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    return this.procurementData.slice(startIndex, endIndex);
-  }
+    return this.procurementData.slice(startIndex, endIndex) || sortedItems.slice(startIndex, endIndex);
 
-  // Inside your component class
-  // filterItems() {
-  //   if (!this.statusFilter) {
-  //     // If the filter is empty, show all items
-  //     this.procurementData = this.getPageItems();
-  //   } else {
-  //     // Filter the items based on the entered text
-  //     const searchText = this.statusFilter.toLowerCase();
-  //     this.procurementData = this.getPageItems().filter((data: { Status: string; RequestNumber: string; RequestType: string; Name: string; }) =>
-  //       data.Status.toLowerCase().includes(searchText) ||
-  //       data.RequestNumber.toLowerCase().includes(searchText) ||
-  //       data.RequestType.toLowerCase().includes(searchText) ||
-  //       data.Name.toLowerCase().includes(searchText)
-  //     );
-  //   }
-  // }
+
+  }
 
   filterItems() {
     if (!this.statusFilter) {
@@ -82,11 +95,24 @@ export class ProcurementviewPage implements OnInit {
     } else {
       // Filter the items based on the entered status
       const searchText = this.statusFilter.toLowerCase();
-      this.procurementData = this.getPageItems().filter((data: { Status: string; Name: string}) =>
+      this.procurementData = this.getPageItems().filter((data: { Status: string; Name: string }) =>
         data.Status.toLowerCase().includes(searchText) ||
         data.Name.toLowerCase().includes(searchText)
       );
     }
   }
+
+  jumpToPage() {
+    if (this.jumpPageNumber >= 1 && this.jumpPageNumber <= this.totalPages) {
+      this.currentPage = this.jumpPageNumber;
+    }
+  }
+
+
+  //sorting
+  toggleSortDirection() {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  }
+
 
 }
