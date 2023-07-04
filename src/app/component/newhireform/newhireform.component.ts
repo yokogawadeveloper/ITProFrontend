@@ -193,7 +193,6 @@ export class NewhireformComponent implements OnInit {
       };
       this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
         if (res) {
-          //more attachment
           const formData = new FormData();
           formData.append('procurement_id', res.id);
           for (let i = 0; i < this.uploadedFiles.length; i++) {

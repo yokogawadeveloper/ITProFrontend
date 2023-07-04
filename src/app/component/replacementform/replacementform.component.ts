@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { NgToastService } from 'ng-angular-popup';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { AttachmentmodalComponent } from '../attachmentmodal/attachmentmodal.component';
 
 
 @Component({
@@ -14,6 +16,8 @@ import { AlertController } from '@ionic/angular';
   
 
 
+
+
 export class ReplacementformComponent implements OnInit {
   myForm!: FormGroup;
   formSubmitted: boolean = false;
@@ -22,7 +26,7 @@ export class ReplacementformComponent implements OnInit {
   itemDropdown: any[] = [];
   costCenterdropdown: any[] = [];
   procurementData: any = [];
-  selectedFileNames: string[] = [];
+  uploadedFiles: File[] = []; //for file upload from modal
 
 
   constructor(
@@ -30,7 +34,8 @@ export class ReplacementformComponent implements OnInit {
     private toast: NgToastService,
     private formBuilder: FormBuilder,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private modalController: ModalController
   ) { }
 
   ngOnInit(): void {
@@ -45,8 +50,7 @@ export class ReplacementformComponent implements OnInit {
       rows: this.formBuilder.array([]),
       additionalAttachments: this.formBuilder.array([]),
     });
-    this.addRow(); 
-    this.addMoreAttachments(); 
+    this.addRow();
 
     this.apiService.getDepartmentDropdownData().subscribe((res: any) => {
       this.departmentDropdown = res;
@@ -98,45 +102,7 @@ export class ReplacementformComponent implements OnInit {
 
   }
 
-  // More attachment
-  get additionalAttachments(): FormArray {
-    return this.myForm.get('additionalAttachments') as FormArray;
-  }
-
-  addMoreAttachments() {
-    const newAttachment = this.formBuilder.control('', Validators.required);
-    this.additionalAttachments.push(newAttachment);
-  }
-
-
-  handleFileChange(event: any, index: number) {
-    const fileInput = event.target as HTMLInputElement;
-    const file = fileInput.files?.[0];
-    if (file) {
-      (this.myForm.get('additionalAttachments') as FormArray).at(index).setValue(file);
-      this.selectedFileNames.push(file.name);
-    }
-  }
-
-  addAttachmentField() {
-    this.addMoreAttachments();
-  }
-
-  removeAttachmentField(index: number) {
-    if (this.additionalAttachments.length == 1) {
-      this.toast.error({
-        detail: 'Atleast one attachment is required',
-        position: 'bottom-right',
-        duration: 3000,
-        type: 'danger'
-      })
-    }
-    else {
-      this.additionalAttachments.removeAt(index);
-      this.selectedFileNames.splice(index, 1);
-    }
-  }
-
+  // Total Price Calculation
   populateUnitPrice(event: any, index: number) {
     const selectedItem = event.target.value;
     // Find the selected item in your itemDropdown array or fetch it from an API
@@ -169,8 +135,18 @@ export class ReplacementformComponent implements OnInit {
     return this.calculateTotal();
   }
 
+  // File Upload Modal
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: AttachmentmodalComponent,
+      componentProps: {
+        attachments: this.uploadedFiles
+      }
+    });
+    await modal.present();
+  }
 
-  // Submit form
+
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Confirm Submission',
@@ -197,6 +173,8 @@ export class ReplacementformComponent implements OnInit {
   }
 
 
+
+  // Submit Form
   submitForm() {
     this.formSubmitted = true;
     if (this.myForm.valid) {
@@ -219,11 +197,10 @@ export class ReplacementformComponent implements OnInit {
       };
       this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
         if (res) {
-          //more attachment
           const formData = new FormData();
           formData.append('procurement_id', res.id);
-          for (let i = 0; i < this.myForm.value.additionalAttachments.length; i++) {
-            formData.append('attachment', this.myForm.value.additionalAttachments[i]);
+          for (let i = 0; i < this.uploadedFiles.length; i++) {
+            formData.append('attachment', this.uploadedFiles[i]);
           }
           this.apiService.postAttachment(formData).subscribe((res: any) => {
             if (res) {
@@ -259,8 +236,8 @@ export class ReplacementformComponent implements OnInit {
 
 
 
-
 }
+
 
 
 
