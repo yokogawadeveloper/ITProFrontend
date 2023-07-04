@@ -44,38 +44,11 @@
                 placeholder="Utilized Budget" />
             </div>
           </div>
-          <!-- Add Attachments -->
-          <div class="form-group col-md-12 attachments">
-            <label for="additionalAttachments">Attachments</label>
-            <div formArrayName="additionalAttachments">
-              <div *ngFor="let attachment of additionalAttachments.controls; let i = index" [formGroupName]="i">
-                <div class="row align-items-center">
-                  <div class="col-md-6">
-                    <input type="file" class="form-control" formControlName="attachment"
-                      (change)="handleFileChange($event, i)"
-                      [ngClass]="{'invalid-file': formSubmitted && attachment.invalid && !attachment.value}" multiple/>
-                  </div>
-                  <div class="col-md-3 delete">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon1"
-                      (click)="removeAttachmentField(i)">
-                      <ion-icon name="trash-outline"></ion-icon>
-                    </button>
-                  </div>
-                  <div class="col-md-3 filename">
-                    <button>
-                      <ion-icon name="document-outline"></ion-icon>
-                      {{attachment.value?.name}}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="input-group">
-              <ion-button (click)="addAttachmentField()" color="medium" fill="solid" size="small"><ion-icon
-                  name="cloud-upload-outline"></ion-icon></ion-button>
-            </div>
+
+          <div class="form-group">
+            <ion-button id="open-modal" size="small" (click)="openModal()">Open</ion-button>
           </div>
-          <!-- End Attachments -->
+
           <div class="inline-table">
             <table class="table table-bordered">
               <thead class="thead-dark">
@@ -143,6 +116,7 @@
               </tfoot>
             </table>
           </div>
+
         </div>
         <button class="btn btn-info" type="submit">Submit</button>
       </div>

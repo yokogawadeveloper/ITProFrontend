@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { ApprovalService } from './services/approval.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -12,24 +13,25 @@ import { ApprovalService } from './services/approval.service';
 export class AppComponent implements OnInit {
 
   public userDropdownClicked: boolean = false;
-  isApprover: boolean | null | undefined;
-  
+  isApprover: boolean = false;
+
   constructor(private router: Router, private authService: AuthService,) {
-    const approverValue = sessionStorage.getItem('approvals');
-    if (approverValue) {
-      // from approverValue get is_approver value
-      const approver = JSON.parse(approverValue);
-      this.isApprover = approver.is_approver;
 
-    }
-    else {
-      this.isApprover = false;
-    }
-
-   }
+  }
 
   ngOnInit() {
-    this.authService.autoLogin();
+    const approvalsValue = sessionStorage.getItem('approvals');
+    if (approvalsValue) {
+      const approvals = JSON.parse(approvalsValue);
+      this.isApprover = approvals.is_approver;
+    }
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    }
+
+
+
+
   } // ngOnInit
 
 

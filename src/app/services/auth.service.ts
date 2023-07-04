@@ -19,6 +19,7 @@ const httpOptions = {
 export class AuthService {
 
   private apiUrl: string = environment.apiUrl; //main url
+  
   constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string) {
@@ -41,19 +42,7 @@ export class AuthService {
     }
   }// isLoggedIn
 
-  autoLogin(): void {
-    if (this.isLoggedIn()) {
-      let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
-      if (userData && userData.access) {
-        this.router.navigate(['/home']);
-      }
-      else {
-        this.router.navigate(['/login']);
-      }
-    }
-  }// autoLogin
-
-
+  
   getUserprofile(): any {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
     if (userData && userData.access) {

@@ -17,6 +17,7 @@ export class LoginPage {
 
   username!: string;
   password!: string;
+  isApprover: boolean = false;
 
 
   constructor(
@@ -24,27 +25,26 @@ export class LoginPage {
     private router: Router,
     private toast: NgToastService,
     private animationCtrl: AnimationController
-  ) { 
+  ) {
     this.animationCtrl.create()
-    }
+  }
 
   login() {
     this.authService.login(this.username, this.password,)
       .subscribe(
         data => {
-          this.toast.success({
-            detail: 'Login Successful',
-            position: 'bottom-right',
-            duration: 3000,
-            type: 'success'
-          })
-          
-          this.router.navigate(['/home']);
           if (data && data.access) {
-            this.onSuccessfulLogin();
+            this.authService.getAuthenticationsApprovals().subscribe(
+              (data: any) => {
+                sessionStorage.setItem('approvals', JSON.stringify(data));
+                this.isApprover = data.is_approver;
+                if (this.isApprover) {
+                  this.router.navigate(['/approvallist']);
+                }
+              }
+            );
           }
-
-          
+          this.router.navigate(['/home']);
         },
         error => {
           this.toast.error({
@@ -57,30 +57,17 @@ export class LoginPage {
         });
   }
 
-  onSuccessfulLogin() {
-    let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
-    if (userData && userData.access) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
-      this.authService.getAuthenticationsApprovals().subscribe(
-        (data: any) => {
-          sessionStorage.setItem('approvals', JSON.stringify(data));
-        }
-      );
-
-    }
-    else {
-      console.log("login failed");
-    }
-}
-
-  
-  
-
-
-
-
 
 }
+
+
+
+
+
+
+
+
+
 
 
 
