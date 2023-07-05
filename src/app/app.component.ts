@@ -21,12 +21,6 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const approvalsValue = sessionStorage.getItem('approvals');
-    if (approvalsValue) {
-      const approvals = JSON.parse(approvalsValue);
-      this.isApprover = approvals.is_approver;
-    }
-
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
     }

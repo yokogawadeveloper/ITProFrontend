@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router} from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { HttpHeaders } from '@angular/common/http';
 import { AnimationController } from '@ionic/angular';
 import { AppComponent } from 'src/app/app.component';
 
@@ -35,14 +34,6 @@ export class LoginPage {
     this.authService.login(this.username, this.password,)
       .subscribe(
         data => {
-          if (data && data.access) {
-            this.authService.getAuthenticationsApprovals().subscribe(
-              (data: any) => {
-                sessionStorage.setItem('approvals', JSON.stringify(data));
-                this.isApprover = data.is_approver;
-              }
-            );
-          }
           this.toast.success({
             detail: 'Login Successful',
             position: 'bottom-right',
@@ -50,7 +41,6 @@ export class LoginPage {
             type: 'success'
           })
           this.appcomponent.ngOnInit();
-          // this.authService.setSession(data);
           this.router.navigate(['/home']);
         },
         error => {
