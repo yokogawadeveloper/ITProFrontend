@@ -10,7 +10,7 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
   public userDropdownClicked: boolean = false;
-  isApprover: boolean = false;
+  isApprover!: boolean;
   currentUser: any;
   userTypes: any = [];
   username: string = ''; // Variable to store the username
@@ -29,11 +29,8 @@ export class AppComponent implements OnInit {
     if (getCurrentUser) {
       this.currentUser = JSON.parse(getCurrentUser); // Assign the value to this.currentUser
       this.username = this.currentUser.username; // Update the username variable
-      if (this.isApprover === true) {
-        this.userTypes = 'Approver';
-      } else {
-        this.userTypes = 'Employee';
-      }
+      this.isApprover = this.currentUser.is_approver; // Update the isApprover variable
+      console.log(this.isApprover);
     }
   }
 

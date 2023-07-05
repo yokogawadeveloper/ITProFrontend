@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { AnimationController } from '@ionic/angular';
 import { AppComponent } from 'src/app/app.component';
