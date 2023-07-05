@@ -5,7 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { AttachmentmodalComponent } from '../attachmentmodal/attachmentmodal.component';
+import { AttachmentsformComponent } from 'src/app/modal/attachmentsform/attachmentsform.component';
 
 
 @Component({
@@ -40,7 +40,7 @@ export class ReplacementformComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
-      requestType: 'Replacement',
+      requestType: 'New Hire',
       name: ['', Validators.required],
       department: ['', Validators.required],
       isExpenditure: ['', Validators.required],
@@ -138,7 +138,7 @@ export class ReplacementformComponent implements OnInit {
   // File Upload Modal
   async openModal() {
     const modal = await this.modalController.create({
-      component: AttachmentmodalComponent,
+      component: AttachmentsformComponent,
       componentProps: {
         attachments: this.uploadedFiles
       }
@@ -237,6 +237,11 @@ export class ReplacementformComponent implements OnInit {
 
 
 }
+
+
+
+
+
 
 
 

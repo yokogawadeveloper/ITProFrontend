@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
+
 @Component({
-  selector: 'app-attachmentmodal',
-  templateUrl: './attachmentmodal.component.html',
-  styleUrls: ['./attachmentmodal.component.scss'],
+  selector: 'app-attachmentsform',
+  templateUrl: './attachmentsform.component.html',
+  styleUrls: ['./attachmentsform.component.scss'],
 })
-export class AttachmentmodalComponent implements OnInit {
+
+
+export class AttachmentsformComponent implements OnInit {
   attachments: File[] = [];
 
   constructor(private modalCtrl: ModalController,) { }
@@ -41,3 +44,4 @@ export class AttachmentmodalComponent implements OnInit {
   }
 
 }
+

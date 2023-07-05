@@ -14,8 +14,10 @@ import { NewhireformModule } from './component/newhireform/newhireform.module';
 import { ReplacementformModule } from './component/replacementform/replacementform.module';
 import { StockmanagementformModule } from './component/stockmanagementform/stockmanagementform.module';
 import { TemporaryformModule } from './component/temporaryform/temporaryform.module';
-// attachment modal
-import { AttachmentmodalComponent } from './component/attachmentmodal/attachmentmodal.component';
+// attachmentsform component form modal
+
+import { AttachmentsformComponent } from './modal/attachmentsform/attachmentsform.component';
+
 
 
 
@@ -24,7 +26,7 @@ import { AttachmentmodalComponent } from './component/attachmentmodal/attachment
 @NgModule({
   declarations: [
     AppComponent,
-    AttachmentmodalComponent,
+    AttachmentsformComponent,
   ],
   imports: [
     BrowserModule,

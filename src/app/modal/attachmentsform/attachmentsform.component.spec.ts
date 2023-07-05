@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AttachmentmodalComponent } from './attachmentmodal.component';
+import { AttachmentsformComponent } from './attachmentsform.component';
 
-describe('AttachmentmodalComponent', () => {
-  let component: AttachmentmodalComponent;
-  let fixture: ComponentFixture<AttachmentmodalComponent>;
+describe('AttachmentsformComponent', () => {
+  let component: AttachmentsformComponent;
+  let fixture: ComponentFixture<AttachmentsformComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AttachmentmodalComponent ],
+      declarations: [ AttachmentsformComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AttachmentmodalComponent);
+    fixture = TestBed.createComponent(AttachmentsformComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

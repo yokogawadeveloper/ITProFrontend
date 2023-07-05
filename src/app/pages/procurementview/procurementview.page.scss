@@ -40,13 +40,39 @@ tbody tr:nth-child(even) {
 
 .pagination-controls {
   display: flex;
+  justify-content: center;
   align-items: center;
-  // justify-content: space-between;
+  margin-top: 20px;
+}
+
+.pagination-buttons{
+  justify-content: space-between;
   justify-content: flex-end;
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 120px;
+  display: flex;
+  align-items: center;
 }
+
+
+.table th ion-icon[name^="arrow-"] {
+  color: red;
+  cursor: pointer;
+}
+
+.table th ion-icon {
+  color: rgb(241, 212, 17);
+  /* Default color */
+}
+
+.table th.ascending ion-icon[name^="arrow-"],
+.table th.descending ion-icon[name^="arrow-"] {
+  color: red;
+
+}
+
+
 
 
 
@@ -80,65 +106,4 @@ tbody tr:nth-child(even) {
   table td:last-child {
     border-bottom: 0;
   }
-}
-
-
-//new
-.pagination-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.pagination-buttons {
-  display: flex;
-  align-items: center;
-}
-
-.pagination-button {
-  margin-right: 5px;
-}
-
-.jump-page {
-  display: flex;
-  align-items: center;
-  margin: 0 10px;
-}
-
-.jump-page input[type="number"] {
-  width: 50px;
-  padding: 5px;
-  text-align: center;
-}
-
-.jump-button {
-  margin-left: 5px;
-}
-
-.pagination-info {
-  margin-left: 10px;
-  font-size: 14px;
-  color: #0d15ec;
-}
-
-.sort-symbol {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  vertical-align: middle;
-  border-style: solid;
-  border-width: 4px 4px 0 4px;
-  border-color: #f60d0d transparent transparent transparent;
-  margin-left: 5px;
-  opacity: 0.4;
-}
-
-.sort-symbol.asc {
-  transform: rotate(180deg);
-  opacity: 1;
-}
-
-.sort-symbol.desc {
-  opacity: 1;
 }

@@ -12,7 +12,6 @@ export class ProcurementviewPage implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalPages: number = 0;
-  jumpPageNumber: number = 1;
 
   //sorting
   sortColumn: string = ''; // Column name for sorting
@@ -102,16 +101,14 @@ export class ProcurementviewPage implements OnInit {
     }
   }
 
-  jumpToPage() {
-    if (this.jumpPageNumber >= 1 && this.jumpPageNumber <= this.totalPages) {
-      this.currentPage = this.jumpPageNumber;
-    }
-  }
-
-
   //sorting
-  toggleSortDirection() {
-    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  toggleSortDirection(column: string) {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
   }
 
 

@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
-import { ApprovalService } from './services/approval.service';
-import { HttpHeaders } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-
 })
 export class AppComponent implements OnInit {
-
   public userDropdownClicked: boolean = false;
   isApprover: boolean = false;
+  currentUser: any;
+  userTypes: any = [];
+  username: string = ''; // Variable to store the username
 
-  constructor(private router: Router, private authService: AuthService,) {
-
-  }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+  ) { }
 
   ngOnInit() {
     const approvalsValue = sessionStorage.getItem('approvals');
@@ -25,24 +26,30 @@ export class AppComponent implements OnInit {
       const approvals = JSON.parse(approvalsValue);
       this.isApprover = approvals.is_approver;
     }
+
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
     }
 
-
-
-
-  } // ngOnInit
-
-
+    const getCurrentUser = sessionStorage.getItem('currentUser');
+    if (getCurrentUser) {
+      this.currentUser = JSON.parse(getCurrentUser); // Assign the value to this.currentUser
+      this.username = this.currentUser.username; // Update the username variable
+      if (this.isApprover === true) {
+        this.userTypes = 'Approver';
+      } else {
+        this.userTypes = 'Employee';
+      }
+    }
+  }
 
   toggleUserDropdown() {
     this.userDropdownClicked = !this.userDropdownClicked;
-  }// toggleUserDropdown
+  }
 
   logout() {
     sessionStorage.removeItem('currentUser');
     sessionStorage.removeItem('approvals');
     this.router.navigate(['/login']);
-  } // logout
+  }
 }

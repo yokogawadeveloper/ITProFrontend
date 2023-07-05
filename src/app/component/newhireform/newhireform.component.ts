@@ -5,7 +5,8 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, FormArray, Validators} from '@angular/forms';
-import { AttachmentmodalComponent } from '../attachmentmodal/attachmentmodal.component';
+import { AttachmentsformComponent } from 'src/app/modal/attachmentsform/attachmentsform.component';
+
 
 @Component({
   selector: 'app-newhireform',
@@ -23,6 +24,7 @@ export class NewhireformComponent implements OnInit {
   costCenterdropdown: any[] = [];
   procurementData: any = [];
   uploadedFiles: File[] = []; //for file upload from modal
+  uploadedFilesCount: number = 0; //for file upload from modal
 
 
   constructor(
@@ -44,7 +46,6 @@ export class NewhireformComponent implements OnInit {
       utilizedBudget: [''],
       remarks: [''],
       rows: this.formBuilder.array([]),
-      additionalAttachments: this.formBuilder.array([]),
     });
     this.addRow();
 
@@ -116,7 +117,7 @@ export class NewhireformComponent implements OnInit {
   calculateTotal(): number {
     const rowsArray = this.myForm.get('rows') as FormArray;
     let total = 0;
-
+    // Iterate through rowsArray and calculate the total price
     rowsArray.controls.forEach(row => {
       const quantity = row.get('quantity')?.value;
       const unitPrice = row.get('unitPrice')?.value;
@@ -134,9 +135,10 @@ export class NewhireformComponent implements OnInit {
   // File Upload Modal
   async openModal() {
     const modal = await this.modalController.create({
-      component: AttachmentmodalComponent,
+      component: AttachmentsformComponent,
       componentProps: {
-        attachments: this.uploadedFiles
+        attachments: this.uploadedFiles,
+        attachmentsCount: this.uploadedFilesCount
       }
     });
     await modal.present();
@@ -169,8 +171,6 @@ export class NewhireformComponent implements OnInit {
   }
 
 
-
-  // Submit Form
   submitForm() {
     this.formSubmitted = true;
     if (this.myForm.valid) {
@@ -198,6 +198,7 @@ export class NewhireformComponent implements OnInit {
           for (let i = 0; i < this.uploadedFiles.length; i++) {
             formData.append('attachment', this.uploadedFiles[i]);
           }
+
           this.apiService.postAttachment(formData).subscribe((res: any) => {
             if (res) {
               this.toast.success({
