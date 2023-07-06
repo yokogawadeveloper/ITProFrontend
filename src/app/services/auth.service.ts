@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 
 // httpOptions 
@@ -17,9 +18,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+  setIsApprover(isApprover: any) {
+    throw new Error('Method not implemented.');
+  }
 
   private apiUrl: string = environment.apiUrl; //main url
-  
+
   constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string) {
@@ -42,7 +46,7 @@ export class AuthService {
     }
   }// isLoggedIn
 
-  
+
   getUserprofile(): any {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
     if (userData && userData.access) {
@@ -65,6 +69,17 @@ export class AuthService {
       return null;
     }
   }// getAuthenticationsApprovals
+
+
+  //get module access list
+
+  getModuleAccessList(jdata: string): Observable<any> {
+    const url = `${this.apiUrl}/getmoduleaccess/getModuleAccess/`;
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post<any>(url, jdata, { headers });
+
+  }
+
 
 
 

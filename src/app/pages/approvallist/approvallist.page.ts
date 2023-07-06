@@ -20,7 +20,6 @@ export class ApprovallistPage implements OnInit {
     this.approverService.getApprovalPendingList().pipe(
       map((response: any) => response.map((item: any) => item.procurementId))
     ).subscribe((procurementIds: any[]) => {
-      // console.log(procurementIds);
       this.approvalPendingList = procurementIds;
     });
 
