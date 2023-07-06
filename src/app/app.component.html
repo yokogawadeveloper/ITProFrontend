@@ -1,89 +1,3 @@
-<!-- <ion-app>
-  <ion-menu menuId="main-menu" content-id="main">
-    <ion-content>
-      <div class="menu-header-bg">
-      </div>
-
-      <div class="header-content">
-        <img src="../assets/profile/hacker.png" alt="profile">
-        <ion-label>
-          <h2>Welcome, {{currentUser?.name}}</h2>
-          <p>{{userTypes}}</p>
-        </ion-label>
-      </div>
-
-      <ion-list class="menu-items" lines="none">
-        <ion-menu-toggle>
-          <ion-item class="active" routerLink="/home">
-            <ion-icon slot="start" name="home-outline"></ion-icon>
-            <ion-label>Home</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-        <ion-toolbar>
-          <ion-item (click)="toggleUserDropdown()" [class.clicked]="userDropdownClicked" button detail="true"
-            detail-icon="caret-forward-outline">
-            <ion-icon name="cart-outline" slot="start"></ion-icon>
-            <ion-label>Procurement</ion-label>
-          </ion-item>
-
-          <ion-menu-toggle>
-            <ion-list *ngIf="userDropdownClicked" class="user-dropdown">
-
-              <ion-item [routerLink]="'/procurementview'">
-                <ion-icon slot="start" name="newspaper-outline"></ion-icon>
-                <ion-label>My Request</ion-label>
-              </ion-item>
-
-              <ion-item [routerLink]="'/modification'">
-                <ion-icon slot="start" name="build-outline"></ion-icon>
-                <ion-label>Modification Request</ion-label>
-              </ion-item>
-
-              <ion-item *ngIf="isApprover === true" [routerLink]="'/approvallist'">
-                <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>
-                <ion-label>Approval</ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-menu-toggle>
-        </ion-toolbar>
-
-        <ion-menu-toggle>
-          <ion-item routerLink="">
-            <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
-            <ion-label>Analytics</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-        <ion-menu-toggle>
-          <ion-item routerLink="">
-            <ion-icon name="document-text-outline" slot="start"></ion-icon>
-            <ion-label>Reports</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-        <ion-menu-toggle>
-          <ion-item routerLink="">
-            <ion-icon name="help-circle-outline" slot="start"></ion-icon>
-            <ion-label>Help</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-        <ion-menu-toggle>
-          <ion-item (click)="logout()">
-            <ion-icon name="log-out-outline" slot="start"></ion-icon>
-            <ion-label>Logout</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-
-  <ion-router-outlet id="main"> </ion-router-outlet>
-  <lib-ng-toast></lib-ng-toast>
-</ion-app> -->
-
 
 <ion-app>
   <ion-menu menuId="main-menu" content-id="main">
@@ -94,8 +8,7 @@
       <div class="header-content">
         <img src="../assets/profile/hacker.png" alt="profile">
         <ion-label>
-          <h2>Welcome, {{currentUser?.name}}</h2>
-          <p>{{userTypes}}</p>
+          <h2>Welcome, {{currentUser?.user_name}}</h2>
         </ion-label>
       </div>
 

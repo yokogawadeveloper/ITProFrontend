@@ -10,10 +10,8 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
   public userDropdownClicked: boolean = false;
-  isApprover!: boolean;
   currentUser: any;
-  userTypes: any = [];
-  username: string = ''; // Variable to store the username
+  isApprover!: boolean;
 
   constructor(
     private router: Router,
@@ -27,8 +25,7 @@ export class AppComponent implements OnInit {
 
     const getCurrentUser = sessionStorage.getItem('currentUser');
     if (getCurrentUser) {
-      this.currentUser = JSON.parse(getCurrentUser); // Assign the value to this.currentUser
-      this.username = this.currentUser.username; // Update the username variable
+      this.currentUser = JSON.parse(getCurrentUser);
       this.isApprover = this.currentUser.is_approver; // Update the isApprover variable
       console.log(this.isApprover);
     }

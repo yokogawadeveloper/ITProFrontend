@@ -26,4 +26,8 @@ export class ProcurementdetailsPage implements OnInit {
     });
   }
 
+  back() {
+    window.history.back();
+  }
+
 }
