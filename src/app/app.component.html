@@ -1,21 +1,16 @@
-
-<ion-app>
+<!-- <ion-app>
   <ion-menu menuId="main-menu" content-id="main">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
     <ion-content>
-      <div class="menu-header-bg">
-      </div>
-
-      <div class="header-content">
-        <img src="../assets/profile/hacker.png" alt="profile">
-        <ion-label>
-          <h2>Welcome, {{currentUser?.user_name}}</h2>
-        </ion-label>
-      </div>
-
-      <ion-list class="menu-items" lines="none">
+      <ion-list>
         <ion-menu-toggle>
-          <ion-item class="active" routerLink="/home">
-            <ion-icon slot="start" name="home-outline"></ion-icon>
+          <ion-item routerLink="/home">
+            <ion-icon name="home" slot="start"></ion-icon>
             <ion-label>Home</ion-label>
           </ion-item>
         </ion-menu-toggle>
@@ -29,21 +24,24 @@
 
           <ion-menu-toggle>
             <ion-list *ngIf="userDropdownClicked" class="user-dropdown">
-
-              <ion-item *ngIf="isApprover === false" [routerLink]="'/procurementview'">
-                <ion-icon slot="start" name="newspaper-outline"></ion-icon>
-                <ion-label>My Request</ion-label>
+              <ion-item [routerLink]="'/procurement'">
+                <ion-icon slot="start" name="documents-outline"></ion-icon>
+                <ion-label>Request</ion-label>
               </ion-item>
 
-              <ion-item *ngIf="isApprover === false" [routerLink]="'/modification'">
-                <ion-icon slot="start" name="build-outline"></ion-icon>
-                <ion-label>Modification Request</ion-label>
+
+              <ion-item [routerLink]="'/procurementview'">
+                <ion-icon slot="start" name="file-tray-sharp"></ion-icon>
+                <ion-label>List</ion-label>
               </ion-item>
+
 
               <ion-item *ngIf="isApprover === true" [routerLink]="'/approvallist'">
                 <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>
                 <ion-label>Approval</ion-label>
               </ion-item>
+
+
             </ion-list>
           </ion-menu-toggle>
         </ion-toolbar>
@@ -68,18 +66,68 @@
             <ion-label>Help</ion-label>
           </ion-item>
         </ion-menu-toggle>
-
-        <ion-menu-toggle>
-          <ion-item (click)="logout()">
-            <ion-icon name="log-out-outline" slot="start"></ion-icon>
-            <ion-label>Logout</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
       </ion-list>
     </ion-content>
-  </ion-menu>
 
+    <ion-footer class="footer">
+      <ion-toolbar>
+        <ion-item (click)="logout()">
+          <ion-icon name="log-out" slot="start" color="danger"></ion-icon>
+          <ion-label>Logout</ion-label>
+        </ion-item>
+      </ion-toolbar>
+    </ion-footer>
+
+  </ion-menu>
   <ion-router-outlet id="main"> </ion-router-outlet>
   <lib-ng-toast></lib-ng-toast>
+</ion-app> -->
+
+
+
+<ion-app>
+  <ion-menu menuId="main-menu" content-id="main">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle *ngFor="let module of module_ids">
+          <ion-item [routerLink]="module.m_link" *ngIf="!module.root_module || module.root_module.length === 0">
+            <ion-icon [name]="module.m_icon_name" slot="start"></ion-icon>
+            <ion-label>{{ module.module_name }}</ion-label>
+          </ion-item>
+
+          <ion-item *ngIf="module.root_module && module.root_module.length > 0" button detail="true"
+            detail-icon="caret-forward-outline" (click)="toggleSubMenu(module)">
+            <ion-icon [name]="module.m_icon_name" slot="start"></ion-icon>
+            <ion-label>{{ module.module_name }}</ion-label>
+          </ion-item>
+
+          <ion-list *ngIf="module.showSubMenu">
+            <ion-item [routerLink]="subModule.m_link" *ngFor="let subModule of module.root_module">
+              <ion-icon [name]="subModule.m_icon_name" slot="start"></ion-icon>
+              <ion-label>{{ subModule.module_name }}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+
+    <ion-footer class="footer">
+      <ion-toolbar>
+        <ion-item (click)="logout()">
+          <ion-icon name="log-out" slot="start" color="danger"></ion-icon>
+          <ion-label>Logout</ion-label>
+        </ion-item>
+      </ion-toolbar>
+    </ion-footer>
+
+  </ion-menu>
+  <ion-router-outlet id="main"></ion-router-outlet>
+  <lib-ng-toast></lib-ng-toast>
 </ion-app>
+

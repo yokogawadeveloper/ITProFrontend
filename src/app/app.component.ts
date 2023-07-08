@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
-import { ApprovalService } from 'src/app/services/approval.service';
-import { map } from 'rxjs';
+
 
 
 @Component({
@@ -14,12 +13,14 @@ export class AppComponent implements OnInit {
   public userDropdownClicked: boolean = false;
   approvalPendingList: any = [];
   currentUser: any;
-  isApprover!: boolean;
+  moduleAccess: any = [];
+
+  module_ids: any[] = [];
+  responseData: any;
 
   constructor(
     private router: Router,
     private authService: AuthService,
-    private approvalService: ApprovalService
   ) { }
 
   ngOnInit() {
@@ -28,32 +29,26 @@ export class AppComponent implements OnInit {
     }
 
     const getCurrentUser = sessionStorage.getItem('currentUser');
-    if (getCurrentUser) {
+    const getModuleAccess = sessionStorage.getItem('moduleAccess');
+    if (getCurrentUser && getModuleAccess) {
       this.currentUser = JSON.parse(getCurrentUser);
-      this.isApprover = this.currentUser.is_approver; // Update the isApprover variable
-      console.log(this.isApprover);
+      this.responseData = JSON.parse(getModuleAccess);
+
+      if (this.responseData && this.responseData.message === 'success') {
+        this.module_ids = this.responseData.module_ids;
+      }
     }
-
-    // Get the list of pending approvals for the current user 
-    this.approvalService.getApprovalPendingList().pipe(
-      map((response: any) => response.map((item: any) => item.procurementId))
-    ).subscribe((procurementIds: any[]) => {
-      this.approvalPendingList = procurementIds;
-    });
-
-
+        
 
   }// end of ngOnInit
 
-  toggleUserDropdown() {
-    this.userDropdownClicked = !this.userDropdownClicked;
+  toggleSubMenu(module: any) {
+    module.showSubMenu = !module.showSubMenu;
   }
-
-  
 
   logout() {
     sessionStorage.removeItem('currentUser');
-    sessionStorage.removeItem('approvals');
+    sessionStorage.removeItem('moduleAccess');
     this.router.navigate(['/login']);
   }
 }
