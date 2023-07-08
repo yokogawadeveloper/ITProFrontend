@@ -27,19 +27,15 @@ export class AppComponent implements OnInit {
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
     }
-
-    const getCurrentUser = sessionStorage.getItem('currentUser');
+    //for module access
     const getModuleAccess = sessionStorage.getItem('moduleAccess');
-    if (getCurrentUser && getModuleAccess) {
-      this.currentUser = JSON.parse(getCurrentUser);
+    if (getModuleAccess) {
       this.responseData = JSON.parse(getModuleAccess);
 
       if (this.responseData && this.responseData.message === 'success') {
         this.module_ids = this.responseData.module_ids;
       }
     }
-        
-
   }// end of ngOnInit
 
   toggleSubMenu(module: any) {
@@ -51,4 +47,6 @@ export class AppComponent implements OnInit {
     sessionStorage.removeItem('moduleAccess');
     this.router.navigate(['/login']);
   }
+
+  
 }
