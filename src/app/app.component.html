@@ -3,7 +3,7 @@
 
     <div class="menu-header-bg">
     </div>
-    
+
     <div class="header-content">
       <img src="../assets/profile/hacker.png" alt="profile">
       <ion-label>
@@ -18,13 +18,13 @@
             <ion-icon [name]="module.m_icon_name" slot="start"></ion-icon>
             <ion-label>{{ module.module_name }}</ion-label>
           </ion-item>
-    
+
           <ion-item *ngIf="module.root_module && module.root_module.length > 0" button detail="true"
             detail-icon="caret-forward-outline" (click)="toggleSubMenu(module)">
             <ion-icon [name]="module.m_icon_name" slot="start"></ion-icon>
             <ion-label>{{ module.module_name }}</ion-label>
           </ion-item>
-    
+
           <ion-list *ngIf="module.showSubMenu">
             <ion-item [routerLink]="subModule.m_link" *ngFor="let subModule of module.root_module">
               <ion-icon [name]="subModule.m_icon_name" slot="start"></ion-icon>
@@ -34,7 +34,7 @@
         </ion-menu-toggle>
       </ion-list>
     </ion-content>
-    
+
     <ion-footer class="footer">
       <ion-toolbar>
         <ion-item (click)="logout()" lines="none">
@@ -43,6 +43,7 @@
         </ion-item>
       </ion-toolbar>
     </ion-footer>
+
   </ion-menu>
 
   <ion-router-outlet id="main"> </ion-router-outlet>

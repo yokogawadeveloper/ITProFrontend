@@ -14,7 +14,8 @@
   <ion-card class="card">
 
     <ion-card-header>
-      <ion-searchbar [(ngModel)]="statusFilter" (ionChange)="filterItems()" placeholder="Filter By Name & Status"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="statusFilter" (ionChange)="filterItems()"
+        placeholder="Filter By Name & Status"></ion-searchbar>
     </ion-card-header>
 
     <ion-card-content>
@@ -26,7 +27,8 @@
                 [ngClass]="{'ascending': sortColumn === 'SI No' && sortDirection === 'asc', 'descending': sortColumn === 'SI No' && sortDirection === 'desc'}">
                 SI No
                 <ion-icon name="arrow-up-outline" *ngIf="sortColumn === 'SI No' && sortDirection === 'asc'"></ion-icon>
-                <ion-icon name="arrow-down-outline" *ngIf="sortColumn === 'SI No' && sortDirection === 'desc'"></ion-icon>
+                <ion-icon name="arrow-down-outline"
+                  *ngIf="sortColumn === 'SI No' && sortDirection === 'desc'"></ion-icon>
               </th>
               <th scope="col" (click)="sortColumn = 'Request No'; toggleSortDirection('Request No')">
                 Request No
@@ -51,34 +53,19 @@
 
               </th>
 
+              <th scope="col" (click)="sortColumn = 'Total Amount'; toggleSortDirection('Total Amount')">Total Amount
+                <ion-icon name="arrow-up-outline"
+                  *ngIf="sortColumn === 'Total Amount' && sortDirection === 'asc'"></ion-icon>
+                <ion-icon name="arrow-down-outline"
+                  *ngIf="sortColumn === 'Total Amount' && sortDirection === 'desc'"></ion-icon>
+              </th>
+
               <th scope="col" (click)="sortColumn = 'Status'; toggleSortDirection('Status')">Status
                 <ion-icon name="arrow-up-outline" *ngIf="sortColumn === 'Status' && sortDirection === 'asc'"></ion-icon>
                 <ion-icon name="arrow-down-outline"
                   *ngIf="sortColumn === 'Status' && sortDirection === 'desc'"></ion-icon>
               </th>
 
-              <!-- <th scope="col" (click)="sortColumn = 'Request No'; toggleSortDirection()">Request No
-                <ion-icon name="arrow-up-outline"
-                  *ngIf="sortColumn === 'Request No' && sortDirection === 'asc'"></ion-icon>
-                <ion-icon name="arrow-down-outline"
-                  *ngIf="sortColumn === 'Request No' && sortDirection === 'desc'"></ion-icon>
-              </th>
-              <th scope="col" (click)="sortColumn = 'RequestType'; toggleSortDirection()">Request Type
-                <ion-icon name="arrow-up-outline"
-                  *ngIf="sortColumn === 'RequestType' && sortDirection === 'asc'"></ion-icon>
-                <ion-icon name="arrow-down-outline"
-                  *ngIf="sortColumn === 'RequestType' && sortDirection === 'desc'"></ion-icon>
-              </th>
-              <th scope="col" (click)="sortColumn = 'Name'; toggleSortDirection()">Name
-                <ion-icon name="arrow-up-outline" *ngIf="sortColumn === 'Name' && sortDirection === 'asc'"></ion-icon>
-                <ion-icon name="arrow-down-outline"
-                  *ngIf="sortColumn === 'Name' && sortDirection === 'desc'"></ion-icon>
-              </th>
-              <th scope="col" (click)="sortColumn = 'Status'; toggleSortDirection()">Status
-                <ion-icon name="arrow-up-outline" *ngIf="sortColumn === 'Status' && sortDirection === 'asc'"></ion-icon>
-                <ion-icon name="arrow-down-outline"
-                  *ngIf="sortColumn === 'Status' && sortDirection === 'desc'"></ion-icon>
-              </th> -->
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -88,6 +75,7 @@
               <td scope="col" data-title="Request No">{{ data.RequestNumber }}</td>
               <td scope="col" data-title="RequestType">{{ data.RequestType }}</td>
               <td scope="col" data-title="Name">{{ data.Name }}</td>
+              <td scope="col" data-title="Total Amount">{{ data.TotalAmount | currency:'INR' }}</td>
               <td scope="col" data-title="Status">{{ data.Status }}</td>
               <td scope="col" data-title="Action">
                 <ion-button (click)="redirectToProcurementDetails(data.id)" class="edit" color="tertiary" fill="clear"

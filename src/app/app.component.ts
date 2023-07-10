@@ -14,7 +14,6 @@ export class AppComponent implements OnInit {
   approvalPendingList: any = [];
   currentUser: any;
   moduleAccess: any = [];
-
   module_ids: any[] = [];
   responseData: any;
 
@@ -28,10 +27,11 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     //for module access
+    const currentUser = sessionStorage.getItem('currentUser');
     const getModuleAccess = sessionStorage.getItem('moduleAccess');
-    if (getModuleAccess) {
+    if (getModuleAccess && currentUser) {
+      this.currentUser = JSON.parse(currentUser);
       this.responseData = JSON.parse(getModuleAccess);
-
       if (this.responseData && this.responseData.message === 'success') {
         this.module_ids = this.responseData.module_ids;
       }

@@ -22,6 +22,15 @@
             <textarea class="form-control" formControlName="remarks" rows="1"></textarea>
           </div>
 
+          <div class="form-group col-md-6" [ngClass]="{'invalid': formSubmitted && myForm.get('deviceType')?.invalid}">
+            <label class="form-label required" for="deviceType">Device Type<span>*</span></label>
+            <select class="form-control" formControlName="deviceType" required>
+              <option value="">Choose...</option>
+              <option value="New">New</option>
+              <option value="Rental">Rental</option>
+            </select>
+          </div>
+
           <div class="form-group col-md-6"
             [ngClass]="{'invalid': formSubmitted && myForm.get('isExpenditure')?.invalid}">
             <label class="form-label required" for="isExpenditure">Is Expenditure Budgted<span>*</span></label>
@@ -29,15 +38,6 @@
               <option value="">Choose...</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
-            </select>
-          </div>
-
-          <div class="form-group col-md-6" [ngClass]="{'invalid': formSubmitted && myForm.get('deviceType')?.invalid}">
-            <label class="form-label required" for="deviceType">Device Type<span>*</span></label>
-            <select class="form-control" formControlName="deviceType" required>
-              <option value="">Choose...</option>
-              <option value="New">New</option>
-              <option value="Rental">Rental</option>
             </select>
           </div>
 
@@ -53,37 +53,14 @@
                 placeholder="Utilized Budget" />
             </div>
           </div>
-          <div class="form-group col-md-12 attachments">
-            <label for="additionalAttachments">Attachments</label>
-            <div formArrayName="additionalAttachments">
-              <div *ngFor="let attachment of additionalAttachments.controls; let i = index" [formGroupName]="i">
-                <div class="row align-items-center">
-                  <div class="col-md-6">
-                    <input type="file" class="form-control" formControlName="attachment"
-                      (change)="handleFileChange($event, i)"
-                      [ngClass]="{'invalid-file': formSubmitted && attachment.invalid && !attachment.value}" multiple />
-                  </div>
-                  <div class="col-md-3 delete">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon1"
-                      (click)="removeAttachmentField(i)">
-                      <ion-icon name="trash-outline"></ion-icon>
-                    </button>
-                  </div>
-                  <div class="col-md-3 filename">
-                    <button>
-                      <ion-icon name="document-outline"></ion-icon>
-                      {{attachment.value?.name}}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="input-group">
-              <ion-button (click)="addAttachmentField()" color="medium" fill="solid" size="small"><ion-icon
-                  name="cloud-upload-outline"></ion-icon></ion-button>
-            </div>
+
+          <div class="form-group">
+            <ion-button id="open-modal" size="small" (click)="openModal()"><ion-icon
+                name="cloud-upload-outline"></ion-icon></ion-button>
           </div>
+
           <div class="inline-table">
+
             <div *ngIf="myForm.get('deviceType')?.value === 'New'">
               <table class="table table-bordered">
                 <thead class="thead-dark">
@@ -91,10 +68,10 @@
                     <th>Category</th>
                     <th>Item</th>
                     <th>Cost Center</th>
+                    <th>Date From</th>
+                    <th>Date To</th>
                     <th>Quantity</th>
                     <th>Unit Price</th>
-                    <th>From</th>
-                    <th>To</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -121,16 +98,18 @@
                       </select>
                     </td>
                     <td>
-                      <input type="number" formControlName="quantity" class="form-control" value="1">
+                      <input type="date" class="form-control" formControlName="dateFrom" required />
                     </td>
+                    <td>
+                      <input type="date" class="form-control" formControlName="dateTo" required />
+                    </td>
+
+                    <td>
+                      <input type="number" formControlName="quantity" class="form-control" value="1" readonly>
+                    </td>
+
                     <td>
                       <input type="number" formControlName="unitPrice" class="form-control" readonly>
-                    </td>
-                    <td>
-                      <input type="date" formControlName="from" class="form-control">
-                    </td>
-                    <td>
-                      <input type="date" formControlName="to" class="form-control">
                     </td>
                     <td>
                       <ion-button (click)="deleteRow(i)" color="danger" fill="solid" size="small">
@@ -141,7 +120,7 @@
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="4"></td>
+                    <td colspan="6"></td>
                     <td class="unit-price-column">
                       <strong>Total:</strong>
                     </td>
@@ -159,7 +138,7 @@
                 </tfoot>
               </table>
             </div>
-            <!-- for rental  -->
+
             <div *ngIf="myForm.get('deviceType')?.value === 'Rental'">
               <table class="table table-bordered">
                 <thead class="thead-dark">
@@ -167,6 +146,8 @@
                     <th>Category</th>
                     <th>Item</th>
                     <th>Cost Center</th>
+                    <th>Date From</th>
+                    <th>Date To</th>
                     <th>Quantity</th>
                     <th>Unit Price</th>
                     <th>Action</th>
@@ -176,10 +157,12 @@
                   <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i"
                     [ngClass]="{'invalid': formSubmitted && row.invalid}">
                     <td>
-                      <input formControlName="category" class="form-control" [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
+                      <input formControlName="category" class="form-control"
+                        [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
                     </td>
                     <td>
-                      <input formControlName="item" class="form-control" (change)="populateUnitPrice($event, i)">
+                      <input formControlName="category" class="form-control"
+                        [ngClass]="{'invalid-inline': formSubmitted && row.get('category')?.invalid}">
                     </td>
                     <td>
                       <select formControlName="costCenter" class="form-control">
@@ -188,10 +171,18 @@
                       </select>
                     </td>
                     <td>
-                      <input type="number" formControlName="quantity" class="form-control" >
+                      <input type="date" class="form-control" formControlName="dateFrom" required />
                     </td>
                     <td>
-                      <input type="number" formControlName="unitPrice" class="form-control"  readonly>
+                      <input type="date" class="form-control" formControlName="dateTo" required />
+                    </td>
+
+                    <td>
+                      <input type="number" formControlName="quantity" class="form-control" value="1" readonly>
+                    </td>
+
+                    <td>
+                      <input type="number" formControlName="unitPrice" class="form-control" value="0" >
                     </td>
                     <td>
                       <ion-button (click)="deleteRow(i)" color="danger" fill="solid" size="small">
@@ -202,7 +193,7 @@
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="4"></td>
+                    <td colspan="6"></td>
                     <td class="unit-price-column">
                       <strong>Total:</strong>
                     </td>
@@ -220,10 +211,12 @@
                 </tfoot>
               </table>
             </div>
+
           </div>
+
         </div>
+        <button class="btn btn-info" type="submit">Submit</button>
       </div>
-      <button class="btn btn-info" type="submit">Submit</button>
     </div>
   </div>
 </form>

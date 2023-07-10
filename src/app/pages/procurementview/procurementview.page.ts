@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ProcurementviewPage implements OnInit {
   currentPage: number = 1;
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 10;
   totalPages: number = 0;
 
   //sorting

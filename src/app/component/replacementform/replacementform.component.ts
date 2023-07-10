@@ -13,9 +13,6 @@ import { AttachmentsformComponent } from 'src/app/modal/attachmentsform/attachme
   templateUrl: './replacementform.component.html',
   styleUrls: ['./replacementform.component.scss'],
 })
-  
-
-
 
 
 export class ReplacementformComponent implements OnInit {
@@ -40,7 +37,7 @@ export class ReplacementformComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
-      requestType: 'New Hire',
+      requestType: 'Replacement',
       name: ['', Validators.required],
       department: ['', Validators.required],
       isExpenditure: ['', Validators.required],
@@ -48,7 +45,6 @@ export class ReplacementformComponent implements OnInit {
       utilizedBudget: [''],
       remarks: [''],
       rows: this.formBuilder.array([]),
-      additionalAttachments: this.formBuilder.array([]),
     });
     this.addRow();
 
@@ -82,7 +78,7 @@ export class ReplacementformComponent implements OnInit {
       category: ['', Validators.required],
       item: ['', Validators.required],
       costCenter: ['', Validators.required],
-      unitPrice: ['', Validators.required],
+      unitPrice: ['0', Validators.required],
       quantity: ['1', Validators.required],
     });
     this.rows.push(newRow);
@@ -186,6 +182,7 @@ export class ReplacementformComponent implements OnInit {
         TotalBudget: this.myForm.value.totalBudget,
         UtilizedBudget: this.myForm.value.utilizedBudget,
         Remarks: this.myForm.value.remarks,
+        TotalAmount: this.total,    //get total price
         inlineitem: this.myForm.value.rows.map((row: any) => ({
           category: row.category,
           item: row.item,

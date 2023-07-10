@@ -1,10 +1,10 @@
-import { Component, OnInit,} from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { NgToastService } from 'ng-angular-popup';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { FormBuilder, FormGroup, FormArray, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { AttachmentsformComponent } from 'src/app/modal/attachmentsform/attachmentsform.component';
 
 
@@ -25,6 +25,8 @@ export class NewhireformComponent implements OnInit {
   procurementData: any = [];
   uploadedFiles: File[] = []; //for file upload from modal
   uploadedFilesCount: number = 0; //for file upload from modal
+ 
+
 
 
   constructor(
@@ -79,7 +81,7 @@ export class NewhireformComponent implements OnInit {
       category: ['', Validators.required],
       item: ['', Validators.required],
       costCenter: ['', Validators.required],
-      unitPrice: ['', Validators.required],
+      unitPrice: ['0', Validators.required],
       quantity: ['1', Validators.required],
     });
     this.rows.push(newRow);
@@ -132,6 +134,8 @@ export class NewhireformComponent implements OnInit {
     return this.calculateTotal();
   }
 
+
+
   // File Upload Modal
   async openModal() {
     const modal = await this.modalController.create({
@@ -182,6 +186,7 @@ export class NewhireformComponent implements OnInit {
         TotalBudget: this.myForm.value.totalBudget,
         UtilizedBudget: this.myForm.value.utilizedBudget,
         Remarks: this.myForm.value.remarks,
+        TotalAmount: this.total,    //get total price
         inlineitem: this.myForm.value.rows.map((row: any) => ({
           category: row.category,
           item: row.item,
@@ -191,6 +196,7 @@ export class NewhireformComponent implements OnInit {
           totalprice: row.quantity * row.unitPrice
         })),
       };
+      console.log(formattedData)
       this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
         if (res) {
           const formData = new FormData();
