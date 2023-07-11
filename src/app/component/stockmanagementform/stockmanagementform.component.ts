@@ -68,6 +68,8 @@ export class StockmanagementformComponent implements OnInit {
     }
     );
 
+    
+
   }//end of ngOnInit
 
   get rows() {

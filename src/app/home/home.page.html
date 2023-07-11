@@ -21,18 +21,27 @@
     <ion-card-content>
       <div class="row">
         <div class="triangle-container">
-          <ion-card class="triangle-card card1" routerLink="/procurement">
+          <ion-card class="triangle-card card1" routerLink="/approvallist" *ngIf="getcurrentUser?.is_approver===true">
+            <ion-card-header>
+              <ion-card-title>Approver Pc Procurement</ion-card-title>
+              <ion-card-subtitle>To Approve Procurement Request of Items</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+
+          <ion-card class="triangle-card card1" routerLink="/procurement" *ngIf="getcurrentUser?.is_approver===false">
             <ion-card-header>
               <ion-card-title>End User Pc Procurement</ion-card-title>
               <ion-card-subtitle>To Create Procurement Request of Items</ion-card-subtitle>
             </ion-card-header>
           </ion-card>
+          
           <ion-card class="triangle-card card2" *ngIf="getcurrentUser?.is_dsin===true">
             <ion-card-header>
               <ion-card-title>DS-IN</ion-card-title>
               <ion-card-subtitle>Network/Data Center License Related Procurement</ion-card-subtitle>
             </ion-card-header>
           </ion-card>
+
           <ion-card class="triangle-card card3" routerLink="/home">
             <ion-card-header>
               <ion-card-title>Customer Project IT Requirements</ion-card-title>

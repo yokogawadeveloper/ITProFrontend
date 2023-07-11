@@ -47,15 +47,13 @@
 
           <div class="form-group col-md-6">
             <label for="attachment">Purchase Date</label>
-            <input type="date" class="form-control" formControlName="purchaseDate" (change)="calculateAge()"/>
+            <input type="date" class="form-control" formControlName="purchaseDate" (change)="calculateAge()" (click)="setAgeReadonly()"/>
           </div>
 
           <div class="form-group col-md-6">
             <label for="attachment">Age</label>
-            <input type="number" class="form-control" formControlName="age"  />
+            <input type="number" class="form-control" formControlName="age" [readonly]="isAgeReadonly" />
           </div>
-
-
 
           <div class="form-group">
             <ion-button id="open-modal" size="small" (click)="openModal()"><ion-icon
@@ -92,7 +90,8 @@
                   </td>
                   <td>
                     <select formControlName="costCenter" class="form-control">
-                      <option *ngFor="let option of costCenterdropdown" [value]="option.CostCenter">{{ option.CostCenter}}</option>
+                      <option *ngFor="let option of costCenterdropdown" [value]="option.CostCenter">{{
+                        option.CostCenter}}</option>
                     </select>
                   </td>
                   <td>

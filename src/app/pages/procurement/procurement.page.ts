@@ -19,6 +19,7 @@ export class ProcurementPage implements OnInit {
   StockManagement: FormGroup;
   //other
   rows: any = [];
+  currentUser: any;
 
   constructor(private formBuilder: FormBuilder) {
 
@@ -65,42 +66,12 @@ export class ProcurementPage implements OnInit {
 
 
   ngOnInit() {
-    this.rows = [{ name: '', category: '', item: '', quantity: '', }]
-  }
-  addRow() {
-    if (this.rows.length < 5) {
-      this.rows.push({
-        name: '',
-        category: '',
-        item: '',
-        quantity: '',
-      })
+    const currentUser = sessionStorage.getItem('currentUser');
+    if (currentUser) {
+      this.currentUser = JSON.parse(currentUser);
     }
-    else {
-      alert("You can add only 5 rows at a time")
-    }
-  }
-
-  deleteRow(index: any) {
-
-    if (this.rows.length == 1) {
-      alert("Atleast one row should be there")
-    }
-    else {
-      this.rows.splice(index, 1)
-    }
+    
   }
 
 
-  //newHireSubmit()
-
-  newHireSubmit() {
-    console.log(this.NewHire.value)
-  }
-
-
-
-
-
-
-}
+}//end of class

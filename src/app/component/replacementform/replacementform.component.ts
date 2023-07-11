@@ -24,6 +24,7 @@ export class ReplacementformComponent implements OnInit {
   costCenterdropdown: any[] = [];
   procurementData: any = [];
   uploadedFiles: File[] = []; //for file upload from modal
+  isAgeReadonly: boolean = false;
 
 
   constructor(
@@ -170,6 +171,12 @@ export class ReplacementformComponent implements OnInit {
     await alert.present();
   }
 
+
+  // calculate age
+  setAgeReadonly() {
+    this.isAgeReadonly = true;
+  }
+
   calculateAge() {
     const purchaseDate = this.myForm.get('purchaseDate')?.value;
     const currentYear = new Date().getFullYear();
@@ -182,8 +189,7 @@ export class ReplacementformComponent implements OnInit {
 
   }
 
-
-
+  
   // Submit Form
   submitForm() {
     this.formSubmitted = true;
@@ -196,7 +202,10 @@ export class ReplacementformComponent implements OnInit {
         TotalBudget: this.myForm.value.totalBudget,
         UtilizedBudget: this.myForm.value.utilizedBudget,
         Remarks: this.myForm.value.remarks,
+        PurchaseDate: this.myForm.value.purchaseDate,
+        Age: this.myForm.value.age,
         TotalAmount: this.total,    //get total price
+
         inlineitem: this.myForm.value.rows.map((row: any) => ({
           category: row.category,
           item: row.item,
