@@ -191,14 +191,14 @@ export class StockmanagementformComponent implements OnInit {
           totalprice: row.quantity * row.unitPrice
         })),
       };
-      this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
+      this.apiService.createProcurement(formattedData).subscribe((res: any) => {
         if (res) {
           const formData = new FormData();
           formData.append('procurement_id', res.id);
           for (let i = 0; i < this.uploadedFiles.length; i++) {
             formData.append('attachment', this.uploadedFiles[i]);
           }
-          this.apiService.postAttachment(formData).subscribe((res: any) => {
+          this.apiService.createMoreAttachment(formData).subscribe((res: any) => {
             if (res) {
               this.toast.success({
                 detail: 'Application submitted successfully',

@@ -28,22 +28,32 @@ export class ApiService {
     return this.http.get(this.apiUrl + '/masteritem/');
   }
 
-
-  //procurement form data send api with authtication header
-
-  postProcurementData(formData: any): Observable<any> {
+  // Create Procurement Data
+  createProcurement(formattedData: any): Observable<any> {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
     if (userData && userData.access) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
-      return this.http.post(this.apiUrl + '/masterprocurement/', formData, { headers });
+      return this.http.post(this.apiUrl + '/masterprocurement/', formattedData, { headers });
     } else {
       console.log("no user data");
       return new Observable<any>((observer) => observer.error("No user data"));
     }
-  }//end of postProcurementData
+  }
+
+  createMoreAttachment(uploadData: any): Observable<any> {
+    let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
+    if (userData && userData.access) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
+      return this.http.post(this.apiUrl + '/moreattachments/', uploadData, { headers });
+    } else {
+      console.log("no user data");
+      return new Observable<any>((observer) => observer.error("No user data"));
+    }
+  }
 
 
-  getProcurementData(): Observable<any> {
+  // Get Procurement Data
+  getLoggedUserProcurementData(): Observable<any> {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
     if (userData && userData.access) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
@@ -52,7 +62,7 @@ export class ApiService {
     else {
       return new Observable<any>((observer) => observer.error("Data for Procurement not found"));
     }
-  }//Get current user procurement data
+  }
 
   getProcurementDataById(id: any): Observable<any> {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
@@ -63,50 +73,21 @@ export class ApiService {
     else {
       return new Observable<any>((observer) => observer.error("Data for Procurement Details not found"));
     }
-  }//Get current user procurement data in details page
+  }
 
 
-  postMasterProcurementData(formattedData: any): Observable<any> {
+  // Get Procurement Data for Modification
+  getLoggedUserModificationList(): Observable<any> {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
     if (userData && userData.access) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
-      return this.http.post(this.apiUrl + '/masterprocurement/', formattedData, { headers });
-    } else {
-      console.log("no user data");
-      return new Observable<any>((observer) => observer.error("No user data"));
-    }
-  }//create master procurement data
-
-
-  postAttachment(uploadData: any): Observable<any> {
-    let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
-    if (userData && userData.access) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
-      return this.http.post(this.apiUrl + '/moreattachments/', uploadData, { headers });
-    } else {
-      console.log("no user data");
-      return new Observable<any>((observer) => observer.error("No user data"));
-    }
-  }//create More attachments
-
-
-
-
-
-
-
-
-  getModificationData(): Observable<any> {
-    let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
-    if (userData && userData.access) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${userData.access}`);
-      return this.http.get(this.apiUrl + '/masterprocurement/modifiedprocurementlist/', { headers });
+      return this.http.get(this.apiUrl + '/masterprocurement/getmodificationlist/', { headers });
 
     }
     else {
       return new Observable<any>((observer) => observer.error("Data for Modification not found"));
     }
-  }//end of getModificationData for current user
+  }
 
   updateModificationProcurementData(id: any, formattedData: any): Observable<any> {
     let userData = JSON.parse(sessionStorage.getItem('currentUser')!);
@@ -119,4 +100,6 @@ export class ApiService {
     }
   }
 
-}
+
+
+}// End of Class

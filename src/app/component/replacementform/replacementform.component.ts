@@ -44,6 +44,8 @@ export class ReplacementformComponent implements OnInit {
       totalBudget: [''],
       utilizedBudget: [''],
       remarks: [''],
+      purchaseDate: [''],
+      age: [''],
       rows: this.formBuilder.array([]),
     });
     this.addRow();
@@ -168,6 +170,18 @@ export class ReplacementformComponent implements OnInit {
     await alert.present();
   }
 
+  calculateAge() {
+    const purchaseDate = this.myForm.get('purchaseDate')?.value;
+    const currentYear = new Date().getFullYear();
+    const purchaseYear = new Date(purchaseDate).getFullYear();
+    const age = currentYear - purchaseYear
+    const ageField = this.myForm.get('age');
+    if (ageField) {
+      ageField.setValue(age);
+    }
+
+  }
+
 
 
   // Submit Form
@@ -192,14 +206,14 @@ export class ReplacementformComponent implements OnInit {
           totalprice: row.quantity * row.unitPrice
         })),
       };
-      this.apiService.postMasterProcurementData(formattedData).subscribe((res: any) => {
+      this.apiService.createProcurement(formattedData).subscribe((res: any) => {
         if (res) {
           const formData = new FormData();
           formData.append('procurement_id', res.id);
           for (let i = 0; i < this.uploadedFiles.length; i++) {
             formData.append('attachment', this.uploadedFiles[i]);
           }
-          this.apiService.postAttachment(formData).subscribe((res: any) => {
+          this.apiService.createMoreAttachment(formData).subscribe((res: any) => {
             if (res) {
               this.toast.success({
                 detail: 'Application submitted successfully',

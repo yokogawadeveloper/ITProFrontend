@@ -23,6 +23,7 @@
         <table class="table">
           <thead class="thead-light">
             <tr class="sorting">
+
               <th scope="col" (click)="sortColumn = 'SI No'; toggleSortDirection('SI No')"
                 [ngClass]="{'ascending': sortColumn === 'SI No' && sortDirection === 'asc', 'descending': sortColumn === 'SI No' && sortDirection === 'desc'}">
                 SI No
@@ -30,6 +31,7 @@
                 <ion-icon name="arrow-down-outline"
                   *ngIf="sortColumn === 'SI No' && sortDirection === 'desc'"></ion-icon>
               </th>
+              
               <th scope="col" (click)="sortColumn = 'Request No'; toggleSortDirection('Request No')">
                 Request No
                 <ion-icon name="arrow-up-outline"

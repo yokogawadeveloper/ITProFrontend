@@ -37,10 +37,13 @@
 
     <ion-footer class="footer">
       <ion-toolbar>
-        <ion-item (click)="logout()" lines="none">
-          <ion-icon name="log-out" slot="start" color="danger"></ion-icon>
-          <ion-label>Logout</ion-label>
-        </ion-item>
+        <ion-menu-toggle>
+          <ion-item (click)="logout()" lines="none">
+            <ion-icon name="log-out" slot="start" color="danger"></ion-icon>
+            <ion-label>Logout</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
       </ion-toolbar>
     </ion-footer>
 

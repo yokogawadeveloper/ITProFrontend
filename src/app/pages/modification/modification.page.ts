@@ -15,7 +15,7 @@ export class ModificationPage implements OnInit {
 
 
   ngOnInit() {
-    this.apiServie.getModificationData().subscribe((response: any) => {
+    this.apiServie.getLoggedUserModificationList().subscribe((response: any) => {
       this.userProcurementModifiedList = response;
     },
       (error: any) => {

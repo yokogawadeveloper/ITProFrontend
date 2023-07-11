@@ -46,7 +46,8 @@
           </div>
 
           <div class="form-group">
-            <ion-button id="open-modal" size="small" (click)="openModal()"><ion-icon name="cloud-upload-outline"></ion-icon></ion-button>
+            <ion-button id="open-modal" size="small" (click)="openModal()"><ion-icon
+                name="cloud-upload-outline"></ion-icon></ion-button>
             <span>
               file name: {{ uploadedFilesCount }}
             </span>
@@ -82,8 +83,7 @@
                   </td>
                   <td>
                     <select formControlName="costCenter" class="form-control">
-                      <option *ngFor="let option of costCenterdropdown" [value]="option.id">{{ option.CostCenter }}
-                      </option>
+                      <option *ngFor="let option of costCenterdropdown" [value]="option.CostCenter">{{ option.CostCenter}}</option>
                     </select>
                   </td>
                   <td>
@@ -119,7 +119,7 @@
               </tfoot>
             </table>
           </div>
-          
+
         </div>
         <button class="btn btn-info" type="submit">Submit</button>
       </div>

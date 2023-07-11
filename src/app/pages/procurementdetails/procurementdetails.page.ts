@@ -10,7 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class ProcurementdetailsPage implements OnInit {
   procurementDataById: any;
 
-  constructor(private apiService: ApiService,private route : ActivatedRoute) { }
+  constructor(private apiService: ApiService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {

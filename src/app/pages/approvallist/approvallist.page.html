@@ -11,50 +11,131 @@
 </ion-header>
 
 <ion-content fullscreen="true">
-  <ion-card>
+  <ion-card class="card">
+
     <ion-card-header>
-      <ion-searchbar placeholder="Filter"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="statusFilter" (ionChange)="filterItems()"
+        placeholder="Filter By Name & Status"></ion-searchbar>
     </ion-card-header>
+
     <ion-card-content>
-      <div class="row">
-        <div class="inline-table">
-          <table class="table table-reponsive">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Procurement Id</th>
-                <th scope="col">Seqeunce No</th>
-                <th scope="col">Approver Type</th>
-                <th scope="col">Request No</th>
-                <th scope="col">Request Type</th>
-                <th scope="col">Name</th>
-                <th scope="col">Staus</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <ng-container *ngFor="let data of approvalPendingList">
-                <tr>
-                  <td scope="col" data-title="SI No">{{data.id}}</td>
-                  <td scope="col" data-title="SI No">{{data.sequence}}</td>
-                  <td scope="col" data-title="SI No">{{data.approverType}}</td>
-                  <td scope="col" data-title="Request No">{{data.RequestNumber}}</td>
-                  <td scope="col" data-title="RequestType">{{data.RequestType}}</td>
-                  <td scope="col" data-title="Name">{{data.Name}}</td>
-                  <td scope="col" data-title="Status">{{data.Status}}</td>
-                  <td scope="col" data-title="Action">
-                    <ion-button (click)="redirectToApprovalListDetails(data.id, data.sequence)" class="edit"
-                      color="tertiary" size="small">
-                      <ion-icon name="open"></ion-icon>
-                    </ion-button>
-                  </td>
-                </tr>
-              </ng-container>
-            </tbody>
-          </table>
-        </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="thead-light">
+            <tr class="sorting">
+
+              <th scope="col" (click)="sortColumn = 'SI No'; toggleSortDirection('SI No')"
+                [ngClass]="{'ascending': sortColumn === 'SI No' && sortDirection === 'asc', 'descending': sortColumn === 'SI No' && sortDirection === 'desc'}">
+                SI No
+                <ion-icon name="arrow-up-outline" *ngIf="sortColumn === 'SI No' && sortDirection === 'asc'"></ion-icon>
+                <ion-icon name="arrow-down-outline"
+                  *ngIf="sortColumn === 'SI No' && sortDirection === 'desc'"></ion-icon>
+              </th>
+
+              <th scope="col" (click)="sortColumn = 'Procurment ID'; toggleSortDirection('Procurment ID')"
+                [ngClass]="{'ascending': sortColumn === 'Procurment ID' && sortDirection === 'asc', 'descending': sortColumn === 'Procurment ID' && sortDirection === 'desc'}">
+                Procurment ID
+                <ion-icon name="arrow-up-outline" *ngIf="sortColumn === 'Procurment ID' && sortDirection === 'asc'"></ion-icon>
+                <ion-icon name="arrow-down-outline"
+                  *ngIf="sortColumn === 'Procurment ID' && sortDirection === 'desc'"></ion-icon>
+              </th>
+
+              <th scope="col" (click)="sortColumn = 'Sequence Number'; toggleSortDirection('Approver Type')"
+                [ngClass]="{'ascending': sortColumn === 'Sequence Number' && sortDirection === 'asc', 'descending': sortColumn === 'Approver Type' && sortDirection === 'desc'}">
+                Sequence Number
+                <ion-icon name="arrow-up-outline" *ngIf="sortColumn === 'Sequence Number' && sortDirection === 'asc'"></ion-icon>
+                <ion-icon name="arrow-down-outline"
+                  *ngIf="sortColumn === 'Sequence Number' && sortDirection === 'desc'"></ion-icon>
+              </th>
+
+              <th scope="col" (click)="sortColumn = 'Approver Type'; toggleSortDirection('Approver Type')"
+                [ngClass]="{'ascending': sortColumn === 'Approver Type' && sortDirection === 'asc', 'descending': sortColumn === 'Approver Type' && sortDirection === 'desc'}">
+                Approver Type
+                <ion-icon name="arrow-up-outline" *ngIf="sortColumn === 'Approver Type' && sortDirection === 'asc'"></ion-icon>
+                <ion-icon name="arrow-down-outline"
+                  *ngIf="sortColumn === 'Approver Type' && sortDirection === 'desc'"></ion-icon>
+              </th>
+
+              <th scope="col" (click)="sortColumn = 'Request No'; toggleSortDirection('Request No')">
+                Request No
+                <ion-icon name="arrow-up-outline"
+                  *ngIf="sortColumn === 'Request No' && sortDirection === 'asc'"></ion-icon>
+                <ion-icon name="arrow-down-outline"
+                  *ngIf="sortColumn === 'Request No' && sortDirection === 'desc'"></ion-icon>
+              </th>
+
+              <th scope="col" (click)="sortColumn = 'RequestType'; toggleSortDirection('RequestType')">
+                Request Type
+                <ion-icon name="arrow-up-outline"
+                  *ngIf="sortColumn === 'RequestType' && sortDirection === 'asc'"></ion-icon>
+                <ion-icon name="arrow-down-outline"
+                  *ngIf="sortColumn === 'RequestType' && sortDirection === 'desc'"></ion-icon>
+              </th>
+
+              <th scope="col" (click)="sortColumn = 'Name'; toggleSortDirection('Name')">Name
+                <ion-icon name="arrow-up-outline" *ngIf="sortColumn === 'Name' && sortDirection === 'asc'"></ion-icon>
+                <ion-icon name="arrow-down-outline"
+                  *ngIf="sortColumn === 'Name' && sortDirection === 'desc'"></ion-icon>
+
+              </th>
+
+              <th scope="col" (click)="sortColumn = 'Total Amount'; toggleSortDirection('Total Amount')">Total Amount
+                <ion-icon name="arrow-up-outline"
+                  *ngIf="sortColumn === 'Total Amount' && sortDirection === 'asc'"></ion-icon>
+                <ion-icon name="arrow-down-outline"
+                  *ngIf="sortColumn === 'Total Amount' && sortDirection === 'desc'"></ion-icon>
+              </th>
+
+              <th scope="col" (click)="sortColumn = 'Status'; toggleSortDirection('Status')">Status
+                <ion-icon name="arrow-up-outline" *ngIf="sortColumn === 'Status' && sortDirection === 'asc'"></ion-icon>
+                <ion-icon name="arrow-down-outline"
+                  *ngIf="sortColumn === 'Status' && sortDirection === 'desc'"></ion-icon>
+              </th>
+
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of getPageItems(); let i = index">
+              <td scope="col" data-title="SI No">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+              <td scope="col" data-title="Procurement">{{data.id}}</td>
+              <td scope="col" data-title="Sequence Number">{{data.sequence}}</td>
+              <td scope="col" data-title="Approver Typer">{{data.approverType}}</td>
+              <td scope="col" data-title="Request No">{{data.RequestNumber}}</td>
+              <td scope="col" data-title="Request Type">{{data.RequestType}}</td>
+              <td scope="col" data-title="Name">{{data.Name}}</td>
+              <td scope="col" data-title="Total Amount">{{ data.TotalAmount | currency:'INR' }}</td>
+              <td scope="col" data-title="Status">{{data.Status}}</td>
+              <td scope="col" data-title="Action">
+                <ion-button (click)="redirectToApprovalListDetails(data.id, data.sequence)" class="edit" color="tertiary"
+                  size="small">
+                  <ion-icon name="open"></ion-icon>
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </ion-card-content>
+
+    <div class="pagination-controls">
+      <div class="pagination-buttons">
+        <ion-button (click)="goToPreviousPage()" [disabled]="currentPage === 1" class="pagination-button" fill="clear">
+          <ion-icon name="arrow-back-circle"></ion-icon>
+        </ion-button>
+        <div class="pagination-info">
+          Page {{ currentPage }} of {{ totalPages }}
+        </div>
+        <ion-button (click)="goToNextPage()" [disabled]="currentPage === totalPages" class="pagination-button"
+          fill="clear">
+          <ion-icon name="arrow-forward-circle"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
   </ion-card>
 </ion-content>
+
+
 
 

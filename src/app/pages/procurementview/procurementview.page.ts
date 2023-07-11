@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './procurementview.page.html',
   styleUrls: ['./procurementview.page.scss'],
 })
+  
 export class ProcurementviewPage implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10;
@@ -23,7 +24,7 @@ export class ProcurementviewPage implements OnInit {
   constructor(private apiService: ApiService, private router: Router) { }
 
   ngOnInit() {
-    this.apiService.getProcurementData().subscribe(
+    this.apiService.getLoggedUserProcurementData().subscribe(
       (res) => {
         this.procurementData = res;
         this.calculateTotalPages();

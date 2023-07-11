@@ -45,6 +45,18 @@
             </div>
           </div>
 
+          <div class="form-group col-md-6">
+            <label for="attachment">Purchase Date</label>
+            <input type="date" class="form-control" formControlName="purchaseDate" (change)="calculateAge()"/>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="attachment">Age</label>
+            <input type="number" class="form-control" formControlName="age"  />
+          </div>
+
+
+
           <div class="form-group">
             <ion-button id="open-modal" size="small" (click)="openModal()"><ion-icon
                 name="cloud-upload-outline"></ion-icon></ion-button>
@@ -80,8 +92,7 @@
                   </td>
                   <td>
                     <select formControlName="costCenter" class="form-control">
-                      <option *ngFor="let option of costCenterdropdown" [value]="option.id">{{ option.CostCenter }}
-                      </option>
+                      <option *ngFor="let option of costCenterdropdown" [value]="option.CostCenter">{{ option.CostCenter}}</option>
                     </select>
                   </td>
                   <td>
